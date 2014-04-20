@@ -49,6 +49,16 @@ DEFINE_ZED_TYPE(ulonglongListP)
 DEFINE_ZED_TYPE(shortListP)
 DEFINE_ZED_TYPE(ushortListP)
  
+ucharListP ucharListNew();
+ucharListP ucharListValuePush(uchar value,ucharListP list);
+ucharListP ucharListValuesPush(ucharListP values,ucharListP list);
+ucharListP ucharListPop(ucharListP list);
+uchar ucharListAssertNull(ucharListP list);
+uchar ucharListAssertValue(ucharListP list);
+uchar ucharListFree(ucharListP list);
+uchar ucharGarbageListFree(ucharGarbageListP garbage);
+ 
+ 
 ucharListP ucharListNew(){
     ucharListP list=malloc(sizeof(ucharList));
     ucharGarbageListP garbage=malloc(sizeof(ucharGarbageList));
@@ -58,38 +68,70 @@ ucharListP ucharListNew(){
     garbage->garbage=list;
     return list;
 }
-
+ 
 ucharListP ucharListValuePush(uchar value,ucharListP list){
-	ucharListP tempList=malloc(sizeof(ucharList));
-	ucharGarbageListP tempGarbageList=malloc(sizeof(ucharGarbageList));
-	tempList->value=list->value;
-	tempList->values=list->values;
-	tempList->garbage=list->garbage->next;;
-	tempList->next=list->next;
-	list->value=value;
-	list->values=NULL;
-	list->garbage->garbage=list;
-	list->garbage->next=tempGarbageList;
-	list->next=tempList;
-	tempGarbageList->garbage=tempList;
-	tempGarbageList->next=tempList->garbage;
-	return list;
+ ucharListP tempList=malloc(sizeof(ucharList));
+ ucharGarbageListP tempGarbageList=malloc(sizeof(ucharGarbageList));
+ tempList->value=list->value;
+ tempList->values=list->values;
+ tempList->garbage=list->garbage->next;;
+ tempList->next=list->next;
+ list->value=value;
+ list->values=NULL;
+ list->garbage->garbage=list;
+ list->garbage->next=tempGarbageList;
+ list->next=tempList;
+ tempGarbageList->garbage=tempList;
+ tempGarbageList->next=tempList->garbage;
+ return list;
 }
-
+ 
 ucharListP ucharListValuesPush(ucharListP values,ucharListP list){
-	ucharListP tempList=malloc(sizeof(ucharList));
-	ucharGarbageListP tempGarbageList=malloc(sizeof(ucharGarbageList));
-	tempList->value=list->value;
-	tempList->values=list->values;
-	tempList->garbage=list->garbage->next;;
-	tempList->next=list->next;
-	list->values=values;
-	list->garbage->garbage=list;
-	list->garbage->next=tempGarbageList;
-	list->next=tempList;
-	tempGarbageList->garbage=tempList;
-	tempGarbageList->next=tempList->garbage;
-	return list;
+ ucharListP tempList=malloc(sizeof(ucharList));
+ ucharGarbageListP tempGarbageList=malloc(sizeof(ucharGarbageList));
+ tempList->value=list->value;
+ tempList->values=list->values;
+ tempList->garbage=list->garbage->next;;
+ tempList->next=list->next;
+ list->values=values;
+ list->garbage->garbage=list;
+ list->garbage->next=tempGarbageList;
+ list->next=tempList;
+ tempGarbageList->garbage=tempList;
+ tempGarbageList->next=tempList->garbage;
+ return list;
+}
+ 
+ucharListP ucharListPop(ucharListP list){
+return list->next;
+}
+ 
+uchar ucharListAssertNull(ucharListP list){
+return list->next==NULL;
+}
+ 
+uchar ucharListAssertValue(ucharListP list){
+return list->values==NULL;
+}
+ 
+uchar ucharListFree(ucharListP list){
+ucharGarbageListFree(list->garbage);
+return 0;
+}
+ 
+uchar ucharGarbageListFree(ucharGarbageListP garbage){
+ucharGarbageListP next=garbage->next;
+if(!ucharListAssertValue(garbage->garbage))
+{
+ ucharListFree(garbage->garbage->values);
+}
+free(garbage->garbage);
+free(garbage);
+if(next==NULL){
+return 0;
+}else{
+return ucharGarbageListFree(next);
+}
 }
  
 int main(){
@@ -114,6 +156,9 @@ int main(){
     list=ucharListValuePush(222,list);
     list=ucharListValuesPush(ucharListValuePush(111,ucharListNew()),list);
     printf("\n%d\n",list->values->value);
+  
+  ucharListFree(list);
  
 return 0;
 }
+ 
