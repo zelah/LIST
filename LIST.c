@@ -83,6 +83,7 @@ ucharListP ucharListValuePush(uchar value,ucharListP list){
  list->next=tempList;
  tempGarbageList->garbage=tempList;
  tempGarbageList->next=tempList->garbage;
+  tempList->garbage=list->garbage;
  return list;
 }
  
@@ -99,6 +100,7 @@ ucharListP ucharListValuesPush(ucharListP values,ucharListP list){
  list->next=tempList;
  tempGarbageList->garbage=tempList;
  tempGarbageList->next=tempList->garbage;
+  tempList->garbage=list->garbage;
  return list;
 }
  
@@ -142,10 +144,10 @@ int main(){
     printf("%d\n",ucharListPArrayRef(55,array1)->next->next->value);
     printf("%d\n",ucharListPArrayRef(55,array1)->next->next->next->value);
     printf("%d\n",ucharListPArrayRef(55,array1)->next->next->next->next->next);
-    printf("%d\n",ucharListPArrayRef(55,array1)->garbage->garbage->value);
-    printf("%d\n",ucharListPArrayRef(55,array1)->garbage->next->garbage->value);
-    printf("%d\n",ucharListPArrayRef(55,array1)->garbage->next->next->garbage->value);
-    printf("%d\n",ucharListPArrayRef(55,array1)->garbage->next->next->next->garbage->value);
+    printf("%d\n",ucharListPArrayRef(55,array1)->next->next->garbage->garbage->value);
+    printf("%d\n",ucharListPArrayRef(55,array1)->next->next->garbage->next->garbage->value);
+    printf("%d\n",ucharListPArrayRef(55,array1)->next->next->garbage->next->next->garbage->value);
+    printf("%d\n",ucharListPArrayRef(55,array1)->next->next->garbage->next->next->next->garbage->value);
     ucharP array=ucharArrayNew(1024);
     ucharArraySet(55,222,array);
     printf("\n%d\n",ucharArrayRef(55,array));
@@ -157,8 +159,12 @@ int main(){
     list=ucharListValuesPush(ucharListValuePush(111,ucharListNew()),list);
     printf("\n%d\n",list->values->value);
   
-  ucharListFree(list);
+  printf("\n%d %d %d\n",list->garbage,list->next->garbage,list->next->next->garbage);
+  
+  ucharListFree(list->next);
+  printf("\n%d\n",list->values->value);
  
 return 0;
 }
+ 
  
