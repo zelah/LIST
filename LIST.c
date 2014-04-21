@@ -112,8 +112,8 @@ uchar ucharListAssertNull(ucharListP list){
 return list->next==NULL;
 }
  
-uchar ucharListAssertValue(ucharListP list){
-return list->values==NULL;
+uchar ucharListAssertValues(ucharListP list){
+return !(list->values==NULL);
 }
  
 uchar ucharListFree(ucharListP list){
@@ -123,7 +123,7 @@ return 0;
  
 uchar ucharGarbageListFree(ucharGarbageListP garbage){
 ucharGarbageListP next=garbage->next;
-if(!ucharListAssertValue(garbage->garbage))
+if(ucharListAssertValues(garbage->garbage))
 {
  ucharListFree(garbage->garbage->values);
 }
@@ -166,5 +166,4 @@ int main(){
  
 return 0;
 }
- 
  
