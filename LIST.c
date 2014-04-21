@@ -59,6 +59,12 @@ uchar ucharListFree(ucharListP list);
 uchar ucharGarbageListFree(ucharGarbageListP garbage);
 void ucharListCollect(ucharListP list);
 void ucharListFeed(ucharGarbageListP garbage,ucharListP values);
+uchar ucharListValueTop(ucharListP list);
+ucharListP ucharListValuesTop(ucharListP list);
+
+ucharListP ucharListValuesTop(ucharListP list){return list->values;}
+ 
+uchar ucharListValueTop(ucharListP list){return list->value;}
  
 void ucharListCollect(ucharListP list){ucharListFeed(list->garbage,list->values);}
 
