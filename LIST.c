@@ -57,8 +57,10 @@ uchar ucharListAssertNull(ucharListP list);
 uchar ucharListAssertValue(ucharListP list);
 uchar ucharListFree(ucharListP list);
 uchar ucharGarbageListFree(ucharGarbageListP garbage);
- 
- 
+void ucharListCollect(ucharListP list);
+
+void ucharListCollect(ucharListP list){if(list->values->next==NULL){ucharListValuesPush(list->values,list);}else if(list->values->values==NULL){ucharListValuePush(list->values->value,list);ucharListCollect(ucharListValuesPush(list->values->next,list));}else{ucharListCollect(ucharListValuesPush(list->values->values,list));ucharListCollect(ucharListValuesPush(list->values->next,list));}}
+
 ucharListP ucharListNew(){
     ucharListP list=malloc(sizeof(ucharList));
     ucharGarbageListP garbage=malloc(sizeof(ucharGarbageList));
