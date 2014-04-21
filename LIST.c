@@ -58,9 +58,12 @@ uchar ucharListAssertValue(ucharListP list);
 uchar ucharListFree(ucharListP list);
 uchar ucharGarbageListFree(ucharGarbageListP garbage);
 void ucharListCollect(ucharListP list);
+void ucharListFeed(ucharGarbageListP garbage,ucharListP values);
+ 
+void ucharListCollect(ucharListP list){ucharListFeed(list->garbage,list->values);}
 
-void ucharListCollect(ucharListP list){if(list->values->next==NULL){ucharListValuesPush(list->values,list);}else if(list->values->values==NULL){ucharListValuePush(list->values->value,list);ucharListCollect(ucharListValuesPush(list->values->next,list));}else{ucharListCollect(ucharListValuesPush(list->values->values,list));ucharListCollect(ucharListValuesPush(list->values->next,list));}}
-
+void ucharListFeed(ucharGarbageListP garbage,ucharListP values){if(ucharListAssertNull(values)){values->next=garbage;}else{ucharListFeed(garbage,values->next);}}
+ 
 ucharListP ucharListNew(){
     ucharListP list=malloc(sizeof(ucharList));
     ucharGarbageListP garbage=malloc(sizeof(ucharGarbageList));
@@ -76,7 +79,7 @@ ucharListP ucharListValuePush(uchar value,ucharListP list){
  ucharGarbageListP tempGarbageList=malloc(sizeof(ucharGarbageList));
  tempList->value=list->value;
  tempList->values=list->values;
- tempList->garbage=list->garbage->next;;
+ tempList->garbage=list->garbage->next;
  tempList->next=list->next;
  list->value=value;
  list->values=NULL;
@@ -103,7 +106,8 @@ ucharListP ucharListValuesPush(ucharListP values,ucharListP list){
  tempGarbageList->garbage=tempList;
  tempGarbageList->next=tempList->garbage;
   tempList->garbage=list->garbage;
- return list;
+  ucharListCollect(list);
+  return list;
 }
  
 ucharListP ucharListPop(ucharListP list){
@@ -137,7 +141,7 @@ return 0;
 return ucharGarbageListFree(next);
 }
 }
-
+ 
 int main(){
     ucharListPP array1=ucharListPArrayNew(1024);
     ucharListPArraySet(55,ucharListPop(ucharListValuePush(211,ucharListValuePush(122,ucharListValuePush(121,ucharListValuePush(112,ucharListValuePush(111,ucharListNew())))))),array1);
@@ -168,3 +172,4 @@ int main(){
  
 return 0;
 }
+ 
