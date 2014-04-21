@@ -135,10 +135,10 @@ return 0;
 return ucharGarbageListFree(next);
 }
 }
- 
+
 int main(){
     ucharListPP array1=ucharListPArrayNew(1024);
-    ucharListPArraySet(55,ucharListValuePush(122,ucharListValuePush(121,ucharListValuePush(112,ucharListValuePush(111,ucharListNew())))),array1);
+    ucharListPArraySet(55,ucharListPop(ucharListValuePush(211,ucharListValuePush(122,ucharListValuePush(121,ucharListValuePush(112,ucharListValuePush(111,ucharListNew())))))),array1);
     printf("%d\n",ucharListPArrayRef(55,array1)->value);
     printf("%d\n",ucharListPArrayRef(55,array1)->next->value);
     printf("%d\n",ucharListPArrayRef(55,array1)->next->next->value);
@@ -166,4 +166,3 @@ int main(){
  
 return 0;
 }
- 
