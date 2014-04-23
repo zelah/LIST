@@ -7,77 +7,62 @@ typedef unsigned int uint;
 typedef unsigned long ulong;
 typedef unsigned long long ulonglong;
 typedef unsigned short ushort;
-#define DEFINE_ZED_TYPE(type_) typedef type_ * type_##P;typedef struct type_##List type_##List;typedef struct type_##GarbageList type_##GarbageList;struct type_##GarbageList{struct type_##List *garbage;struct type_##GarbageList *next;};struct type_##List{type_ value;struct type_##List *values;struct type_##List *next;type_##GarbageList *garbage};typedef struct type_##List * type_##ListP;typedef struct type_##GarbageList * type_##GarbageListP;typedef type_ ZED##type_;typedef type_##P ZED##type_##P;typedef struct type_##GarbageList ZED##type_##GarbageList;typedef type_##GarbageListP ZED##type_##GarbageListP;typedef struct type_##List ZED##type_##List;typedef type_##ListP ZED##type_##ListP;type_##P type_##ArrayNew(ulonglong size){return malloc(size*sizeof(type_));}type_ type_##ArrayRef(ulonglong index,type_##P array){return array[index-1];}type_##P type_##ArraySet(ulonglong index,type_ value,type_##P array){array[index-1]=value;return array;}type_##ListP type_##ListNew();type_##ListP type_##ListValuePush(type_ value,type_##ListP list);type_##ListP type_##ListValuesPush(type_##ListP values,type_##ListP list);type_##ListP type_##ListPop(type_##ListP list);uchar type_##ListAssertNull(type_##ListP list);uchar type_##ListAssertValue(type_##ListP list);uchar type_##ListFree(type_##ListP list);static uchar type_##GarbageListFree(type_##GarbageListP garbage);static void type_##ListCollect(type_##ListP list);static void type_##ListFeed(type_##GarbageListP garbage,type_##ListP values);type_ type_##ListValueTop(type_##ListP list);type_##ListP type_##ListValuesTop(type_##ListP list);type_##ListP type_##ListValuesTop(type_##ListP list){return list->values;}type_ type_##ListValueTop(type_##ListP list){return list->value;}static void type_##ListCollect(type_##ListP list){type_##ListFeed(list->garbage,list->values);}static void type_##ListFeed(type_##GarbageListP garbage,type_##ListP values){if(type_##ListAssertNull(values)){values->next=garbage;}else{type_##ListFeed(garbage,values->next);}}type_##ListP type_##ListNew(){type_##ListP list=malloc(sizeof(type_##List));type_##GarbageListP garbage=malloc(sizeof(type_##GarbageList));list->next=NULL;list->garbage=garbage;garbage->next=NULL;garbage->garbage=list;return list;}type_##ListP type_##ListValuePush(type_ value,type_##ListP list){type_##ListP tempList=malloc(sizeof(type_##List));type_##GarbageListP tempGarbageList=malloc(sizeof(type_##GarbageList));tempList->value=list->value;tempList->values=list->values;tempList->garbage=list->garbage->next;tempList->next=list->next;list->value=value;list->values=NULL;list->garbage->garbage=list;list->garbage->next=tempGarbageList;list->next=tempList;tempGarbageList->garbage=tempList;tempGarbageList->next=tempList->garbage;tempList->garbage=list->garbage;return list;}type_##ListP type_##ListValuesPush(type_##ListP values,type_##ListP list){type_##ListP tempList=malloc(sizeof(type_##List));type_##GarbageListP tempGarbageList=malloc(sizeof(type_##GarbageList));tempList->value=list->value;tempList->values=list->values;tempList->garbage=list->garbage->next;;tempList->next=list->next;list->values=values;list->garbage->garbage=list;list->garbage->next=tempGarbageList;list->next=tempList;tempGarbageList->garbage=tempList;tempGarbageList->next=tempList->garbage;tempList->garbage=list->garbage;type_##ListCollect(list);return list;}type_##ListP type_##ListPop(type_##ListP list){return list->next;}uchar type_##ListAssertNull(type_##ListP list){return list->next==NULL;}uchar type_##ListAssertValues(type_##ListP list){return !(list->values==NULL);}uchar type_##ListFree(type_##ListP list){type_##GarbageListFree(list->garbage);return 0;}static uchar type_##GarbageListFree(type_##GarbageListP garbage){type_##GarbageListP next=garbage->next;if(type_##ListAssertValues(garbage->garbage)){type_##ListFree(garbage->garbage->values);}free(garbage->garbage);free(garbage);if(next==NULL){return 0;}else{return type_##GarbageListFree(next);}}
- 
+#define DEFINE_ZED_TYPE(type_) typedef type_ * type_##P;typedef struct type_##List type_##List;typedef struct type_##GarbageList type_##GarbageList;struct type_##GarbageList{struct type_##List *garbage;struct type_##GarbageList *next;};struct type_##List{type_ value;struct type_##List *values;struct type_##List *next;type_##GarbageList *garbage};typedef struct type_##List * type_##ListP;typedef struct type_##GarbageList * type_##GarbageListP;typedef type_ ZED##type_;typedef type_##P ZED##type_##P;typedef struct type_##GarbageList ZED##type_##GarbageList;typedef type_##GarbageListP ZED##type_##GarbageListP;typedef struct type_##List ZED##type_##List;typedef type_##ListP ZED##type_##ListP;type_##P type_##ArrayNew(ulonglong size){return malloc(size*sizeof(type_));}type_ type_##ArrayRef(ulonglong index,type_##P array){return array[index-1];}type_##P type_##ArraySet(ulonglong index,type_ value,type_##P array){array[index-1]=value;return array;}type_##ListP type_##ListNew();type_##ListP type_##ListValuePush(type_ value,type_##ListP list);type_##ListP type_##ListValuesPush(type_##ListP values,type_##ListP list);type_##ListP type_##ListPop(type_##ListP list);uchar type_##ListAssertNull(type_##ListP list);uchar type_##ListAssertValues(type_##ListP list);uchar type_##ListFree(type_##ListP list);static uchar type_##GarbageListFree(type_##GarbageListP garbage);type_ type_##ListValueTop(type_##ListP list);type_##ListP type_##ListValuesTop(type_##ListP list);
+
 DEFINE_ZED_TYPE(char)
 DEFINE_ZED_TYPE(uchar)
-DEFINE_ZED_TYPE(double)
-DEFINE_ZED_TYPE(float)
 DEFINE_ZED_TYPE(int)
 DEFINE_ZED_TYPE(uint)
 DEFINE_ZED_TYPE(long)
 DEFINE_ZED_TYPE(ulong)
-DEFINE_ZED_TYPE(longdouble)
-DEFINE_ZED_TYPE(longlong)
-DEFINE_ZED_TYPE(ulonglong)
-DEFINE_ZED_TYPE(short)
-DEFINE_ZED_TYPE(ushort)
-DEFINE_ZED_TYPE(charP)
-DEFINE_ZED_TYPE(ucharP)
-DEFINE_ZED_TYPE(doubleP)
-DEFINE_ZED_TYPE(floatP)
-DEFINE_ZED_TYPE(intP)
-DEFINE_ZED_TYPE(uintP)
-DEFINE_ZED_TYPE(longP)
-DEFINE_ZED_TYPE(ulongP)
-DEFINE_ZED_TYPE(longdoubleP)
-DEFINE_ZED_TYPE(longlongP)
-DEFINE_ZED_TYPE(ulonglongP)
-DEFINE_ZED_TYPE(shortP)
-DEFINE_ZED_TYPE(ushortP)
-DEFINE_ZED_TYPE(charListP)
-DEFINE_ZED_TYPE(ucharListP)
-DEFINE_ZED_TYPE(doubleListP)
-DEFINE_ZED_TYPE(floatListP)
-DEFINE_ZED_TYPE(intListP)
-DEFINE_ZED_TYPE(uintListP)
-DEFINE_ZED_TYPE(longListP)
-DEFINE_ZED_TYPE(ulongListP)
-DEFINE_ZED_TYPE(longdoubleListP)
-DEFINE_ZED_TYPE(longlongListP)
-DEFINE_ZED_TYPE(ulonglongListP)
-DEFINE_ZED_TYPE(shortListP)
-DEFINE_ZED_TYPE(ushortListP)
+
+static void ucharListCollect(ucharListP list);
+static void ucharGarbageListFeed(ucharGarbageListP garbage1,ucharGarbageListP garbage2);
+static void ucharListCollect1(ucharGarbageListP all,ucharGarbageListP garbage);
+
+ucharListP ucharListValuesTop(ucharListP list){return list->values;}
+
+uchar ucharListValueTop(ucharListP list){return list->value;}
+
+static void ucharListCollect(ucharListP list){ucharGarbageListFeed(list->values->garbage,list->garbage);ucharListCollect1(list->garbage,list->garbage->next);}
+
+static void ucharListCollect1(ucharGarbageListP all,ucharGarbageListP garbage){printf("c%dc",garbage->garbage->garbage);printf("d%dd",all);if(garbage->next==NULL){garbage->garbage->garbage=all;}else{garbage->garbage->garbage=all;ucharListCollect1(all,garbage->next);}}
+
+static void ucharGarbageListFeed(ucharGarbageListP garbage1,ucharGarbageListP garbage2){if(garbage2->next==NULL){garbage2->next=garbage1;}else{ucharGarbageListFeed(garbage1,garbage2->next);}}
+
+ucharListP ucharListNew(){ucharListP list=malloc(sizeof(ucharList));ucharGarbageListP garbage=malloc(sizeof(ucharGarbageList));list->next=NULL;list->garbage=garbage;garbage->next=NULL;garbage->garbage=list;return list;}
+
+ucharListP ucharListValuePush(uchar value,ucharListP list){ucharListP tempList=malloc(sizeof(ucharList));ucharGarbageListP tempGarbageList=malloc(sizeof(ucharGarbageList));tempList->value=list->value;tempList->values=list->values;tempList->garbage=list->garbage->next;tempList->next=list->next;list->value=value;list->values=NULL;list->garbage->garbage=list;list->garbage->next=tempGarbageList;list->next=tempList;tempGarbageList->garbage=tempList;tempGarbageList->next=tempList->garbage;tempList->garbage=list->garbage;return list;}
+
+ucharListP ucharListValuesPush(ucharListP values,ucharListP list){ucharListP tempList=malloc(sizeof(ucharList));ucharGarbageListP tempGarbageList=malloc(sizeof(ucharGarbageList));tempList->value=list->value;tempList->values=list->values;tempList->garbage=list->garbage->next;;tempList->next=list->next;list->values=values;list->garbage->garbage=list;list->garbage->next=tempGarbageList;list->next=tempList;tempGarbageList->garbage=tempList;tempGarbageList->next=tempList->garbage;tempList->garbage=list->garbage;ucharListCollect(list);return list;}
+
+ucharListP ucharListPop(ucharListP list){return list->next;}
+
+uchar ucharListAssertNull(ucharListP list){return list->next==NULL;}
+
+uchar ucharListAssertValues(ucharListP list){return !(list->values==NULL);}
+
+uchar ucharListFree(ucharListP list){ucharGarbageListFree(list->garbage);return 0;}
+
+static uchar ucharGarbageListFree(ucharGarbageListP garbage){ucharGarbageListP	next=garbage->next;free(garbage->garbage);free(garbage);printf("free");if(next==NULL){return 0;}else{return ucharGarbageListFree(next);}}
  
 int main(){
-    ucharListPP array1=ucharListPArrayNew(1024);
-    ucharListPArraySet(55,ucharListPop(ucharListValuePush(211,ucharListValuePush(122,ucharListValuePush(121,ucharListValuePush(112,ucharListValuePush(111,ucharListNew())))))),array1);
-    printf("%d\n",ucharListPArrayRef(55,array1)->value);
-    printf("%d\n",ucharListPArrayRef(55,array1)->next->value);
-    printf("%d\n",ucharListPArrayRef(55,array1)->next->next->value);
-    printf("%d\n",ucharListPArrayRef(55,array1)->next->next->next->value);
-    printf("%d\n",ucharListPArrayRef(55,array1)->next->next->next->next->next);
-    printf("%d\n",ucharListPArrayRef(55,array1)->next->next->garbage->garbage->value);
-    printf("%d\n",ucharListPArrayRef(55,array1)->next->next->garbage->next->garbage->value);
-    printf("%d\n",ucharListPArrayRef(55,array1)->next->next->garbage->next->next->garbage->value);
-    printf("%d\n",ucharListPArrayRef(55,array1)->next->next->garbage->next->next->next->garbage->value);
-    ucharP array=ucharArrayNew(1024);
-    ucharArraySet(55,222,array);
-    printf("\n%d\n",ucharArrayRef(55,array));
-    ucharGarbageListP x=NULL;
-    ulongListP y=NULL;
     ucharListP list=ucharListNew();
-    list=ucharListValuesPush(ucharListNew(),list);
+    ucharListP sublist=ucharListNew();
+    printf("\n%dlist%dlist\n",list->garbage,list->garbage->next);
+    printf("\n%dsub%dsub\n",sublist->garbage,sublist->garbage->next);
+    sublist=ucharListValuePush(1,sublist);
+    printf("\n%dsub%dsub%dsub\n",sublist->garbage,sublist->garbage->next,sublist->garbage->next->next);
+    list=ucharListValuesPush(sublist,list);
+    printf("\n%dlist%dlist%dlist%dlist%dlist\n",list->garbage,list->garbage->next,list->garbage->next->next,list->garbage->next->next->next,list->garbage->next->next->next->next);
     list=ucharListValuePush(222,list);
+    printf("\n%dlist%dlist%dlist%dlist%dlist%dlist\n",list->garbage,list->garbage->next,list->garbage->next->next,list->garbage->next->next->next,list->garbage->next->next->next->next,list->garbage->next->next->next->next->next);
     list=ucharListValuesPush(ucharListValuePush(111,ucharListNew()),list);
-    printf("\n%d\n",list->values->value);
+    printf("\n%dlist%dlist%dlist%dlist%dlist%dlist%dlist%dlist%dlist\n",list->garbage,list->garbage->next,list->garbage->next->next,list->garbage->next->next->next,list->garbage->next->next->next->next,list->garbage->next->next->next->next->next,list->garbage->next->next->next->next->next->next,list->garbage->next->next->next->next->next->next->next,list->garbage->next->next->next->next->next->next->next->next);
   
-  printf("\n%d %d %d\n",list->garbage,list->next->garbage,list->next->next->garbage);
+printf("\n%d\n",list->next->next->values->next->garbage);
   
-  ucharListFree(list->next->next);
-  printf("\n%d\n",list->values->value);
+  ucharListFree(list->next->next->values->next);
  
 return 0;
 }
- 
- 
