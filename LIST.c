@@ -1,21 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
-typedef long double longdouble;
-typedef long long longlong;
+
 typedef unsigned char uchar;
-typedef unsigned int uint;
-typedef unsigned long ulong;
 typedef unsigned long long ulonglong;
-typedef unsigned short ushort;
 
 #include "MACRO.h"
  
-DEFINE_ZED_TYPE(char)
 DEFINE_ZED_TYPE(uchar)
-DEFINE_ZED_TYPE(int)
-DEFINE_ZED_TYPE(uint)
-DEFINE_ZED_TYPE(long)
-DEFINE_ZED_TYPE(ulong)
+DEFINE_ZED_TYPE(ulonglong)
  
 int main(){
     ucharListP list=ucharListNew();
