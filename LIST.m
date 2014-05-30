@@ -8,10 +8,14 @@ typedef unsigned long long ulonglong;
  
 DEFINE_ZED_TYPE(uchar)
 DEFINE_ZED_TYPE(ulonglong)
+  
+typedef uchar (*ucharUcharP)(uchar);
+  
+static ucharListP ucharListShare(ucharListP list){if(ucharListAssertNull(list)){return list;}else{return ucharListShare(ucharListPop(list));}}
 
 static ucharListP ucharListReverse1(ucharListP list,ucharListP stack){if(ucharListAssertNull(list)) {return stack;}else if(ucharListAssertValues(list)){return ucharListReverse1(ucharListPop(list),ucharListValuesPush(ucharListValuesTop(list),stack));}else{return ucharListReverse1(ucharListPop(list),ucharListValuePush(ucharListValueTop(list),stack));}}
 
-static ucharListP ucharListReverse(ucharListP list){return ucharListReverse1(list,ucharListNew());}
+static ucharListP ucharListReverse(ucharListP list){return ucharListReverse1(list,ucharListShare(list));}
  
 int main(){
     ucharListP list=ucharListNew();
