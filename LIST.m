@@ -1,35 +1,21 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include<stdio.h>
+#include<stdlib.h>
+
+#define DEFINE_ZED_TYPE(type_) typedef type_ ZED##type_;typedef type_ * type_##P;typedef type_##P ZED##type_##P;static type_##P type_##ArrayNew(ulonglong size){return malloc(size*sizeof(type_));}static type_ type_##ArrayRef(ulonglong index,type_##P array){return array[index-1];}static type_##P type_##ArraySet(ulonglong index,type_ value,type_##P array){array[index-1]=value;return array;}
 
 typedef unsigned char uchar;
 typedef unsigned long long ulonglong;
-
-#include "MACRO.h"
- 
 DEFINE_ZED_TYPE(uchar)
 DEFINE_ZED_TYPE(ulonglong)
-  
-typedef uchar (*ucharUcharP)(uchar);
-  
-static ucharListP ucharListShare(ucharListP list){if(ucharListAssertNull(list)){return list;}else{return ucharListShare(ucharListPop(list));}}
 
-static ucharListP ucharListReverse1(ucharListP list,ucharListP stack){if(ucharListAssertNull(list)) {return stack;}else if(ucharListAssertValues(list)){return ucharListReverse1(ucharListPop(list),ucharListValuesPush(ucharListValuesTop(list),stack));}else{return ucharListReverse1(ucharListPop(list),ucharListValuePush(ucharListValueTop(list),stack));}}
+ucharP newList(){return ucharArraySet(3,')',ucharArraySet(2,'0',ucharArraySet(1,'(',ucharArrayNew(3))));}
 
-static ucharListP ucharListReverse(ucharListP list){return ucharListReverse1(list,ucharListShare(list));}
- 
+void test(ucharP x){printf("\n%d\n",sizeof(x));}
+
 int main(){
-    ucharListP list=ucharListNew();
-    list=ucharListValuePush(1,list);
-    list=ucharListValuePush(2,list);
-    list=ucharListValuePush(3,list);
-    list=ucharListValuePush(4,list);
-    //list=ucharListPop(list);
-    //list=ucharListPop(list);
-    //list=ucharListPop(list);
-    printf("\n%d",ucharListValueTop(list));
-    list=ucharListReverse(list);
-    printf("\n%d",ucharListValueTop(list));
-    ucharListFree(list);
- 
+ucharP list=newList();
+printf("\n%c%c%c\n",list[0],list[1],list[2]);
+test(list);
+
 return 0;
 }
