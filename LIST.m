@@ -34,25 +34,30 @@ void displayNumber1(ulonglong index,ulonglong end,ucharP list){if(index<end){pri
 
 void displayNumber(ucharP list){ulonglong ext=extent(list);ulonglong start=selfExtent(ext);ulonglong end=start+ext;displayNumber1(start,end,list);}
 
+ulonglong lengthString1(char* string,ulonglong index){if(string[index]==0){return index;}else{return lengthString1(string,index+1);}}
+
+ulonglong lengthString(char* string){return lengthString1(string,0);}
+
+char* reverseString(char* str){ulonglong i;ulonglong j=lengthString(str)-1;ulonglong k=j/2;char temp;for(i=0;i<=k;i++){temp=str[j];str[j]=str[i];str[i]=temp;j--;}return str;}
+
+char* copyString1(ulonglong index,char* str1,char* str2){if(str1[index]==0){str2[index]=0;return str2;}else{str2[index]=str1[index];return copyString1(index+1,str1,str2);}}
+
+char* copyString(char* str){char* copy=(char*)malloc((1+lengthString(str))*sizeof(char));return copyString1(0,str,copy);}
+
+ucharP newNumber1(ulonglong index,char* string,ucharP number){if(string[index]==NULL){return number;}else{return newNumber1(index+1,string,extend((uchar)string[index],number));}}
+
+ucharP newNumber(char* string){ucharP number=newList();return newNumber1(0,reverseString(copyString(string)),number);}
+
 int main(){
 
-ucharP list=newList();
-list=extend('1',list);
-list=extend('2',list);
-list=extend('3',list);
-list=extend('4',list);
-list=extend('5',list);
-list=extend('1',list);
-list=extend('2',list);
-list=extend('3',list);
-list=extend('4',list);
-list=extend('5',list);
-ucharP list2=copy(list);
+ucharP number1=newNumber("1234512345123451234512345123451234512345123451234512345");
+ucharP number2=copy(number1);
 
-displayNumber(list);
-free(list);
+displayNumber(number1);
+free(number1);
 printf("\n");
-displayNumber(list2);
+displayNumber(number2);
+free(number2);
 
 return 0;
 }
