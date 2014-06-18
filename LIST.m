@@ -10,23 +10,15 @@ DEFINE_ZED_TYPE(ulonglong)
 typedef uchar u;
 typedef ucharP p;
 
-p n1(){return ucharArraySet(3,')',ucharArraySet(2,'0',ucharArraySet(1,'(',ucharArrayNew(3))));}
+ulonglong extent1(ulonglong character){return character-'0';}
 
-ulonglong extent2(ulonglong character){return character-'0';}
+ulonglong extent2(ulonglong index,p list,ulonglong value){if(list[index]==')'){return value;}else{return extent2(index+1,list,extent1(list[index])+value*10);}}
 
-ulonglong extent1(ulonglong index,p list,ulonglong value){if(list[index]==')'){return value;}else{return extent1(index+1,list,extent2(list[index])+value*10);}}
-
-ulonglong extent(p list){return extent1(1,list,0);}
+ulonglong extent(p list){return extent2(1,list,0);}
 
 ulonglong selfExtent1(ulonglong extent,ulonglong length,ulonglong magnitude){if(extent<magnitude){return length;}else{return selfExtent1(extent,length+1,magnitude*10);}}
 
 ulonglong selfExtent(ulonglong extent){return selfExtent1(extent,3,10);}
-
-void extend1(ulonglong length,ulonglong index,p temp){if(index>0){temp[index]=length%10+'0';extend1(length/10,index-1,temp);}}
-
-void extend2(ulonglong length,ulonglong listIndex,p list,ulonglong tempIndex,p temp){if(length>0){temp[tempIndex]=list[listIndex];extend2(length-1,listIndex+1,list,tempIndex+1,temp);}}
-
-p extend(u character,p list){ulonglong oldExtent=extent(list);ulonglong newExtent=oldExtent+1;ulonglong oldSelfExtent=selfExtent(oldExtent);ulonglong newSelfExtent=selfExtent(newExtent);p temp=(p)malloc((newSelfExtent+newExtent)*sizeof(u));temp[0]='(';extend1(newExtent,newSelfExtent-2,temp);temp[newSelfExtent-1]=')';temp[newSelfExtent]=character;extend2(oldExtent,oldSelfExtent,list,newSelfExtent+1,temp);free(list);return temp;}
 
 p copy1(p list,p temp,ulonglong length){if(length==0){return temp;}else{temp[length-1]=list[length-1];return copy1(list,temp,length-1);}}
 
@@ -50,9 +42,9 @@ char* stringCopy1(ulonglong index,char* str1,char* str2){if(str1[index]==0){str2
 
 char* stringCopy(char* str){char* copy=(char*)malloc((1+stringLength(str))*sizeof(char));return stringCopy1(0,str,copy);}
 
-p n2(ulonglong index,char* string,p number){if(string[index]==0){return number;}else{return n2(index+1,string,extend((u)string[index],number));}}
+p n1(char* string,p list,ulonglong left,ulonglong right,ulonglong extent){list[0]='(';list[left-1]=')';ulonglong i;for(i=left-2;i>0;--i){list[i]=(u)extent%10+'0';extent/=10;}for(i=left;i<right;++i){list[i]=(u)string[i-left];}return list;}
 
-p n(char* string){p number=n1();return n2(0,stringReverse(stringCopy(string)),number);}
+p n(char* string){ulonglong x=stringLength(string);ulonglong s=selfExtent(x);ulonglong t=s+x;return n1(string,ucharArrayNew(t),s,t,x);}
 
 p push1(p one,p two,p three,ulonglong left,ulonglong middle,ulonglong right,ulonglong total){three[0]='(';three[left-1]=')';ulonglong i;for(i=left-2;i>0;--i){three[i]=total%10+'0';total/=10;}for(i=left;i<middle;++i){three[i]=one[i-left];}for(i=middle;i<right;++i){three[i]=two[i-middle];}return three;}
 
