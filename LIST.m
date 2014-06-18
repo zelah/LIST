@@ -50,6 +50,10 @@ p push1(p one,p two,p three,ulonglong left,ulonglong middle,ulonglong right,ulon
 
 p push(p one,p two){ulonglong x1=extent(one);ulonglong x2=extent(two);ulonglong s1=selfExtent(x1);ulonglong s2=selfExtent(x2);ulonglong t1=s1+x1;ulonglong x3=t1+s2+x2;ulonglong s3=selfExtent(x3);ulonglong x4=s3+x3;return push1(one,two,ucharArrayNew(x4),s3,s3+t1,x4,x3);}
 
+p top(p list){ulonglong x=extent(list);ulonglong s=selfExtent(x);return copy(list+s);}
+
+p pop(p list){ulonglong x=extent(list);ulonglong s=selfExtent(x);ulonglong tx=extent(list+s);ulonglong ts=selfExtent(tx);return copy(list+s+ts+tx);}
+
 int main(){
 
 p number1=n("1234512345123451234512345123451234512345123451234512345");
@@ -72,7 +76,7 @@ displayLine(n("return square(L)number(R);"));
 line();
 p pair1=push(n("abc"),n("123"));
 p pair2=copy(pair1);
-displayLine(push(pair1,push(pair2,pair2)));
+displayLine(top(pop(push(pair1,push(pair2,pair2)))));
 
 return 0;
 }
