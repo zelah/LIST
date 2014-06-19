@@ -6,9 +6,11 @@
 typedef unsigned char uchar;
 typedef unsigned long long ulonglong;
 DEFINE_ZED_TYPE(uchar)
+DEFINE_ZED_TYPE(ucharP)
 DEFINE_ZED_TYPE(ulonglong)
 typedef uchar u;
 typedef ucharP p;
+typedef ucharPP pp;
 
 ulonglong extent1(ulonglong character){return character-'0';}
 
@@ -36,11 +38,11 @@ ulonglong stringLength1(char* string,ulonglong index){if(string[index]==0){retur
 
 ulonglong stringLength(char* string){return stringLength1(string,0);}
 
-char* stringReverse(char* str){ulonglong i;ulonglong j=stringLength(str)-1;ulonglong k=j/2;char temp;for(i=0;i<=k;i++){temp=str[j];str[j]=str[i];str[i]=temp;j--;}return str;}
+ulonglong garbageLength1(pp garbage,ulonglong index){if(garbage[index]==0){return index;}else{return garbageLength1(garbage,index+1);}}
 
-char* stringCopy1(ulonglong index,char* str1,char* str2){if(str1[index]==0){str2[index]=0;return str2;}else{str2[index]=str1[index];return stringCopy1(index+1,str1,str2);}}
+ulonglong garbageLength(pp garbage){return garbageLength1(garbage,0);}
 
-char* stringCopy(char* str){char* copy=(char*)malloc((1+stringLength(str))*sizeof(char));return stringCopy1(0,str,copy);}
+pp makeGarbageList(){pp garbage=ucharPArrayNew(1);garbage[0]=0;return garbage;}
 
 p n1(char* string,p list,ulonglong left,ulonglong right,ulonglong extent){list[0]='(';list[left-1]=')';ulonglong i;for(i=left-2;i>0;--i){list[i]=(u)extent%10+'0';extent/=10;}for(i=left;i<right;++i){list[i]=(u)string[i-left];}return list;}
 
@@ -77,6 +79,8 @@ line();
 p pair1=push(n("abc"),n("123"));
 p pair2=copy(pair1);
 displayLine(top(pop(push(pair1,push(pair2,pair2)))));
+
+printf("\n%llu\n",garbageLength(makeGarbageList()));
 
 return 0;
 }
