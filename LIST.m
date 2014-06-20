@@ -3,14 +3,13 @@
 
 #define DEFINE_ZED_TYPE(type_) typedef type_ ZED##type_;typedef type_ * type_##P;typedef type_##P ZED##type_##P;static type_##P type_##ArrayNew(ull size){return (type_##P)malloc(size*sizeof(type_));}static type_ type_##ArrayRef(ull index,type_##P array){return array[index-1];}static type_##P type_##ArraySet(ull index,type_ value,type_##P array){array[index-1]=value;return array;}
 
-typedef unsigned char uc;
+typedef unsigned char u;
 typedef unsigned long long ull;
-DEFINE_ZED_TYPE(uc)
-DEFINE_ZED_TYPE(ucP)
+DEFINE_ZED_TYPE(u)
+DEFINE_ZED_TYPE(uP)
 DEFINE_ZED_TYPE(ull)
-typedef uc u;
-typedef ucP p;
-typedef ucPP pp;
+typedef uP p;
+typedef uPP pp;
 
 ull extent1(ull character){return character-'0';}
 
@@ -42,15 +41,15 @@ ull garbageListLength1(pp garbage,ull index){if(garbage[index]==0){return index;
 
 ull garbageListLength(pp garbage){return garbageListLength1(garbage,0);}
 
-pp garbageListNew(){pp garbage=ucPArrayNew(1024);garbage=garbage+1023;garbage[0]=0;return garbage;}
+pp garbageListNew(){pp garbage=uPArrayNew(1024);garbage=garbage+1023;garbage[0]=0;return garbage;}
 
 p n1(char* string,p list,ull left,ull right,ull extent){list[0]='(';list[left-1]=')';ull i;for(i=left-2;i>0;--i){list[i]=(u)extent%10+'0';extent/=10;}for(i=left;i<right;++i){list[i]=(u)string[i-left];}return list;}
 
-p n(char* string){ull x=stringLength(string);ull s=selfExtent(x);ull t=s+x;return n1(string,ucArrayNew(t),s,t,x);}
+p n(char* string){ull x=stringLength(string);ull s=selfExtent(x);ull t=s+x;return n1(string,uArrayNew(t),s,t,x);}
 
 p push1(p one,p two,p three,ull left,ull middle,ull right,ull total){three[0]='(';three[left-1]=')';ull i;for(i=left-2;i>0;--i){three[i]=total%10+'0';total/=10;}for(i=left;i<middle;++i){three[i]=one[i-left];}for(i=middle;i<right;++i){three[i]=two[i-middle];}return three;}
 
-p push(p one,p two){ull x1=extent(one);ull x2=extent(two);ull s1=selfExtent(x1);ull s2=selfExtent(x2);ull t1=s1+x1;ull x3=t1+s2+x2;ull s3=selfExtent(x3);ull x4=s3+x3;return push1(one,two,ucArrayNew(x4),s3,s3+t1,x4,x3);}
+p push(p one,p two){ull x1=extent(one);ull x2=extent(two);ull s1=selfExtent(x1);ull s2=selfExtent(x2);ull t1=s1+x1;ull x3=t1+s2+x2;ull s3=selfExtent(x3);ull x4=s3+x3;return push1(one,two,uArrayNew(x4),s3,s3+t1,x4,x3);}
 
 p top(p list){ull x=extent(list);ull s=selfExtent(x);return copy(list+s);}
 
