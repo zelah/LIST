@@ -38,11 +38,11 @@ ulonglong stringLength1(char* string,ulonglong index){if(string[index]==0){retur
 
 ulonglong stringLength(char* string){return stringLength1(string,0);}
 
-ulonglong garbageLength1(pp garbage,ulonglong index){if(garbage[index]==0){return index;}else{return garbageLength1(garbage,index+1);}}
+ulonglong garbageListLength1(pp garbage,ulonglong index){if(garbage[index]==0){return index;}else{return garbageListLength1(garbage,index+1);}}
 
-ulonglong garbageLength(pp garbage){return garbageLength1(garbage,0);}
+ulonglong garbageListLength(pp garbage){return garbageListLength1(garbage,0);}
 
-pp makeGarbageList(){pp garbage=ucharPArrayNew(1);garbage[0]=0;return garbage;}
+pp garbageListNew(){pp garbage=ucharPArrayNew(1024);garbage=garbage+1023;garbage[0]=0;return garbage;}
 
 p n1(char* string,p list,ulonglong left,ulonglong right,ulonglong extent){list[0]='(';list[left-1]=')';ulonglong i;for(i=left-2;i>0;--i){list[i]=(u)extent%10+'0';extent/=10;}for(i=left;i<right;++i){list[i]=(u)string[i-left];}return list;}
 
@@ -80,7 +80,7 @@ p pair1=push(n("abc"),n("123"));
 p pair2=copy(pair1);
 displayLine(top(pop(push(pair1,push(pair2,pair2)))));
 
-printf("\n%llu\n",garbageLength(makeGarbageList()));
+printf("\n%llu\n",garbageListLength(garbageListNew()));
 
 return 0;
 }
