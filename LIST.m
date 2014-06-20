@@ -6,10 +6,9 @@
 typedef unsigned char u;
 typedef unsigned long long ull;
 DEFINE_ZED_TYPE(u)
-DEFINE_ZED_TYPE(uP)
 DEFINE_ZED_TYPE(ull)
 typedef uP p;
-typedef uPP pp;
+typedef ullP pp;
 
 ull extent1(ull character){return character-'0';}
 
@@ -37,11 +36,7 @@ ull stringLength1(char* string,ull index){if(string[index]==0){return index;}els
 
 ull stringLength(char* string){return stringLength1(string,0);}
 
-ull garbageListLength1(pp garbage,ull index){if(garbage[index]==0){return index;}else{return garbageListLength1(garbage,index+1);}}
-
-ull garbageListLength(pp garbage){return garbageListLength1(garbage,0);}
-
-pp garbageListNew(){pp garbage=uPArrayNew(1024);garbage=garbage+1023;garbage[0]=0;return garbage;}
+pp garbageListNew(){pp garbage=ullArrayNew(1024);garbage[1023]=(ull)garbage;return garbage+1023;}
 
 p n1(char* string,p list,ull left,ull right,ull extent){list[0]='(';list[left-1]=')';ull i;for(i=left-2;i>0;--i){list[i]=(u)extent%10+'0';extent/=10;}for(i=left;i<right;++i){list[i]=(u)string[i-left];}return list;}
 
@@ -78,8 +73,6 @@ line();
 p pair1=push(n("abc"),n("123"));
 p pair2=copy(pair1);
 displayLine(top(pop(push(pair1,push(pair2,pair2)))));
-
-printf("\n%llu\n",garbageListLength(garbageListNew()));
 
 return 0;
 }
