@@ -8,7 +8,6 @@ typedef unsigned long long ull;
 DEFINE_ZED_TYPE(u)
 DEFINE_ZED_TYPE(ull)
 typedef uP p;
-typedef ullP pp;
 
 ull extent1(ull character){return character-'0';}
 
@@ -36,7 +35,7 @@ ull stringLength1(char* string,ull index){if(string[index]==0){return index;}els
 
 ull stringLength(char* string){return stringLength1(string,0);}
 
-pp garbageListNew(){pp garbage=ullArrayNew(1024);garbage[1023]=(ull)garbage;return garbage+1023;}
+ullP garbageListNew(){ullP garbage=ullArrayNew(1024);garbage[1023]=0;return garbage+1023;}
 
 p n1(char* string,p list,ull left,ull right,ull extent){list[0]='(';list[left-1]=')';ull i;for(i=left-2;i>0;--i){list[i]=(u)extent%10+'0';extent/=10;}for(i=left;i<right;++i){list[i]=(u)string[i-left];}return list;}
 
