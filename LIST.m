@@ -44,9 +44,9 @@ u ullAssertLargePowerOfTwo(ull number){return ullAssertLargePowerOfTwo1(number,2
 
 pp garbageListNew(){pp garbage=uPArrayNew(1024);garbage[1023]=0;return garbage+1023;}
 
-pp garbageListExtend(p garbage,pp garbageList){if(ullAssertLargePowerOfTwo((ull)garbageList[0]+1)){pp temp=uPArrayNew(2*((ull)garbageList[0]+1));temp=(pp)((ull)temp+(ull)(garbageList[0]));temp[0]=garbageList[0]+1;temp[1]=garbage;ull i;ull right=(ull)garbageList[0]+1;for(i=2;i<right;++i){temp[i]=garbageList[i-1];}free(garbageList);return temp;}else{garbageList=garbageList-1;garbageList[0]=garbageList[1]+1;garbageList[1]=garbage;return garbageList;}}
-
 ull garbageListLength(pp garbageList){return (ull)garbageList[0];}
+
+pp garbageListExtend(p garbage,pp garbageList){ull i;ull count=0;ull length=garbageListLength(garbageList);for(i=1;i<length;++i){if(garbageList[i]==garbage){++count;}}if(count==0){if(ullAssertLargePowerOfTwo((ull)garbageList[0]+1)){pp temp=uPArrayNew(2*((ull)garbageList[0]+1));temp=(pp)((ull)temp+(ull)(garbageList[0]));temp[0]=garbageList[0]+1;temp[1]=garbage;ull right=(ull)garbageList[0]+1;for(i=2;i<right;++i){temp[i]=garbageList[i-1];}free(garbageList);return temp;}else{garbageList=garbageList-1;garbageList[0]=garbageList[1]+1;garbageList[1]=garbage;return garbageList;}}else{return garbageList;}}
 
 pp collect1(pp garbageList,ull t){if(t-1<(ull)garbageList[0]){return collect1(garbageList,t*2);}else{return garbageList-(t-1-garbageListLength(garbageList));}}
 
@@ -58,7 +58,7 @@ p n(char* string){ull x=stringLength(string);ull s=selfExtent(x);ull t=s+x;retur
 
 p push1(p one,p two,p three,ull left,ull middle,ull right,ull total){three[0]='(';three[left-1]=')';ull i;for(i=left-2;i>0;--i){three[i]=total%10+'0';total/=10;}for(i=left;i<middle;++i){three[i]=one[i-left];}for(i=middle;i<right;++i){three[i]=two[i-middle];}return three;}
 
-p push(p one,p two){ull x1=extent(one);ull x2=extent(two);ull s1=selfExtent(x1);ull s2=selfExtent(x2);ull t1=s1+x1;ull x3=t1+s2+x2;ull s3=selfExtent(x3);ull x4=s3+x3;garbageList=garbageListExtend(one,garbageList);if(one!=two){garbageList=garbageListExtend(two,garbageList);}return push1(one,two,uArrayNew(x4),s3,s3+t1,x4,x3);}
+p push(p one,p two){ull x1=extent(one);ull x2=extent(two);ull s1=selfExtent(x1);ull s2=selfExtent(x2);ull t1=s1+x1;ull x3=t1+s2+x2;ull s3=selfExtent(x3);ull x4=s3+x3;garbageList=garbageListExtend(one,garbageList);garbageList=garbageListExtend(two,garbageList);return push1(one,two,uArrayNew(x4),s3,s3+t1,x4,x3);}
 
 p top(p list){ull x=extent(list);ull s=selfExtent(x);return copy(list+s);}
 
@@ -87,6 +87,7 @@ displayLine(n("return square(L)number(R);"));
 line();
 p pair1=push(n("abc"),n("123"));
 p pair2=copy(pair1);
+p pair3=push(pair1,pair2);
 displayLine(top(pop(push(pair1,push(pair2,pair2)))));
 
 printf("\n%llu\n",garbageListLength(garbageList));
