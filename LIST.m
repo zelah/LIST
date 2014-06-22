@@ -6,9 +6,11 @@
 typedef unsigned char u;
 typedef unsigned long long ull;
 DEFINE_ZED_TYPE(u)
-DEFINE_ZED_TYPE(uP)
 typedef uP p;
-typedef uPP pp;
+union Garbage{ull length;p pointer;};
+typedef union Garbage g;
+DEFINE_ZED_TYPE(g)
+typedef gP pp;
 
 pp garbageList;
 
@@ -40,17 +42,15 @@ ull stringLength(char* string){return stringLength1(string,0);}
 
 u ullAssertLargePowerOfTwo1(ull number,ull t){if(t>number){return 0;}else if(t==number){return 1;}else{return ullAssertLargePowerOfTwo1(number,t*2);}}
 
-u ullAssertLargePowerOfTwo(ull number){return ullAssertLargePowerOfTwo1(number,2048);}
+u ullAssertLargePowerOfTwo(ull number){return ullAssertLargePowerOfTwo1(number,1024);}
 
-pp garbageListNew(){pp garbage=uPArrayNew(1024);garbage[1023]=0;return garbage+1023;}
+pp garbageListNew(){pp garbage=gArrayNew(1024);garbage[1023].length=0;return garbage+1023;}
 
-ull garbageListLength(pp garbageList){return (ull)garbageList[0];}
+pp garbageListExtend(p garbage,pp garbageList){ull i;ull count=0;ull length=garbageList[0].length;for(i=1;i<length;++i){if(garbageList[i].pointer==garbage){++count;}}if(count==0){if(ullAssertLargePowerOfTwo(garbageList[0].length+1)){pp temp=gArrayNew(2*(length+1));temp=temp+length;temp[0].length=length+1;temp[1].pointer=garbage;ull right=length+1;for(i=2;i<right;++i){temp[i].pointer=garbageList[i-1].pointer;}free(garbageList);return temp;}else{garbageList=garbageList-1;garbageList[0].length=length+1;garbageList[1].pointer=garbage;return garbageList;}}else{return garbageList;}}
 
-pp garbageListExtend(p garbage,pp garbageList){ull i;ull count=0;ull length=garbageListLength(garbageList);for(i=1;i<length;++i){if(garbageList[i]==garbage){++count;}}if(count==0){if(ullAssertLargePowerOfTwo((ull)garbageList[0]+1)){pp temp=uPArrayNew(2*((ull)garbageList[0]+1));temp=(pp)((ull)temp+(ull)(garbageList[0]));temp[0]=garbageList[0]+1;temp[1]=garbage;ull right=(ull)garbageList[0]+1;for(i=2;i<right;++i){temp[i]=garbageList[i-1];}free(garbageList);return temp;}else{garbageList=garbageList-1;garbageList[0]=garbageList[1]+1;garbageList[1]=garbage;return garbageList;}}else{return garbageList;}}
+pp collect1(pp garbageList,ull t){if(t-1<garbageList[0].length){return collect1(garbageList,t*2);}else{return garbageList-(t-1-garbageList[0].length);}}
 
-pp collect1(pp garbageList,ull t){if(t-1<(ull)garbageList[0]){return collect1(garbageList,t*2);}else{return garbageList-(t-1-garbageListLength(garbageList));}}
-
-void collect(){ull right=garbageListLength(garbageList);ull i;for(i=right;i>0;--i){free(garbageList[i]);}garbageList=collect1(garbageList,1024);free(garbageList);garbageList=garbageListNew();}
+void collect(){ull right=garbageList[0].length;ull i;for(i=right;i>0;--i){free(garbageList[i].pointer);}garbageList=collect1(garbageList,1024);free(garbageList);garbageList=garbageListNew();}
 
 p n1(char* string,p list,ull left,ull right,ull extent){list[0]='(';list[left-1]=')';ull i;for(i=left-2;i>0;--i){list[i]=(u)extent%10+'0';extent/=10;}for(i=left;i<right;++i){list[i]=(u)string[i-left];}return list;}
 
@@ -90,9 +90,9 @@ p pair2=copy(pair1);
 p pair3=push(pair1,pair2);
 displayLine(top(pop(push(pair1,push(pair2,pair2)))));
 
-printf("\n%llu\n",garbageListLength(garbageList));
+printf("\n%llu\n",garbageList[0].length);
 collect();
-printf("\n%llu\n",garbageListLength(garbageList));
+printf("\n%llu\n",garbageList[0].length);
 
 return 0;
 }
