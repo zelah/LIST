@@ -48,13 +48,17 @@ pp garbageListExtend(p garbage,pp garbageList){if(ullAssertLargePowerOfTwo((ull)
 
 ull garbageListLength(pp garbageList){return (ull)garbageList[0];}
 
+pp collect1(pp garbageList,ull t){if(t-1<(ull)garbageList[0]){return collect1(garbageList,t*2);}else{return garbageList-(t-1-garbageListLength(garbageList));}}
+
+void collect(){ull right=garbageListLength(garbageList);ull i;for(i=right;i>0;--i){free(garbageList[i]);}garbageList=collect1(garbageList,1024);free(garbageList);garbageList=garbageListNew();}
+
 p n1(char* string,p list,ull left,ull right,ull extent){list[0]='(';list[left-1]=')';ull i;for(i=left-2;i>0;--i){list[i]=(u)extent%10+'0';extent/=10;}for(i=left;i<right;++i){list[i]=(u)string[i-left];}return list;}
 
 p n(char* string){ull x=stringLength(string);ull s=selfExtent(x);ull t=s+x;return n1(string,uArrayNew(t),s,t,x);}
 
 p push1(p one,p two,p three,ull left,ull middle,ull right,ull total){three[0]='(';three[left-1]=')';ull i;for(i=left-2;i>0;--i){three[i]=total%10+'0';total/=10;}for(i=left;i<middle;++i){three[i]=one[i-left];}for(i=middle;i<right;++i){three[i]=two[i-middle];}return three;}
 
-p push(p one,p two){ull x1=extent(one);ull x2=extent(two);ull s1=selfExtent(x1);ull s2=selfExtent(x2);ull t1=s1+x1;ull x3=t1+s2+x2;ull s3=selfExtent(x3);ull x4=s3+x3;garbageList=garbageListExtend(one,garbageList);garbageList=garbageListExtend(two,garbageList);return push1(one,two,uArrayNew(x4),s3,s3+t1,x4,x3);}
+p push(p one,p two){ull x1=extent(one);ull x2=extent(two);ull s1=selfExtent(x1);ull s2=selfExtent(x2);ull t1=s1+x1;ull x3=t1+s2+x2;ull s3=selfExtent(x3);ull x4=s3+x3;garbageList=garbageListExtend(one,garbageList);if(one!=two){garbageList=garbageListExtend(two,garbageList);}return push1(one,two,uArrayNew(x4),s3,s3+t1,x4,x3);}
 
 p top(p list){ull x=extent(list);ull s=selfExtent(x);return copy(list+s);}
 
@@ -85,6 +89,8 @@ p pair1=push(n("abc"),n("123"));
 p pair2=copy(pair1);
 displayLine(top(pop(push(pair1,push(pair2,pair2)))));
 
+printf("\n%llu\n",garbageListLength(garbageList));
+collect();
 printf("\n%llu\n",garbageListLength(garbageList));
 
 return 0;
