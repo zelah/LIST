@@ -3,12 +3,11 @@
 
 #define DEFINE_ZED_TYPE(type_) typedef type_ ZED##type_;typedef type_ * type_##P;typedef type_##P ZED##type_##P;static type_##P type_##ArrayNew(ull size){return (type_##P)malloc(size*sizeof(type_));}static type_ type_##ArrayRef(ull index,type_##P array){return array[index-1];}static type_##P type_##ArraySet(ull index,type_ value,type_##P array){array[index-1]=value;return array;}
 
-typedef unsigned char u;
 typedef unsigned long long ull;
+typedef unsigned char u;
 DEFINE_ZED_TYPE(u)
 typedef uP p;
-union Garbage{ull length;p pointer;};
-typedef union Garbage g;
+typedef union{ull length;p pointer;}g;
 DEFINE_ZED_TYPE(g)
 typedef gP pp;
 
@@ -56,6 +55,10 @@ p n1(char* string,p list,ull left,ull right,ull extent){list[0]='(';list[left-1]
 
 p n(char* string){ull x=stringLength(string);ull s=selfExtent(x);ull t=s+x;return n1(string,uArrayNew(t),s,t,x);}
 
+p ap1(p one,p two,p three,ull s1,ull s2,ull left,ull middle,ull right,ull extent){ull i;three[0]='(';three[left-1]=')';for(i=left-2;i>0;--i){three[i]=extent%10+'0';extent=extent/10;}for(i=left;i<middle;++i){three[i]=one[i-left+s1];}for(i=middle;i<right;++i){three[i]=two[i-middle+s2];}return three;}
+
+p ap(p one,p two){ull x1=extent(one);ull x2=extent(two);ull x3=x1+x2;ull s1=selfExtent(x1);ull s2=selfExtent(x2);ull s3=selfExtent(x3);ull t=s3+x3;garbageList=garbageListExtend(one,garbageList);garbageList=garbageListExtend(two,garbageList);return ap1(one,two,uArrayNew(t),s1,s2,s3,s3+x1,t,x3);}
+
 p push1(p one,p two,p three,ull left,ull middle,ull right,ull total){three[0]='(';three[left-1]=')';ull i;for(i=left-2;i>0;--i){three[i]=total%10+'0';total/=10;}for(i=left;i<middle;++i){three[i]=one[i-left];}for(i=middle;i<right;++i){three[i]=two[i-middle];}return three;}
 
 p push(p one,p two){ull x1=extent(one);ull x2=extent(two);ull s1=selfExtent(x1);ull s2=selfExtent(x2);ull t1=s1+x1;ull x3=t1+s2+x2;ull s3=selfExtent(x3);ull x4=s3+x3;garbageList=garbageListExtend(one,garbageList);garbageList=garbageListExtend(two,garbageList);return push1(one,two,uArrayNew(x4),s3,s3+t1,x4,x3);}
@@ -76,19 +79,18 @@ displayLine(number2);
 free(number2);
 line();
 
-p word1=n("alphabet");
-p word2=copy(word1);
-free(word1);
-displayLine(word2);
-free(word2);
-line();
-
 displayLine(n("return square(L)number(R);"));
 line();
 p pair1=push(n("abc"),n("123"));
 p pair2=copy(pair1);
 p pair3=push(pair1,pair2);
+p pair4=push(pair2,pair3);
 displayLine(top(pop(push(pair1,push(pair2,pair2)))));
+line();
+
+p word1=n("Zelah");
+p word2=copy(word1);
+displayLine(ap(word1,word2));
 
 printf("\n%llu\n",garbageList[0].length);
 collect();
