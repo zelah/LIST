@@ -63,9 +63,9 @@ p push1(p one,p two,p three,ull left,ull middle,ull right,ull total){three[0]='(
 
 p push(p one,p two){ull x1=extent(one);ull x2=extent(two);ull s1=selfExtent(x1);ull s2=selfExtent(x2);ull t1=s1+x1;ull x3=t1+s2+x2;ull s3=selfExtent(x3);ull x4=s3+x3;garbageList=garbageListExtend(one,garbageList);garbageList=garbageListExtend(two,garbageList);return push1(one,two,uArrayNew(x4),s3,s3+t1,x4,x3);}
 
-p top(p list){ull x=extent(list);ull s=selfExtent(x);return copy(list+s);}
+p top(p list){ull x=extent(list);ull s=selfExtent(x);garbageList=garbageListExtend(list,garbageList);return copy(list+s);}
 
-p pop(p list){ull x=extent(list);ull s=selfExtent(x);ull tx=extent(list+s);ull ts=selfExtent(tx);return copy(list+s+ts+tx);}
+p pop(p list){ull x=extent(list);ull s=selfExtent(x);ull tx=extent(list+s);ull ts=selfExtent(tx);garbageList=garbageListExtend(list,garbageList);return copy(list+s+ts+tx);}
 
 int main(){
 garbageList=garbageListNew();
@@ -79,7 +79,7 @@ displayLine(number2);
 free(number2);
 line();
 
-displayLine(n("return square(L)number(R);"));
+displayLine(n("return square(number);"));
 line();
 p pair1=push(n("abc"),n("123"));
 p pair2=copy(pair1);
