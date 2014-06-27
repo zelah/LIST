@@ -47,7 +47,7 @@ u ullAssertLargePowerOfTwo(ull number){return ullAssertLargePowerOfTwo1(number,1
 
 pp garbageListNew(){pp garbage=gArrayNew(1024);garbage[1023].length=0;return garbage+1023;}
 
-pp garbageListExtend(p garbage,pp garbageList){printf(" %p\n",garbage);ull i;ull count=0;ull length=garbageList[0].length;for(i=1;i<length+1;++i){printf("  %p\n",garbageList[i].pointer);if(garbageList[i].pointer==garbage){++count;}}if(count==0){if(ullAssertLargePowerOfTwo(garbageList[0].length+1)){pp temp=gArrayNew(2*(length+1));temp=temp+length;temp[0].length=length+1;temp[1].pointer=garbage;ull right=length+1;for(i=2;i<right;++i){temp[i].pointer=garbageList[i-1].pointer;}free(garbageList);return temp;}else{garbageList=garbageList-1;garbageList[0].length=length+1;garbageList[1].pointer=garbage;return garbageList;}}else{return garbageList;}}
+pp garbageListExtend(p garbage,pp garbageList){ull i;ull count=0;ull length=garbageList[0].length;for(i=1;i<length+1;++i){if(garbageList[i].pointer==garbage){++count;}}if(count==0){if(ullAssertLargePowerOfTwo(garbageList[0].length+1)){pp temp=gArrayNew(2*(length+1));temp=temp+length;temp[0].length=length+1;temp[1].pointer=garbage;ull right=length+1;for(i=2;i<right;++i){temp[i].pointer=garbageList[i-1].pointer;}free(garbageList);return temp;}else{garbageList=garbageList-1;garbageList[0].length=length+1;garbageList[1].pointer=garbage;return garbageList;}}else{return garbageList;}}
 
 pp collect1(pp garbageList,ull t){if(t-1<garbageList[0].length){return collect1(garbageList,t*2);}else{return garbageList-(t-1-garbageList[0].length);}}
 
@@ -76,10 +76,7 @@ p pop(p list){ull x=extent(list);ull s=selfExtent(x);ull tx=extent(list+s);ull t
 int main(){
 garbageList=garbageListNew();
 
-p number1=n("999");
-p number2=copy(number1);
-displayLine(number1);
-displayLine(add(number2,number2));
+displayLine(add(n("0"),n("0")));
 line();
 
 printf("\n%llu\n",garbageList[0].length);
