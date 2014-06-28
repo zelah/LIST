@@ -61,7 +61,7 @@ p ap1(p one,p two,p three,ull s1,ull s2,ull left,ull middle,ull right,ull extent
 
 p ap(p one,p two){ull x1=extent(one);ull x2=extent(two);ull x3=x1+x2;ull s1=selfExtent(x1);ull s2=selfExtent(x2);ull s3=selfExtent(x3);ull t=s3+x3;garbageList=garbageListExtend(one,garbageList);garbageList=garbageListExtend(two,garbageList);return ap1(one,two,uArrayNew(t),s1,s2,s3,s3+x1,t,x3);}
 
-p add1(p one,p two,ull s1,ull t1,ull s2,ull t2,ull carry){if(t1<s1){if(carry){return ap(n("1"),one);}else{return one;}}else if(t2<s2){ull temp=one[t1];one[t1]=(temp-'0'+carry)%10+'0';return add1(one,two,s1,t1-1,s2,t2,(temp-'0'+carry)/10);}else{ull temp=one[t1];one[t1]=(temp-'0'+two[t2]-'0'+carry)%10+'0';return add1(one,two,s1,t1-1,s2,t2-1,(temp-'0'+two[t2]-'0'+carry)/10);}}
+p add1(p one,p two,ull s1,ull t1,ull s2,ull t2,ull carry){if(t1<s1){if(carry){return ap(n("1"),one);}else{return one;}}else if(t2<s2){ull temp=one[t1];one[t1]=(temp-'0'+carry)%10+'0';if((temp-'0'+carry)>9){return add1(one,two,s1,t1-1,s2,t2,1);}else{return one;}}else{ull temp=one[t1];one[t1]=(temp-'0'+two[t2]-'0'+carry)%10+'0';return add1(one,two,s1,t1-1,s2,t2-1,(temp-'0'+two[t2]-'0'+carry)/10);}}
 
 p add(p one,p two){ull x1=extent(one);ull x2=extent(two);ull x3=ullMax(x1,x2);ull s1=selfExtent(x1);ull s2=selfExtent(x2);ull t1=s1+x1;ull t2=s2+x2;garbageList=garbageListExtend(one,garbageList);garbageList=garbageListExtend(two,garbageList);if(x3==x1){return add1(copy(one),two,s1,t1-1,s2,t2-1,0);}else{return add1(copy(two),one,s2,t2-1,s1,t1-1,0);}}
 
@@ -76,7 +76,7 @@ p pop(p list){ull x=extent(list);ull s=selfExtent(x);ull tx=extent(list+s);ull t
 int main(){
 garbageList=garbageListNew();
 
-displayLine(add(n("0"),n("0")));
+displayLine(add(n("111999"),n("2")));
 line();
 
 printf("\n%llu\n",garbageList[0].length);
