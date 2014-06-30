@@ -65,7 +65,47 @@ p add1(p one,p two,ull s1,ull t1,ull s2,ull t2,ull carry){if(t1<s1){if(carry){re
 
 p add(p one,p two){ull x1=extent(one);ull x2=extent(two);ull x3=ullMax(x1,x2);ull s1=selfExtent(x1);ull s2=selfExtent(x2);ull t1=s1+x1;ull t2=s2+x2;garbageList=garbageListExtend(one,garbageList);garbageList=garbageListExtend(two,garbageList);if(x3==x1){return add1(copy(one),two,s1,t1-1,s2,t2-1,0);}else{return add1(copy(two),one,s2,t2-1,s1,t1-1,0);}}
 
-p sub1(p one,p two,ull s1,ull t1,ull s2,ull t2,ull borrow){if(t1<s1){return one;}else if(t2<s2){ull temp=one[t1];one[t1]=(temp-'0'+10-borrow)%10+'0';if((10+temp-'0'-borrow)>9){return one;}else{return sub1(one,two,s1,t1-1,s2,t2-1,1);}}else{ull temp=one[t1];one[t1]=(10+temp-two[t2]-borrow)%10+'0';if((10+temp-two[t2]-borrow)>9){return sub1(one,two,s1,t1-1,s2,t2-1,0);}else{return sub1(one,two,s1,t1-1,s2,t2-1,1);}}}
+p sub1(p one,p two,ull s1,ull t1,ull s2,ull t2,ull borrow)
+{
+  if(t1<s1)
+  {
+     return one;
+  }
+  if(t2<s2)
+  {
+    if(borrow)
+    {
+      if(one[t1]=='0')
+      {
+        one[t1]='9';
+        return sub1(one,two,s1,t1-1,s2,t2,1);
+      }
+      else
+      {
+        one[t1]-=1;
+        return sub1(one,two,s1,t1-1,s2,t2,0);
+      }
+    }
+    else
+    {
+      return one;
+    }
+  }
+  else
+  {
+    u assertFutureBorrow=(10+one[t1]-two[t2]-borrow)<10;
+    if(assertFutureBorrow)
+    {
+      one[t1]=10+one[t1]-two[t2]-borrow+'0';
+      return sub1(one,two,s1,t1-1,s2,t2-1,1);
+    }
+    else
+    {
+      one[t1]=one[t1]-two[t2]-borrow+'0';
+      return sub1(one,two,s1,t1-1,s2,t2-1,0);
+    }
+  }
+}
 
 p sub(p one,p two){ull x1=extent(one);ull x2=extent(two);ull s1=selfExtent(x1);ull s2=selfExtent(x2);ull t1=s1+x1;ull t2=s2+x2;garbageList=garbageListExtend(one,garbageList);garbageList=garbageListExtend(two,garbageList);return sub1(copy(one),two,s1,t1-1,s2,t2-1,0);}
 
@@ -84,6 +124,10 @@ printf("%d=",111999+2);
 displayLine(add(n("111999"),n("2")));
 printf("%d=",987654-6789);
 displayLine(sub(n("987654"),n("6789")));
+printf("%d=",91000-1);
+displayLine(sub(n("91000"),n("1")));
+printf("%d=",999999-999000);
+displayLine(sub(n("999999"),n("999000")));
 line();
 
 printf("\n%llu\n",garbageList[0].length);
