@@ -65,6 +65,10 @@ p add1(p one,p two,ull s1,ull t1,ull s2,ull t2,ull carry){if(t1<s1){if(carry){re
 
 p add(p one,p two){ull x1=extent(one);ull x2=extent(two);ull x3=ullMax(x1,x2);ull s1=selfExtent(x1);ull s2=selfExtent(x2);ull t1=s1+x1;ull t2=s2+x2;garbageList=garbageListExtend(one,garbageList);garbageList=garbageListExtend(two,garbageList);if(x3==x1){return add1(copy(one),two,s1,t1-1,s2,t2-1,0);}else{return add1(copy(two),one,s2,t2-1,s1,t1-1,0);}}
 
+p sub1(p one,p two,ull s1,ull t1,ull s2,ull t2,ull borrow){if(t1<s1){return one;}else if(t2<s2){ull temp=one[t1];one[t1]=(temp-'0'+10-borrow)%10+'0';if((10+temp-'0'-borrow)>9){return one;}else{return sub1(one,two,s1,t1-1,s2,t2-1,1);}}else{ull temp=one[t1];one[t1]=(10+temp-two[t2]-borrow)%10+'0';if((10+temp-two[t2]-borrow)>9){return sub1(one,two,s1,t1-1,s2,t2-1,0);}else{return sub1(one,two,s1,t1-1,s2,t2-1,1);}}}
+
+p sub(p one,p two){ull x1=extent(one);ull x2=extent(two);ull s1=selfExtent(x1);ull s2=selfExtent(x2);ull t1=s1+x1;ull t2=s2+x2;garbageList=garbageListExtend(one,garbageList);garbageList=garbageListExtend(two,garbageList);return sub1(copy(one),two,s1,t1-1,s2,t2-1,0);}
+
 p push1(p one,p two,p three,ull left,ull middle,ull right,ull total){three[0]='(';three[left-1]=')';ull i;for(i=left-2;i>0;--i){three[i]=total%10+'0';total/=10;}for(i=left;i<middle;++i){three[i]=one[i-left];}for(i=middle;i<right;++i){three[i]=two[i-middle];}return three;}
 
 p push(p one,p two){ull x1=extent(one);ull x2=extent(two);ull s1=selfExtent(x1);ull s2=selfExtent(x2);ull t1=s1+x1;ull x3=t1+s2+x2;ull s3=selfExtent(x3);ull x4=s3+x3;garbageList=garbageListExtend(one,garbageList);garbageList=garbageListExtend(two,garbageList);return push1(one,two,uArrayNew(x4),s3,s3+t1,x4,x3);}
@@ -76,7 +80,10 @@ p pop(p list){ull x=extent(list);ull s=selfExtent(x);ull tx=extent(list+s);ull t
 int main(){
 garbageList=garbageListNew();
 
+printf("%d=",111999+2);
 displayLine(add(n("111999"),n("2")));
+printf("%d=",987654-6789);
+displayLine(sub(n("987654"),n("6789")));
 line();
 
 printf("\n%llu\n",garbageList[0].length);
