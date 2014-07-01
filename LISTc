@@ -61,11 +61,11 @@ p ap1(p one,p two,p three,ull s1,ull s2,ull left,ull middle,ull right,ull extent
 
 p ap(p one,p two){ull x1=extent(one);ull x2=extent(two);ull x3=x1+x2;ull s1=selfExtent(x1);ull s2=selfExtent(x2);ull s3=selfExtent(x3);ull t=s3+x3;garbageList=garbageListExtend(one,garbageList);garbageList=garbageListExtend(two,garbageList);return ap1(one,two,uArrayNew(t),s1,s2,s3,s3+x1,t,x3);}
 
-p add1(p one,p two,ull s1,ull t1,ull s2,ull t2,ull carry){if(t1<s1){if(carry){return ap(n("1"),one);}else{return one;}}else if(t2<s2){ull temp=one[t1];one[t1]=(temp-'0'+carry)%10+'0';if((temp-'0'+carry)>9){return add1(one,two,s1,t1-1,s2,t2,1);}else{return one;}}else{ull temp=one[t1];one[t1]=(temp-'0'+two[t2]-'0'+carry)%10+'0';return add1(one,two,s1,t1-1,s2,t2-1,(temp-'0'+two[t2]-'0'+carry)/10);}}
+p ad1(p one,p two,ull s1,ull t1,ull s2,ull t2,ull carry){if(t1<s1){if(carry){return ap(n("1"),one);}else{return one;}}else if(t2<s2){ull temp=one[t1];one[t1]=(temp-'0'+carry)%10+'0';if((temp-'0'+carry)>9){return ad1(one,two,s1,t1-1,s2,t2,1);}else{return one;}}else{ull temp=one[t1];one[t1]=(temp-'0'+two[t2]-'0'+carry)%10+'0';return ad1(one,two,s1,t1-1,s2,t2-1,(temp-'0'+two[t2]-'0'+carry)/10);}}
 
-p add(p one,p two){ull x1=extent(one);ull x2=extent(two);ull x3=ullMax(x1,x2);ull s1=selfExtent(x1);ull s2=selfExtent(x2);ull t1=s1+x1;ull t2=s2+x2;garbageList=garbageListExtend(one,garbageList);garbageList=garbageListExtend(two,garbageList);if(x3==x1){return add1(copy(one),two,s1,t1-1,s2,t2-1,0);}else{return add1(copy(two),one,s2,t2-1,s1,t1-1,0);}}
+p ad(p one,p two){ull x1=extent(one);ull x2=extent(two);ull x3=ullMax(x1,x2);ull s1=selfExtent(x1);ull s2=selfExtent(x2);ull t1=s1+x1;ull t2=s2+x2;garbageList=garbageListExtend(one,garbageList);garbageList=garbageListExtend(two,garbageList);if(x3==x1){return ad1(copy(one),two,s1,t1-1,s2,t2-1,0);}else{return ad1(copy(two),one,s2,t2-1,s1,t1-1,0);}}
 
-p sub1(p one,p two,ull s1,ull t1,ull s2,ull t2,ull borrow)
+p su1(p one,p two,ull s1,ull t1,ull s2,ull t2,ull borrow)
 {
   if(t1<s1)
   {
@@ -78,12 +78,12 @@ p sub1(p one,p two,ull s1,ull t1,ull s2,ull t2,ull borrow)
       if(one[t1]=='0')
       {
         one[t1]='9';
-        return sub1(one,two,s1,t1-1,s2,t2,1);
+        return su1(one,two,s1,t1-1,s2,t2,1);
       }
       else
       {
         one[t1]-=1;
-        return sub1(one,two,s1,t1-1,s2,t2,0);
+        return su1(one,two,s1,t1-1,s2,t2,0);
       }
     }
     else
@@ -97,17 +97,17 @@ p sub1(p one,p two,ull s1,ull t1,ull s2,ull t2,ull borrow)
     if(assertFutureBorrow)
     {
       one[t1]=10+one[t1]-two[t2]-borrow+'0';
-      return sub1(one,two,s1,t1-1,s2,t2-1,1);
+      return su1(one,two,s1,t1-1,s2,t2-1,1);
     }
     else
     {
       one[t1]=one[t1]-two[t2]-borrow+'0';
-      return sub1(one,two,s1,t1-1,s2,t2-1,0);
+      return su1(one,two,s1,t1-1,s2,t2-1,0);
     }
   }
 }
 
-p sub(p one,p two){ull x1=extent(one);ull x2=extent(two);ull s1=selfExtent(x1);ull s2=selfExtent(x2);ull t1=s1+x1;ull t2=s2+x2;garbageList=garbageListExtend(one,garbageList);garbageList=garbageListExtend(two,garbageList);return sub1(copy(one),two,s1,t1-1,s2,t2-1,0);}
+p su(p one,p two){ull x1=extent(one);ull x2=extent(two);ull s1=selfExtent(x1);ull s2=selfExtent(x2);ull t1=s1+x1;ull t2=s2+x2;garbageList=garbageListExtend(one,garbageList);garbageList=garbageListExtend(two,garbageList);return su1(copy(one),two,s1,t1-1,s2,t2-1,0);}
 
 p push1(p one,p two,p three,ull left,ull middle,ull right,ull total){three[0]='(';three[left-1]=')';ull i;for(i=left-2;i>0;--i){three[i]=total%10+'0';total/=10;}for(i=left;i<middle;++i){three[i]=one[i-left];}for(i=middle;i<right;++i){three[i]=two[i-middle];}return three;}
 
@@ -121,13 +121,15 @@ int main(){
 garbageList=garbageListNew();
 
 printf("%d=",111999+2);
-displayLine(add(n("111999"),n("2")));
+displayLine(ad(n("111999"),n("2")));
 printf("%d=",987654-6789);
-displayLine(sub(n("987654"),n("6789")));
+displayLine(su(n("987654"),n("6789")));
 printf("%d=",91000-1);
-displayLine(sub(n("91000"),n("1")));
+displayLine(su(n("91000"),n("1")));
 printf("%d=",999999-999000);
-displayLine(sub(n("999999"),n("999000")));
+displayLine(su(n("999999"),n("999000")));
+printf("%d=",999-999);
+displayLine(su(n("999"),n("999")));
 line();
 
 printf("\n%llu\n",garbageList[0].length);
