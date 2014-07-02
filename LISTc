@@ -67,47 +67,9 @@ p ad(p one,p two){ull x1=extent(one);ull x2=extent(two);ull x3=ullMax(x1,x2);ull
  
 p su1(p one,p two,ull s1,ull t1,ull s2,ull t2,ull borrow){if(t1<s1){return one;}else if(t2<s2){if(borrow){if(one[t1]=='0'){one[t1]='9';return su1(one,two,s1,t1-1,s2,t2,1);}else{one[t1]-=1;return su1(one,two,s1,t1-1,s2,t2,0);}}else{return one;}}else{u futureBorrow=(10+one[t1]-two[t2]-borrow)<10;if(futureBorrow){one[t1]=10+one[t1]-two[t2]-borrow+'0';return su1(one,two,s1,t1-1,s2,t2-1,1);}else{one[t1]=one[t1]-two[t2]-borrow+'0';return su1(one,two,s1,t1-1,s2,t2-1,0);}}}
  
-void su2(p list,ull ext,ull index)
-{
-  ull i;
-  for(i=index;i>0;--i)
-  {
-    list[i]=ext%10+'0';
-    ext/=10;
-  }
-}
+void su2(p list,ull ext,ull index){ull i;for(i=index;i>0;--i){list[i]=ext%10+'0';ext/=10;}}
  
-p su3(p list)
-{
-  ull x=extent(list);
-  ull s=selfExtent(x);
-  if(list[s]=='0')
-  {
-    ull t=s+x;
-    while(s<t-1&&list[s]=='0')
-    {
-      ++s;
-    }
-    ull ext=t-s;
-    ull sel=selfExtent(ext);
-    garbageList=garbageListExtend(list,garbageList);
-    p temp=uArrayNew(sel+ext);
-    temp[0]='(';
-    temp[sel-1]=')';
-    su2(temp,ext,sel-2);
-    ull i;
-    for(i=sel;i<t;++i)
-    {
-      temp[i]=list[s];
-      ++s;
-    }
-    return temp;
-  }
-  else
-  {
-    return list;
-  }
-}
+p su3(p list){ull x=extent(list);ull s=selfExtent(x);if(list[s]=='0'){ull t=s+x;while(s<t-1&&list[s]=='0'){++s;}ull ext=t-s;ull sel=selfExtent(ext);garbageList=garbageListExtend(list,garbageList);p temp=uArrayNew(sel+ext);temp[0]='(';temp[sel-1]=')';su2(temp,ext,sel-2);ull i;for(i=sel;i<t;++i){temp[i]=list[s];++s;}return temp;}else{return list;}}
  
 p su(p one,p two){ull x1=extent(one);ull x2=extent(two);ull s1=selfExtent(x1);ull s2=selfExtent(x2);ull t1=s1+x1;ull t2=s2+x2;garbageList=garbageListExtend(one,garbageList);garbageList=garbageListExtend(two,garbageList);return su3(su1(copy(one),two,s1,t1-1,s2,t2-1,0));}
  
@@ -132,6 +94,8 @@ printf("%d=",999999-999000);
 displayLine(su(n("999999"),n("999000")));
 printf("%d=",999-999);
 displayLine(su(n("999"),n("999")));
+printf("%d=",333-7777777);
+displayLine(su(n("333"),n("7777777")));
 line();
  
 printf("\n%llu\n",garbageList[0].length);
