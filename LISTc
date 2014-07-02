@@ -1,8 +1,8 @@
 #include<stdio.h>
 #include<stdlib.h>
-
+ 
 #define DEFINE_ZED_TYPE(type_) typedef type_ ZED##type_;typedef type_ * type_##P;typedef type_##P ZED##type_##P;static type_##P type_##ArrayNew(ull size){return (type_##P)malloc(size*sizeof(type_));}static type_ type_##ArrayRef(ull index,type_##P array){return array[index-1];}static type_##P type_##ArraySet(ull index,type_ value,type_##P array){array[index-1]=value;return array;}
-
+ 
 typedef unsigned long long ull;
 typedef unsigned char u;
 DEFINE_ZED_TYPE(u)
@@ -10,63 +10,63 @@ typedef uP p;
 typedef union{ull length;p pointer;}g;
 DEFINE_ZED_TYPE(g)
 typedef gP pp;
-
+ 
 pp garbageList;
-
+ 
 ull ullMax(ull one,ull two){if(one>two){return one;}else{return two;}}
-
+ 
 ull extent1(ull character){return character-'0';}
-
+ 
 ull extent2(ull index,p list,ull value){if(list[index]==')'){return value;}else{return extent2(index+1,list,extent1(list[index])+value*10);}}
-
+ 
 ull extent(p list){return extent2(1,list,0);}
-
+ 
 ull selfExtent1(ull extent,ull length,ull magnitude){if(extent<magnitude){return length;}else{return selfExtent1(extent,length+1,magnitude*10);}}
-
+ 
 ull selfExtent(ull extent){return selfExtent1(extent,3,10);}
-
+ 
 p copy1(p list,p temp,ull length){if(length==0){return temp;}else{temp[length-1]=list[length-1];return copy1(list,temp,length-1);}}
-
+ 
 p copy(p list){ull newExtent=extent(list);ull newSelfExtent=selfExtent(newExtent);ull length=newExtent+newSelfExtent;p temp=(p)malloc(length*sizeof(u));return copy1(list,temp,length);}
-
+ 
 void display1(ull index,ull end,p list){if(index<end){printf("%c",list[index]);display1(index+1,end,list);}}
-
+ 
 void display(p list){ull ext=extent(list);ull start=selfExtent(ext);ull end=start+ext;display1(start,end,list);}
-
+ 
 void line(){printf("\n");}
-
+ 
 void displayLine(p list){display(list);printf("\n");}
-
+ 
 ull stringLength1(char* string,ull index){if(string[index]==0){return index;}else{return stringLength1(string,index+1);}}
-
+ 
 ull stringLength(char* string){return stringLength1(string,0);}
-
+ 
 u ullAssertLargePowerOfTwo1(ull number,ull t){if(t>number){return 0;}else if(t==number){return 1;}else{return ullAssertLargePowerOfTwo1(number,t*2);}}
-
+ 
 u ullAssertLargePowerOfTwo(ull number){return ullAssertLargePowerOfTwo1(number,1024);}
-
+ 
 pp garbageListNew(){pp garbage=gArrayNew(1024);garbage[1023].length=0;return garbage+1023;}
-
+ 
 pp garbageListExtend(p garbage,pp garbageList){ull i;ull count=0;ull length=garbageList[0].length;for(i=1;i<length+1;++i){if(garbageList[i].pointer==garbage){++count;}}if(count==0){if(ullAssertLargePowerOfTwo(garbageList[0].length+1)){pp temp=gArrayNew(2*(length+1));temp=temp+length;temp[0].length=length+1;temp[1].pointer=garbage;ull right=length+1;for(i=2;i<right;++i){temp[i].pointer=garbageList[i-1].pointer;}free(garbageList);return temp;}else{garbageList=garbageList-1;garbageList[0].length=length+1;garbageList[1].pointer=garbage;return garbageList;}}else{return garbageList;}}
-
+ 
 pp collect1(pp garbageList,ull t){if(t-1<garbageList[0].length){return collect1(garbageList,t*2);}else{return garbageList-(t-1-garbageList[0].length);}}
-
+ 
 void collect(){ull right=garbageList[0].length;ull i;for(i=right;i>0;--i){free(garbageList[i].pointer);}garbageList=collect1(garbageList,1024);free(garbageList);garbageList=garbageListNew();}
-
+ 
 p n1(char* string,p list,ull left,ull right,ull extent){list[0]='(';list[left-1]=')';ull i;for(i=left-2;i>0;--i){list[i]=(u)extent%10+'0';extent/=10;}for(i=left;i<right;++i){list[i]=(u)string[i-left];}return list;}
-
+ 
 p n(char* string){ull x=stringLength(string);ull s=selfExtent(x);ull t=s+x;return n1(string,uArrayNew(t),s,t,x);}
-
+ 
 p ap1(p one,p two,p three,ull s1,ull s2,ull left,ull middle,ull right,ull extent){ull i;three[0]='(';three[left-1]=')';for(i=left-2;i>0;--i){three[i]=extent%10+'0';extent=extent/10;}for(i=left;i<middle;++i){three[i]=one[i-left+s1];}for(i=middle;i<right;++i){three[i]=two[i-middle+s2];}return three;}
-
+ 
 p ap(p one,p two){ull x1=extent(one);ull x2=extent(two);ull x3=x1+x2;ull s1=selfExtent(x1);ull s2=selfExtent(x2);ull s3=selfExtent(x3);ull t=s3+x3;garbageList=garbageListExtend(one,garbageList);garbageList=garbageListExtend(two,garbageList);return ap1(one,two,uArrayNew(t),s1,s2,s3,s3+x1,t,x3);}
-
+ 
 p ad1(p one,p two,ull s1,ull t1,ull s2,ull t2,ull carry){if(t1<s1){if(carry){return ap(n("1"),one);}else{return one;}}else if(t2<s2){ull temp=one[t1];one[t1]=(temp-'0'+carry)%10+'0';if((temp-'0'+carry)>9){return ad1(one,two,s1,t1-1,s2,t2,1);}else{return one;}}else{ull temp=one[t1];one[t1]=(temp-'0'+two[t2]-'0'+carry)%10+'0';return ad1(one,two,s1,t1-1,s2,t2-1,(temp-'0'+two[t2]-'0'+carry)/10);}}
-
+ 
 p ad(p one,p two){ull x1=extent(one);ull x2=extent(two);ull x3=ullMax(x1,x2);ull s1=selfExtent(x1);ull s2=selfExtent(x2);ull t1=s1+x1;ull t2=s2+x2;garbageList=garbageListExtend(one,garbageList);garbageList=garbageListExtend(two,garbageList);if(x3==x1){return ad1(copy(one),two,s1,t1-1,s2,t2-1,0);}else{return ad1(copy(two),one,s2,t2-1,s1,t1-1,0);}}
-
+ 
 p su1(p one,p two,ull s1,ull t1,ull s2,ull t2,ull borrow){if(t1<s1){return one;}else if(t2<s2){if(borrow){if(one[t1]=='0'){one[t1]='9';return su1(one,two,s1,t1-1,s2,t2,1);}else{one[t1]-=1;return su1(one,two,s1,t1-1,s2,t2,0);}}else{return one;}}else{u futureBorrow=(10+one[t1]-two[t2]-borrow)<10;if(futureBorrow){one[t1]=10+one[t1]-two[t2]-borrow+'0';return su1(one,two,s1,t1-1,s2,t2-1,1);}else{one[t1]=one[t1]-two[t2]-borrow+'0';return su1(one,two,s1,t1-1,s2,t2-1,0);}}}
-
+ 
 void su2(p list,ull ext,ull index)
 {
   ull i;
@@ -76,45 +76,52 @@ void su2(p list,ull ext,ull index)
     ext/=10;
   }
 }
-
+ 
 p su3(p list)
 {
   ull x=extent(list);
   ull s=selfExtent(x);
-  ull t=s+x;
-  while(s<t-1&&list[s]=='0')
+  if(list[s]=='0')
   {
-    ++s;
+    ull t=s+x;
+    while(s<t-1&&list[s]=='0')
+    {
+      ++s;
+    }
+    ull ext=t-s;
+    ull sel=selfExtent(ext);
+    garbageList=garbageListExtend(list,garbageList);
+    p temp=uArrayNew(sel+ext);
+    temp[0]='(';
+    temp[sel-1]=')';
+    su2(temp,ext,sel-2);
+    ull i;
+    for(i=sel;i<t;++i)
+    {
+      temp[i]=list[s];
+      ++s;
+    }
+    return temp;
   }
-  ull ext=t-s;
-  ull sel=selfExtent(ext);
-  garbageList=garbageListExtend(list,garbageList);
-  p temp=uArrayNew(sel+ext);
-  temp[0]='(';
-  temp[sel-1]=')';
-  su2(temp,ext,sel-2);
-  ull i;
-  for(i=sel;i<t;++i)
+  else
   {
-    temp[i]=list[s];
-    ++s;
+    return list;
   }
-  return temp;
 }
-
+ 
 p su(p one,p two){ull x1=extent(one);ull x2=extent(two);ull s1=selfExtent(x1);ull s2=selfExtent(x2);ull t1=s1+x1;ull t2=s2+x2;garbageList=garbageListExtend(one,garbageList);garbageList=garbageListExtend(two,garbageList);return su3(su1(copy(one),two,s1,t1-1,s2,t2-1,0));}
-
+ 
 p push1(p one,p two,p three,ull left,ull middle,ull right,ull total){three[0]='(';three[left-1]=')';ull i;for(i=left-2;i>0;--i){three[i]=total%10+'0';total/=10;}for(i=left;i<middle;++i){three[i]=one[i-left];}for(i=middle;i<right;++i){three[i]=two[i-middle];}return three;}
-
+ 
 p push(p one,p two){ull x1=extent(one);ull x2=extent(two);ull s1=selfExtent(x1);ull s2=selfExtent(x2);ull t1=s1+x1;ull x3=t1+s2+x2;ull s3=selfExtent(x3);ull x4=s3+x3;garbageList=garbageListExtend(one,garbageList);garbageList=garbageListExtend(two,garbageList);return push1(one,two,uArrayNew(x4),s3,s3+t1,x4,x3);}
-
+ 
 p top(p list){ull x=extent(list);ull s=selfExtent(x);garbageList=garbageListExtend(list,garbageList);return copy(list+s);}
-
+ 
 p pop(p list){ull x=extent(list);ull s=selfExtent(x);ull tx=extent(list+s);ull ts=selfExtent(tx);garbageList=garbageListExtend(list,garbageList);return copy(list+s+ts+tx);}
-
+ 
 int main(){
 garbageList=garbageListNew();
-
+ 
 printf("%d=",111999+2);
 displayLine(ad(n("111999"),n("2")));
 printf("%d=",987654-6789);
@@ -126,10 +133,10 @@ displayLine(su(n("999999"),n("999000")));
 printf("%d=",999-999);
 displayLine(su(n("999"),n("999")));
 line();
-
+ 
 printf("\n%llu\n",garbageList[0].length);
 collect();
 printf("\n%llu\n",garbageList[0].length);
-
+ 
 return 0;
 }
