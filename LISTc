@@ -73,6 +73,35 @@ p su3(p list){ull x=extent(list);ull s=selfExtent(x);if(list[s]=='0'){ull t=s+x;
  
 p su(p one,p two){ull x1=extent(one);ull x2=extent(two);ull s1=selfExtent(x1);ull s2=selfExtent(x2);ull t1=s1+x1;ull t2=s2+x2;garbageList=garbageListExtend(one,garbageList);garbageList=garbageListExtend(two,garbageList);return su3(su1(copy(one),two,s1,t1-1,s2,t2-1,0));}
  
+p lt(p one,p two)
+{
+  ull x1=extent(one);
+  ull x2=extent(two);
+  garbageList=garbageListExtend(one,garbageList);
+  garbageList=garbageListExtend(two,garbageList);
+  if(x1==x2)
+  {
+    ull s=selfExtent(x1);
+    ull t=s+x1;
+    while(one[s]==two[s]&&s<t)
+    {
+      ++s;
+    }
+    if(s<t)
+    {
+      return (one[s]<two[s])?n("#true"):n("#false");
+    }
+    else
+    {
+      return n("#false");
+    }
+  }
+  else
+  {
+    return (x1<x2)?n("#true"):n("#false");
+  }
+}
+
 p eq(p one,p two){ull x1=extent(one);ull x2=extent(two);if(x1==x2){ull s=selfExtent(x1);ull t=s+x1;while(s<t&&one[s]==two[s]){++s;}garbageList=garbageListExtend(one,garbageList);garbageList=garbageListExtend(two,garbageList);if(s==t){return n("#true");}}return n("#false");}
 
 p no(p boolean){garbageList=garbageListExtend(boolean,garbageList);return eq(boolean,n("#false"));}
@@ -106,7 +135,12 @@ displayLine(eq(n("789"),n("789")));
 displayLine(eq(n("happy"),n("happy")));
 displayLine(eq(n("dog"),n("cat")));
 displayLine(no(eq(n("dog"),n("cat"))));
-if(boolean(eq(n("dog"),n("cat")))){printf("elephant\n");}
+if(boolean(no(eq(n("dog"),n("cat"))))){printf("elephant\n");}
+displayLine(lt(n("123"),n("124")));
+displayLine(lt(n("123"),n("12345")));
+displayLine(lt(n("124"),n("123")));
+displayLine(lt(n("123"),n("123")));
+displayLine(lt(n("12345"),n("123")));
 line();
  
 printf("\n%llu\n",garbageList[0].length);
