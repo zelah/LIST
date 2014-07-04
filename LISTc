@@ -72,6 +72,8 @@ void su2(p list,ull ext,ull index){ull i;for(i=index;i>0;--i){list[i]=ext%10+'0'
 p su3(p list){ull x=extent(list);ull s=selfExtent(x);if(list[s]=='0'){ull t=s+x;while(s<t-1&&list[s]=='0'){++s;}ull ext=t-s;ull sel=selfExtent(ext);garbageList=garbageListExtend(list,garbageList);p temp=uArrayNew(sel+ext);temp[0]='(';temp[sel-1]=')';su2(temp,ext,sel-2);ull i;for(i=sel;i<t;++i){temp[i]=list[s];++s;}return temp;}else{return list;}}
  
 p su(p one,p two){ull x1=extent(one);ull x2=extent(two);ull s1=selfExtent(x1);ull s2=selfExtent(x2);ull t1=s1+x1;ull t2=s2+x2;garbageList=garbageListExtend(one,garbageList);garbageList=garbageListExtend(two,garbageList);return su3(su1(copy(one),two,s1,t1-1,s2,t2-1,0));}
+
+p al(p one,p two){ull x1=extent(one);ull x2=extent(two);ull s1=selfExtent(x1);ull s2=selfExtent(x2);ull t1=s1+x1;ull t2=s2+x2;while(one[s1]==two[s2]&&s1<t1&&s2<t2){++s1;++s2;}if(s1<t1&&s2<t2){return (one[s1]<two[s2])?n("#true"):n("#false");}else{return (x1<x2)?n("#true"):n("#false");}}
  
 p lt(p one,p two){ull x1=extent(one);ull x2=extent(two);garbageList=garbageListExtend(one,garbageList);garbageList=garbageListExtend(two,garbageList);if(x1==x2){ull s=selfExtent(x1);ull t=s+x1;while(one[s]==two[s]&&s<t){++s;}if(s<t){return (one[s]<two[s])?n("#true"):n("#false");}else{return n("#false");}}else{return (x1<x2)?n("#true"):n("#false");}}
 
@@ -111,11 +113,10 @@ displayLine(eq(n("happy"),n("happy")));
 displayLine(eq(n("dog"),n("cat")));
 displayLine(no(eq(n("dog"),n("cat"))));
 if(boolean(no(eq(n("dog"),n("cat"))))){printf("elephant\n");}
-displayLine(lt(n("123"),n("124")));
-displayLine(lt(n("123"),n("12345")));
-displayLine(lt(n("123"),n("123")));
-displayLine(lt(n("124"),n("123")));
-displayLine(lt(n("12345"),n("321")));
+displayLine(al(n("123"),n("124")));
+displayLine(al(n("321"),n("12345")));
+displayLine(al(n("12345"),n("321")));
+displayLine(al(n("123"),n("123")));
 line();
  
 printf("\n%llu\n",garbageList[0].length);
