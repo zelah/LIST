@@ -100,33 +100,8 @@ p pop(p list){ull x=extent(list);ull s=selfExtent(x);ull tx=extent(list+s);ull t
 int main(){
 garbageList=garbageListNew();
  
-printf("%d=",111999+2);
-displayLine(ad(n("111999"),n("2")));
-printf("%d=",987654-6789);
-displayLine(su(n("987654"),n("6789")));
-printf("%d=",91000-1);
-displayLine(su(n("91000"),n("1")));
-printf("%d=",999999-999000);
-displayLine(su(n("999999"),n("999000")));
-printf("%d=",999-999);
-displayLine(su(n("999"),n("999")));
-printf("%d=",333-7777777);
-displayLine(su(n("333"),n("7777777")));
-displayLine(eq(n("789"),n("789")));
-displayLine(eq(n("happy"),n("happy")));
-displayLine(eq(n("dog"),n("cat")));
-displayLine(no(eq(n("dog"),n("cat"))));
-if(boolean(no(eq(n("dog"),n("cat"))))){printf("elephant\n");}
-displayLine(al(n("123"),n("124")));
-displayLine(al(n("321"),n("12345")));
-displayLine(al(n("12345"),n("321")));
-displayLine(al(n("123"),n("123")));
-printf("goat\n");
-displayLine(a(al(n("zel"),n("zelah")),n("zel")));
-displayLine(a(al(n("zel"),n("zelah")),n("#false")));
-printf("pig\n");
-displayLine(o(n("zel"),n("zelah")));
-displayLine(o(n("#false"),n("zelah")));
+printf("%d=",999999999+999999999);
+displayLine(ad(n("999999999"),n("999999999")));
 line();
  
 printf("\n%llu\n",garbageList[0].length);
