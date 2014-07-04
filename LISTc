@@ -73,7 +73,7 @@ p su3(p list){ull x=extent(list);ull s=selfExtent(x);if(list[s]=='0'){ull t=s+x;
  
 p su(p one,p two){ull x1=extent(one);ull x2=extent(two);ull s1=selfExtent(x1);ull s2=selfExtent(x2);ull t1=s1+x1;ull t2=s2+x2;garbageList=garbageListExtend(one,garbageList);garbageList=garbageListExtend(two,garbageList);return su3(su1(copy(one),two,s1,t1-1,s2,t2-1,0));}
 
-p al(p one,p two){ull x1=extent(one);ull x2=extent(two);ull s1=selfExtent(x1);ull s2=selfExtent(x2);ull t1=s1+x1;ull t2=s2+x2;while(one[s1]==two[s2]&&s1<t1&&s2<t2){++s1;++s2;}if(s1<t1&&s2<t2){return (one[s1]<two[s2])?n("#true"):n("#false");}else{return (x1<x2)?n("#true"):n("#false");}}
+p al(p one,p two){ull x1=extent(one);ull x2=extent(two);ull s1=selfExtent(x1);ull s2=selfExtent(x2);ull t1=s1+x1;ull t2=s2+x2;while(one[s1]==two[s2]&&s1<t1&&s2<t2){++s1;++s2;}garbageList=garbageListExtend(one,garbageList);garbageList=garbageListExtend(two,garbageList);if(s1<t1&&s2<t2){return (one[s1]<two[s2])?n("#true"):n("#false");}else{return (x1<x2)?n("#true"):n("#false");}}
  
 p lt(p one,p two){ull x1=extent(one);ull x2=extent(two);garbageList=garbageListExtend(one,garbageList);garbageList=garbageListExtend(two,garbageList);if(x1==x2){ull s=selfExtent(x1);ull t=s+x1;while(one[s]==two[s]&&s<t){++s;}if(s<t){return (one[s]<two[s])?n("#true"):n("#false");}else{return n("#false");}}else{return (x1<x2)?n("#true"):n("#false");}}
 
