@@ -99,15 +99,35 @@ p top(p list){ull x=extent(list);ull s=selfExtent(x);garbageList=garbageListExte
  
 p pop(p list){ull x=extent(list);ull s=selfExtent(x);ull tx=extent(list+s);ull ts=selfExtent(tx);garbageList=garbageListExtend(list,garbageList);return copy(list+s+ts+tx);}
  
+p null(p list)
+{
+  garbageList=garbageListExtend(list,garbageList);
+  return (extent(list)==0)?n("#true"):n("#false");
+}
+
+p reverse1(p list,p collect)
+{
+  if(boolean(null(list)))
+  {
+    return collect;
+  }
+  else
+  {
+    return reverse1(pop(list),push(top(list),collect));
+  }
+}
+
+p reverse(p list)
+{
+  return reverse1(list,n(""));
+}
+
 int main(){
 garbageList=garbageListNew();
  
 printf("%d=",999999999+999999999);
 displayLine(ad(n("999999999"),n("999999999")));
-displayLine(x(n("#false"),n("#false")));
-displayLine(x(n("#false"),n("t")));
-displayLine(x(n("t"),n("#false")));
-displayLine(x(n("t1"),n("t2")));
+displayLine(reverse(push(n("c"),push(n("b"),push(n("a"),n(""))))));
 line();
  
 printf("\n%llu\n",garbageList[0].length);
