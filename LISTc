@@ -61,12 +61,28 @@ p mp1(p (*f)(p),p list,p collect){if(boolean(null(list))){return reverse(collect
 p mp(p (*f)(p),p list){return mp1(f,list,n(""));}
 p fi1(p (*f)(p),p list,p collect){if(boolean(null(list))){return reverse(collect);}else{p v=top(list);if(boolean(f(v))){return fi1(f,pop(list),push(v,collect));}else{return fi1(f,pop(list),collect);}}}
 p fi(p (*f)(p),p list){return fi1(f,list,n(""));}
+p rd1(p (*f)(p,p),p result,p list)
+{
+  if(boolean(null(list)))
+  {
+    return result;
+  }
+  else
+  {
+    return rd1(f,f(top(list),result),pop(list));
+  }
+}
+p rd(p (*f)(p,p),p fin,p list)
+{
+  return rd1(f,fin,reverse(list));
+}
 int main(){
 garbageList=garbageListNew();
 printf("%d=",999999999+999999999);
 displayLine(ad(n("999999999"),n("999999999")));
 displayLine(mp(&no,append(n("(6)#false(7)(1)b(0)"),n("(6)#false(7)(1)d(0)"))));
 displayLine(fi(&no,append(n("(6)#false(7)(1)b(0)"),n("(6)#false(7)(1)d(0)"))));
+displayLine(rd(&su,n("0"),push(n("10"),push(n("2"),push(n("2"),push(n("1"),n("")))))));
 line();
 printf("\n%llu\n",garbageList[0].length);
 collect();
