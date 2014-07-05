@@ -57,26 +57,16 @@ p reverse1(p list,p collect){if(boolean(null(list))){return collect;}else{return
 p reverse(p list){return reverse1(list,n(""));}
 p append1(p one,p two,p collect){if(boolean(null(one))){if(boolean(null(two))){return reverse(collect);}else{return append1(one,pop(two),push(top(two),collect));}}else{return append1(pop(one),two,push(top(one),collect));}}
 p append(p one,p two){return append1(one,two,n(""));}
-p mp1(p (*f)(p),p list,p collect)
-{
-  if(boolean(null(list)))
-  {
-    return reverse(collect);
-  }
-  else
-  {
-    return mp1(f,pop(list),push(f(top(list)),collect));
-  }
-}
-p mp(p (*f)(p),p list)
-{
-  return mp1(f,list,n(""));
-}
+p mp1(p (*f)(p),p list,p collect){if(boolean(null(list))){return reverse(collect);}else{return mp1(f,pop(list),push(f(top(list)),collect));}}
+p mp(p (*f)(p),p list){return mp1(f,list,n(""));}
+p fi1(p (*f)(p),p list,p collect){if(boolean(null(list))){return reverse(collect);}else{p v=top(list);if(boolean(f(v))){return fi1(f,pop(list),push(v,collect));}else{return fi1(f,pop(list),collect);}}}
+p fi(p (*f)(p),p list){return fi1(f,list,n(""));}
 int main(){
 garbageList=garbageListNew();
 printf("%d=",999999999+999999999);
 displayLine(ad(n("999999999"),n("999999999")));
 displayLine(mp(&no,append(n("(6)#false(7)(1)b(0)"),n("(6)#false(7)(1)d(0)"))));
+displayLine(fi(&no,append(n("(6)#false(7)(1)b(0)"),n("(6)#false(7)(1)d(0)"))));
 line();
 printf("\n%llu\n",garbageList[0].length);
 collect();
