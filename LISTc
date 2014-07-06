@@ -61,21 +61,8 @@ p mp1(p (*f)(p),p list,p collect){if(boolean(null(list))){return reverse(collect
 p mp(p (*f)(p),p list){return mp1(f,list,n(""));}
 p fi1(p (*f)(p),p list,p collect){if(boolean(null(list))){return reverse(collect);}else{p v=top(list);if(boolean(f(v))){return fi1(f,pop(list),push(v,collect));}else{return fi1(f,pop(list),collect);}}}
 p fi(p (*f)(p),p list){return fi1(f,list,n(""));}
-p rd1(p (*f)(p,p),p result,p list)
-{
-  if(boolean(null(list)))
-  {
-    return result;
-  }
-  else
-  {
-    return rd1(f,f(top(list),result),pop(list));
-  }
-}
-p rd(p (*f)(p,p),p fin,p list)
-{
-  return rd1(f,fin,reverse(list));
-}
+p rd1(p (*f)(p,p),p result,p list){if(boolean(null(list))){return result;}else{return rd1(f,f(top(list),result),pop(list));}}
+p rd(p (*f)(p,p),p fin,p list){return rd1(f,fin,reverse(list));}
 int main(){
 garbageList=garbageListNew();
 printf("%d=",999999999+999999999);
