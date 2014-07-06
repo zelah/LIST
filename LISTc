@@ -28,7 +28,8 @@ pp garbageListExtend(p garbage,pp garbageList){ull i;ull count=0;ull length=garb
 pp collect1(pp garbageList,ull t){if(t-1<garbageList[0].length){return collect1(garbageList,t*2);}else{return garbageList-(t-1-garbageList[0].length);}}
 void collect(){ull right=garbageList[0].length;ull i;for(i=right;i>0;--i){free(garbageList[i].pointer);}garbageList=collect1(garbageList,1024);free(garbageList);garbageList=garbageListNew();}
 p copy1(p list,p temp,ull length){if(length==0){return temp;}else{temp[length-1]=list[length-1];return copy1(list,temp,length-1);}}
-p copy(p list){ull newExtent=extent(list);ull newSelfExtent=selfExtent(newExtent);ull length=newExtent+newSelfExtent;p temp=(p)malloc(length*sizeof(u));return copy1(list,temp,length);}
+p copy(p list){ull x=extent(list);ull s=selfExtent(x);ull length=s+x;p temp=(p)malloc(length*sizeof(u));return copy1(list,temp,length);}
+p c(p list){ull x=extent(list);ull s=selfExtent(x);ull length=s+x;p temp=(p)malloc(length*sizeof(u));garbageList=garbageListExtend(list,garbageList);return copy1(list,temp,length);}
 p n1(char* string,p list,ull left,ull right,ull extent){list[0]='(';list[left-1]=')';ull i;for(i=left-2;i>0;--i){list[i]=(u)extent%10+'0';extent/=10;}for(i=left;i<right;++i){list[i]=(u)string[i-left];}return list;}
 p n(char* string){ull x=stringLength(string);ull s=selfExtent(x);ull t=s+x;return n1(string,uArrayNew(t),s,t,x);}
 p ap1(p one,p two,p three,ull s1,ull s2,ull left,ull middle,ull right,ull extent){ull i;three[0]='(';three[left-1]=')';for(i=left-2;i>0;--i){three[i]=extent%10+'0';extent=extent/10;}for(i=left;i<middle;++i){three[i]=one[i-left+s1];}for(i=middle;i<right;++i){three[i]=two[i-middle+s2];}return three;}
@@ -63,11 +64,14 @@ p fi1(p (*f)(p),p list,p collect){if(boolean(null(list))){return reverse(collect
 p fi(p (*f)(p),p list){return fi1(f,list,n(""));}
 p rd1(p (*f)(p,p),p result,p list){if(boolean(null(list))){return result;}else{return rd1(f,f(top(list),result),pop(list));}}
 p rd(p (*f)(p,p),p fin,p list){return rd1(f,fin,reverse(list));}
-p mu1(p one,p two,p try1,p try2,p res){collect();if(boolean(eq(n("0"),one))){return res;}else{p tr=ad(try1,try1);if(boolean(gt(tr,one))){return mu1(su(one,try1),two,n("1"),copy(two),ad(res,try2));}else{return mu1(copy(one),two,copy(tr),ad(try2,try2),res);}}}
-p mu(p one,p two){if(boolean(o(eq(n("0"),one),eq(n("0"),two)))){return n("0");}else{return mu1(copy(one),copy(two),n("1"),copy(two),n("0"));}}
+p mu1(p one,p two,p try1,p try2,p res){collect();if(boolean(eq(n("0"),one))){return res;}else{p tr=ad(try1,try1);if(boolean(gt(tr,one))){return mu1(su(one,try1),c(two),n("1"),c(two),ad(res,try2));}else{return mu1(c(one),c(two),c(tr),ad(try2,try2),c(res));}}}
+p mu(p one,p two){garbageList=garbageListExtend(one,garbageList);garbageList=garbageListExtend(two,garbageList);if(boolean(o(eq(n("0"),one),eq(n("0"),two)))){return n("0");}else{return mu1(c(one),c(two),n("1"),c(two),n("0"));}}
 int main(){
 garbageList=garbageListNew();
-displayLine(mu(n("999999999"),n("999999999999999999999999999")));
+p num=n("999999999");
+displayLine(ad(num,num));
+displayLine(su(num,num));
+displayLine(mu(num,num));
 line();
 printf("\n%llu\n",garbageList[0].length);
 collect();
