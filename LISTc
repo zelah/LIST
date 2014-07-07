@@ -33,13 +33,10 @@ p copy(p list){ull x=extent(list);ull s=selfExtent(x);ull length=s+x;p temp=(p)m
 p n1(char* string,p list,ull left,ull right,ull extent){list[0]='(';list[left-1]=')';ull i;for(i=left-2;i>0;--i){list[i]=(u)extent%10+'0';extent/=10;}for(i=left;i<right;++i){list[i]=(u)string[i-left];}return list;}
 p n(char* string){ull x=stringLength(string);ull s=selfExtent(x);ull t=s+x;return n1(string,uArrayNew(t),s,t,x);}
 p ap1(p one,p two,p three,ull s1,ull s2,ull left,ull middle,ull right,ull extent){ull i;three[0]='(';three[left-1]=')';for(i=left-2;i>0;--i){three[i]=extent%10+'0';extent=extent/10;}for(i=left;i<middle;++i){three[i]=one[i-left+s1];}for(i=middle;i<right;++i){three[i]=two[i-middle+s2];}return three;}
-p ap(p one,p two){ull x1=extent(one);ull x2=extent(two);ull x3=x1+x2;ull s1=selfExtent(x1);ull s2=selfExtent(x2);ull s3=selfExtent(x3);ull t=s3+x3;gl=glExtend(one,gl);gl=glExtend(two,gl);return ap1(one,two,uArrayNew(t),s1,s2,s3,s3+x1,t,x3);}
-p ad1(p one,p two,ull s1,ull t1,ull s2,ull t2,ull carry){if(t1<s1){if(carry){return ap(n("1"),one);}else{return one;}}else if(t2<s2){ull temp=one[t1];one[t1]=(temp-'0'+carry)%10+'0';if((temp-'0'+carry)>9){return ad1(one,two,s1,t1-1,s2,t2,1);}else{return one;}}else{ull temp=one[t1];one[t1]=(temp-'0'+two[t2]-'0'+carry)%10+'0';return ad1(one,two,s1,t1-1,s2,t2-1,(temp-'0'+two[t2]-'0'+carry)/10);}}
+p ap(p one,p two){ull x1=extent(one);ull x2=extent(two);ull x3=x1+x2;ull s1=selfExtent(x1);ull s2=selfExtent(x2);ull s3=selfExtent(x3);ull t=s3+x3;return ap1(c(one),c(two),uArrayNew(t),s1,s2,s3,s3+x1,t,x3);}
+p ad1(p one,p two,ull s1,ull t1,ull s2,ull t2,ull carry){if(t1<s1){if(carry){return ap(n("1"),c(one));}else{return one;}}else if(t2<s2){ull temp=one[t1];one[t1]=(temp-'0'+carry)%10+'0';if((temp-'0'+carry)>9){return ad1(c(one),c(two),s1,t1-1,s2,t2,1);}else{return one;}}else{ull temp=one[t1];one[t1]=(temp-'0'+two[t2]-'0'+carry)%10+'0';return ad1(c(one),c(two),s1,t1-1,s2,t2-1,(temp-'0'+two[t2]-'0'+carry)/10);}}
 p ad(p one,p two){ull x1=extent(one);ull x2=extent(two);ull x3=ullMax(x1,x2);ull s1=selfExtent(x1);ull s2=selfExtent(x2);ull t1=s1+x1;ull t2=s2+x2;if(x3==x1){return ad1(c(one),c(two),s1,t1-1,s2,t2-1,0);}else{return ad1(c(two),c(one),s2,t2-1,s1,t1-1,0);}}
-p su1(p one,p two,ull s1,ull t1,ull s2,ull t2,ull borrow){if(t1<s1){return one;}else if(t2<s2){if(borrow){if(one[t1]=='0'){one[t1]='9';return su1(one,two,s1,t1-1,s2,t2,1);}else{one[t1]-=1;return su1(one,two,s1,t1-1,s2,t2,0);}}else{return one;}}else{u futureBorrow=(10+one[t1]-two[t2]-borrow)<10;if(futureBorrow){one[t1]=10+one[t1]-two[t2]-borrow+'0';return su1(one,two,s1,t1-1,s2,t2-1,1);}else{one[t1]=one[t1]-two[t2]-borrow+'0';return su1(one,two,s1,t1-1,s2,t2-1,0);}}}
-void su2(p list,ull ext,ull index){ull i;for(i=index;i>0;--i){list[i]=ext%10+'0';ext/=10;}}
-p su3(p list){ull x=extent(list);ull s=selfExtent(x);if(list[s]=='0'){ull t=s+x;while(s<t-1&&list[s]=='0'){++s;}ull ext=t-s;ull sel=selfExtent(ext);gl=glExtend(list,gl);p temp=uArrayNew(sel+ext);temp[0]='(';temp[sel-1]=')';su2(temp,ext,sel-2);ull i;for(i=sel;i<t;++i){temp[i]=list[s];++s;}return temp;}else{return list;}}
-p su(p one,p two){ull x1=extent(one);ull x2=extent(two);ull s1=selfExtent(x1);ull s2=selfExtent(x2);ull t1=s1+x1;ull t2=s2+x2;return su3(su1(c(one),c(two),s1,t1-1,s2,t2-1,0));}
+
 p al(p one,p two){ull x1=extent(one);ull x2=extent(two);ull s1=selfExtent(x1);ull s2=selfExtent(x2);ull t1=s1+x1;ull t2=s2+x2;while(one[s1]==two[s2]&&s1<t1&&s2<t2){++s1;++s2;}gl=glExtend(one,gl);gl=glExtend(two,gl);if(s1<t1&&s2<t2){return (one[s1]<two[s2])?one:n("#false");}else{return (x1<x2)?one:n("#false");}}
 p lt(p one,p two){ull x1=extent(one);ull x2=extent(two);gl=glExtend(one,gl);gl=glExtend(two,gl);if(x1==x2){ull s=selfExtent(x1);ull t=s+x1;while(one[s]==two[s]&&s<t){++s;}if(s<t){return (one[s]<two[s])?one:n("#false");}else{return n("#false");}}else{return (x1<x2)?one:n("#false");}}
 p eq(p one,p two){ull x1=extent(one);ull x2=extent(two);if(x1==x2){ull s=selfExtent(x1);ull t=s+x1;while(s<t&&one[s]==two[s]){++s;}gl=glExtend(one,gl);gl=glExtend(two,gl);if(s==t){return one;}}return n("#false");}
@@ -80,9 +77,7 @@ displayLine(top(list));
 line();
 displayLine(ad(num,num));
 line();
-displayLine(su(num,num));
-line();
-displayLine(al(n("123"),num));
+displayLine(al(n("123"),n("999")));
 line();
 printf("\n%llu\n",gl[0].length);
 co();
