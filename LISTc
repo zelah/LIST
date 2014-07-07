@@ -80,8 +80,6 @@ displayLine(top(list));
 line();
 displayLine(ad(num,num));
 line();
-displayLine(su(num,num));
-line();
 displayLine(al(n("123"),num));
 line();
 printf("\n%llu\n",gl[0].length);
