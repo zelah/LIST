@@ -39,15 +39,16 @@ p ap(p one,p two){co();ull x1=extent(one);ull x2=extent(two);ull x3=x1+x2;ull s1
 p ad1(p one,p two,ull s1,ull t1,ull s2,ull t2,ull carry){co();if(t1<s1){if(carry){cc(one);cc(two);return ap(n("1"),c(one));}else{cc(one);cc(two);return c(one);}}else if(t2<s2){ull temp=one[t1];one[t1]=(temp-'0'+carry)%10+'0';if((temp-'0'+carry)>9){cc(one);cc(two);return ad1(c(one),c(two),s1,t1-1,s2,t2,1);}else{cc(one);cc(two);return c(one);}}else{ull temp=one[t1];one[t1]=(temp-'0'+two[t2]-'0'+carry)%10+'0';cc(one);cc(two);return ad1(c(one),c(two),s1,t1-1,s2,t2-1,(temp-'0'+two[t2]-'0'+carry)/10);}}
 p ad(p one,p two){co();ull x1=extent(one);ull x2=extent(two);ull x3=ullMax(x1,x2);ull s1=selfExtent(x1);ull s2=selfExtent(x2);ull t1=s1+x1;ull t2=s2+x2;if(x3==x1){cc(one);cc(two);return ad1(c(one),c(two),s1,t1-1,s2,t2-1,0);}else{cc(one);cc(two);return ad1(c(two),c(one),s2,t2-1,s1,t1-1,0);}}
 
-p al(p one,p two){ull x1=extent(one);ull x2=extent(two);ull s1=selfExtent(x1);ull s2=selfExtent(x2);ull t1=s1+x1;ull t2=s2+x2;while(one[s1]==two[s2]&&s1<t1&&s2<t2){++s1;++s2;}gl=glExtend(one,gl);gl=glExtend(two,gl);if(s1<t1&&s2<t2){return (one[s1]<two[s2])?one:n("#false");}else{return (x1<x2)?one:n("#false");}}
-p lt(p one,p two){ull x1=extent(one);ull x2=extent(two);gl=glExtend(one,gl);gl=glExtend(two,gl);if(x1==x2){ull s=selfExtent(x1);ull t=s+x1;while(one[s]==two[s]&&s<t){++s;}if(s<t){return (one[s]<two[s])?one:n("#false");}else{return n("#false");}}else{return (x1<x2)?one:n("#false");}}
-p eq(p one,p two){ull x1=extent(one);ull x2=extent(two);if(x1==x2){ull s=selfExtent(x1);ull t=s+x1;while(s<t&&one[s]==two[s]){++s;}gl=glExtend(one,gl);gl=glExtend(two,gl);if(s==t){return one;}}return n("#false");}
-p gt(p one,p two){ull x1=extent(one);ull x2=extent(two);gl=glExtend(one,gl);gl=glExtend(two,gl);if(x1==x2){ull s=selfExtent(x1);ull t=s+x1;while(one[s]==two[s]&&s<t){++s;}if(s<t){return (one[s]>two[s])?one:n("#false");}else{return n("#false");}}else{return (x1>x2)?one:n("#false");}}
-u boolean(p list){ull x=extent(list);return !(x==6&&list[3]=='#'&&list[4]=='f'&&list[5]=='a'&&list[6]=='l'&&list[7]=='s'&&list[8]=='e');}
-p no(p boolean){gl=glExtend(boolean,gl);return eq(boolean,n("#false"));}
-p a(p one,p two){if(boolean(one)){gl=glExtend(one,gl);return two;}else{gl=glExtend(two,gl);return one;}}
-p o(p one,p two){if(boolean(one)){gl=glExtend(two,gl);return one;}else{gl=glExtend(one,gl);return two;}}
-p x(p one,p two){gl=glExtend(one,gl);if(boolean(one)){return no(two);}else{return two;}}
+p al(p one,p two){ull x1=extent(one);ull x2=extent(two);ull s1=selfExtent(x1);ull s2=selfExtent(x2);ull t1=s1+x1;ull t2=s2+x2;while(one[s1]==two[s2]&&s1<t1&&s2<t2){++s1;++s2;}if(s1<t1&&s2<t2){cc(one);cc(two);return (one[s1]<two[s2])?c(one):n("#false");}else{cc(one);cc(two);return (x1<x2)?c(one):n("#false");}}
+p lt(p one,p two){ull x1=extent(one);ull x2=extent(two);if(x1==x2){ull s=selfExtent(x1);ull t=s+x1;while(one[s]==two[s]&&s<t){++s;}if(s<t){cc(one);cc(two);return (one[s]<two[s])?c(one):n("#false");}else{cc(one);cc(two);return n("#false");}}else{cc(one);cc(two);return (x1<x2)?c(one):n("#false");}}
+p eq(p one,p two){ull x1=extent(one);ull x2=extent(two);if(x1==x2){ull s=selfExtent(x1);ull t=s+x1;while(s<t&&one[s]==two[s]){++s;}if(s==t){cc(one);cc(two);return c(one);}}return n("#false");}
+p gt(p one,p two){ull x1=extent(one);ull x2=extent(two);if(x1==x2){ull s=selfExtent(x1);ull t=s+x1;while(one[s]==two[s]&&s<t){++s;}if(s<t){cc(one);cc(two);return (one[s]>two[s])?c(one):n("#false");}else{cc(one);cc(two);return n("#false");}}else{cc(one);cc(two);return (x1>x2)?c(one):n("#false");}}
+u boolean(p list){co();ull x=extent(list);cc(list);return !(x==6&&list[3]=='#'&&list[4]=='f'&&list[5]=='a'&&list[6]=='l'&&list[7]=='s'&&list[8]=='e');}
+p no(p boolean){cc(boolean);return eq(c(boolean),n("#false"));}
+p a(p one,p two){if(boolean(one)){cc(one);cc(two);return c(two);}else{cc(one);cc(two);return c(one);}}
+p o(p one,p two){if(boolean(one)){cc(one);cc(two);return c(one);}else{cc(one);cc(two);return c(two);}}
+p x(p one,p two){if(boolean(one)){cc(one);cc(two);return no(two);}else{cc(one);cc(two);return c(two);}}
+
 p push1(p one,p two,p three,ull left,ull middle,ull right,ull total){three[0]='(';three[left-1]=')';ull i;for(i=left-2;i>0;--i){three[i]=total%10+'0';total/=10;}for(i=left;i<middle;++i){three[i]=one[i-left];}for(i=middle;i<right;++i){three[i]=two[i-middle];}return three;}
 p push(p one,p two){ull x1=extent(one);ull x2=extent(two);ull s1=selfExtent(x1);ull s2=selfExtent(x2);ull t1=s1+x1;ull x3=t1+s2+x2;ull s3=selfExtent(x3);ull x4=s3+x3;gl=glExtend(one,gl);gl=glExtend(two,gl);return push1(one,two,uArrayNew(x4),s3,s3+t1,x4,x3);}
 p top(p list){ull x=extent(list);ull s=selfExtent(x);gl=glExtend(list,gl);return c(list+s);}
@@ -86,6 +87,8 @@ line();
 displayLine(top(c(list)));
 line();
 displayLine(ad(c(num),c(num)));
+line();
+displayLine(a(c(num),c(num)));
 line();
 
 line();
