@@ -33,7 +33,7 @@ p n1(char* string,p list,ull left,ull right,ull extent){list[0]='(';list[left-1]
 p n(char* string){ull x=stringLength(string);ull s=selfExtent(x);ull t=s+x;return n1(string,uArrayNew(t),s,t,x);}
 void c(p list){gl=glExtend(list,gl);}
 p cc1(p list,p temp,ull length){if(length==0){return temp;}else{temp[length-1]=list[length-1];return cc1(list,temp,length-1);}}
-p cc(p list){ull x=extent(list);ull s=selfExtent(x);ull length=s+x;p temp=(p)malloc(length*sizeof(u));gl=glExtend(list,gl);return cc1(list,temp,length);}
+p cc(p list){ull x=extent(list);ull s=selfExtent(x);ull length=s+x;p temp=(p)malloc(length*sizeof(u));c(list);return cc1(list,temp,length);}
 p copy(p list){ull x=extent(list);ull s=selfExtent(x);ull length=s+x;p temp=(p)malloc(length*sizeof(u));return cc1(list,temp,length);}
 p ap1(p one,p two,p three,ull s1,ull s2,ull left,ull middle,ull right,ull extent){co();ull i;three[0]='(';three[left-1]=')';for(i=left-2;i>0;--i){three[i]=extent%10+'0';extent=extent/10;}for(i=left;i<middle;++i){three[i]=one[i-left+s1];}for(i=middle;i<right;++i){three[i]=two[i-middle+s2];}c(one);c(two);c(three);return cc(three);}
 p ap(p one,p two){co();ull x1=extent(one);ull x2=extent(two);ull x3=x1+x2;ull s1=selfExtent(x1);ull s2=selfExtent(x2);ull s3=selfExtent(x3);ull t=s3+x3;c(one);c(two);return ap1(cc(one),cc(two),uArrayNew(t),s1,s2,s3,s3+x1,t,x3);}
@@ -66,20 +66,27 @@ p rd1(p (*f)(p,p),p result,p list){if(boolean(null(list))){return result;}else{r
 p rd(p (*f)(p,p),p fin,p list){return rd1(f,fin,reverse(list));}
 int main(){
 gl=glNew();
+co();
+co();
 p num=n("99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999");
+c(num);
+c(num);
+c(n("123"));
+c(num);
+c(num);
 displayLine(lt(num,num));
 displayLine(gt(num,num));
 displayLine(eq(num,num));
 displayLine(al(n("123"),n("999")));
 line();
-//displayLine(ap(num,num));
+displayLine(ap(copy(num),copy(num)));
 line();
 p list=push(num,n(""));
 displayLine(list);
 line();
 displayLine(top(list));
 line();
-//displayLine(ad(num,num));
+displayLine(ad(copy(num),copy(num)));
 line();
 printf("\n%llu\n",gl[0].length);
 co();
