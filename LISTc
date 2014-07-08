@@ -1,6 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
-#define DEFINE_ZED_TYPE(type_) typedef type_ ZED##type_;typedef type_ * type_##P;typedef type_##P ZED##type_##P;static type_##P type_##ArrayNew(ull size){return (type_##P)malloc(size*sizeof(type_));}static type_ type_##ArrayRef(ull index,type_##P array){return array[index-1];}static type_##P type_##ArraySet(ull index,type_ value,type_##P array){array[index-1]=value;return array;}
+#define DEFINE_ZED_TYPE(type_) typedef type_ ZED##type_;typedef type_ * type_##P;typedef type_##P ZED##type_##P;static type_##P type_##ArrayNew(ull size){return (type_##P)malloc(size*sizeof(type_));}
 typedef unsigned long long ull;
 typedef unsigned char u;
 DEFINE_ZED_TYPE(u)
