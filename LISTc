@@ -40,6 +40,11 @@ p ap(p one,p two){co();ull x1=extent(one);ull x2=extent(two);ull x3=x1+x2;ull s1
 p ad1(p one,p two,ull s1,ull t1,ull s2,ull t2,ull carry){co();if(t1<s1){if(carry){c(one);c(two);return ap(n("1"),cc(one));}else{c(one);c(two);return cc(one);}}else if(t2<s2){ull temp=one[t1];one[t1]=(temp-'0'+carry)%10+'0';if((temp-'0'+carry)>9){c(one);c(two);return ad1(cc(one),cc(two),s1,t1-1,s2,t2,1);}else{c(one);c(two);return cc(one);}}else{ull temp=one[t1];one[t1]=(temp-'0'+two[t2]-'0'+carry)%10+'0';c(one);c(two);return ad1(cc(one),cc(two),s1,t1-1,s2,t2-1,(temp-'0'+two[t2]-'0'+carry)/10);}}
 p ad(p one,p two){co();ull x1=extent(one);ull x2=extent(two);ull x3=ullMax(x1,x2);ull s1=selfExtent(x1);ull s2=selfExtent(x2);ull t1=s1+x1;ull t2=s2+x2;if(x3==x1){c(one);c(two);return ad1(cc(one),cc(two),s1,t1-1,s2,t2-1,0);}else{c(one);c(two);return ad1(cc(two),cc(one),s2,t2-1,s1,t1-1,0);}}
 
+p su1(p one,p two,ull s1,ull t1,ull s2,ull t2,ull borrow){co();if(t1<s1){c(one);c(two);return cc(one);}else if(t2<s2){if(borrow){if(one[t1]=='0'){one[t1]='9';c(one);c(two);return su1(cc(one),cc(two),s1,t1-1,s2,t2,1);}else{--one[t1];c(one),c(two);return su1(cc(one),cc(two),s1,t1-1,s2,t2,0);}}else{return cc(one);}}else{u futureBorrow=(10+one[t1]-two[t2]-borrow)<10;if(futureBorrow){one[t1]=10+one[t1]-two[t2]-borrow+'0';c(one);c(two);return su1(cc(one),cc(two),s1,t1-1,s2,t2-1,1);}else{one[t1]=one[t1]-two[t2]-borrow+'0';c(one);c(two);return su1(cc(one),cc(two),s1,t1-1,s2,t2-1,0);}}}
+void su2(p list,ull ext,ull index){ull i;for(i=index;i>0;--i){list[i]=ext%10+'0';ext/=10;}}
+p su3(p list){co();ull x=extent(list);ull s=selfExtent(x);if(list[s]=='0'){ull t=s+x;while(s<t-1&&list[s]=='0'){++s;}ull ext=t-s;ull sel=selfExtent(ext);p temp=uArrayNew(sel+ext);temp[0]='(';temp[sel-1]=')';su2(temp,ext,sel-2);ull i;for(i=sel;i<t;++i){temp[i]=list[s];++s;}c(list);return cc(temp);}else{c(list);return cc(list);}}
+p su(p one,p two){co();ull x1=extent(one);ull x2=extent(two);ull s1=selfExtent(x1);ull s2=selfExtent(x2);ull t1=s1+x1;ull t2=s2+x2;c(one);c(two);return su3(su1(cc(one),cc(two),s1,t1-1,s2,t2-1,0));}
+
 p al(p one,p two){ull x1=extent(one);ull x2=extent(two);ull s1=selfExtent(x1);ull s2=selfExtent(x2);ull t1=s1+x1;ull t2=s2+x2;while(one[s1]==two[s2]&&s1<t1&&s2<t2){++s1;++s2;}gl=glExtend(one,gl);gl=glExtend(two,gl);if(s1<t1&&s2<t2){return (one[s1]<two[s2])?one:n("#false");}else{return (x1<x2)?one:n("#false");}}
 p lt(p one,p two){ull x1=extent(one);ull x2=extent(two);gl=glExtend(one,gl);gl=glExtend(two,gl);if(x1==x2){ull s=selfExtent(x1);ull t=s+x1;while(one[s]==two[s]&&s<t){++s;}if(s<t){return (one[s]<two[s])?one:n("#false");}else{return n("#false");}}else{return (x1<x2)?one:n("#false");}}
 p eq(p one,p two){ull x1=extent(one);ull x2=extent(two);if(x1==x2){ull s=selfExtent(x1);ull t=s+x1;while(s<t&&one[s]==two[s]){++s;}gl=glExtend(one,gl);gl=glExtend(two,gl);if(s==t){return one;}}return n("#false");}
@@ -87,6 +92,8 @@ line();
 displayLine(top(list));
 line();
 displayLine(ad(copy(num),copy(num)));
+line();
+displayLine(su(copy(num),copy(num)));
 line();
 printf("\n%llu\n",gl[0].length);
 co();
