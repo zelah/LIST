@@ -44,10 +44,10 @@ p lt(p one,p two){ull x1=extent(one);ull x2=extent(two);if(x1==x2){ull s=selfExt
 p eq(p one,p two){ull x1=extent(one);ull x2=extent(two);if(x1==x2){ull s=selfExtent(x1);ull t=s+x1;while(s<t&&one[s]==two[s]){++s;}if(s==t){cc(one);cc(two);return c(one);}}return n("#false");}
 p gt(p one,p two){ull x1=extent(one);ull x2=extent(two);if(x1==x2){ull s=selfExtent(x1);ull t=s+x1;while(one[s]==two[s]&&s<t){++s;}if(s<t){cc(one);cc(two);return (one[s]>two[s])?c(one):n("#false");}else{cc(one);cc(two);return n("#false");}}else{cc(one);cc(two);return (x1>x2)?c(one):n("#false");}}
 u boolean(p list){co();ull x=extent(list);cc(list);return !(x==6&&list[3]=='#'&&list[4]=='f'&&list[5]=='a'&&list[6]=='l'&&list[7]=='s'&&list[8]=='e');}
-p no(p boolean){cc(boolean);return eq(c(boolean),n("#false"));}
+p no(p one){if(boolean(one)){cc(one);return n("#false");}else{cc(one);return n("#true");}}
 p a(p one,p two){if(boolean(one)){cc(one);cc(two);return c(two);}else{cc(one);cc(two);return c(one);}}
 p o(p one,p two){if(boolean(one)){cc(one);cc(two);return c(one);}else{cc(one);cc(two);return c(two);}}
-p x(p one,p two){if(boolean(one)){cc(one);cc(two);return no(two);}else{cc(one);cc(two);return c(two);}}
+p x(p one,p two){if(boolean(one)){cc(one);cc(two);return no(c(two));}else{cc(one);cc(two);return c(two);}}
 
 p push1(p one,p two,p three,ull left,ull middle,ull right,ull total){three[0]='(';three[left-1]=')';ull i;for(i=left-2;i>0;--i){three[i]=total%10+'0';total/=10;}for(i=left;i<middle;++i){three[i]=one[i-left];}for(i=middle;i<right;++i){three[i]=two[i-middle];}return three;}
 p push(p one,p two){ull x1=extent(one);ull x2=extent(two);ull s1=selfExtent(x1);ull s2=selfExtent(x2);ull t1=s1+x1;ull x3=t1+s2+x2;ull s3=selfExtent(x3);ull x4=s3+x3;gl=glExtend(one,gl);gl=glExtend(two,gl);return push1(one,two,uArrayNew(x4),s3,s3+t1,x4,x3);}
@@ -78,6 +78,7 @@ displayLine(lt(c(num),c(num)));
 displayLine(gt(c(num),c(num)));
 displayLine(eq(c(num),c(num)));
 displayLine(al(n("123"),n("999")));
+displayLine(al(n("#false"),n("#true")));
 line();
 displayLine(ap(c(num),c(num)));
 line();
@@ -88,9 +89,29 @@ displayLine(top(c(list)));
 line();
 displayLine(ad(c(num),c(num)));
 line();
-displayLine(a(c(num),c(num)));
+displayLine(a(n("#false"),n("#false")));
 line();
-
+displayLine(a(n("#false"),c(num)));
+line();
+displayLine(a(n("#true"),n("#false")));
+line();
+displayLine(a(n("#true"),c(num)));
+line();
+displayLine(o(n("#false"),n("#false")));
+line();
+displayLine(o(n("#false"),c(num)));
+line();
+displayLine(o(n("#true"),n("#false")));
+line();
+displayLine(o(n("#true"),c(num)));
+line();
+displayLine(x(n("#false"),n("#false")));
+line();
+displayLine(x(n("#false"),c(num)));
+line();
+displayLine(x(n("#true"),n("#false")));
+line();
+displayLine(x(n("#true"),c(num)));
 line();
 printf("\n%llu\n",gl[0].length);
 co();
