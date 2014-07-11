@@ -582,10 +582,65 @@ p x(p one,p two)
   }
 }
 
-p push1(p one,p two,p three,ull left,ull middle,ull right,ull total){co();three[0]='(';three[left-1]=')';ull i;for(i=left-2;i>0;--i){three[i]=total%10+'0';total/=10;}for(i=left;i<middle;++i){three[i]=one[i-left];}for(i=middle;i<right;++i){three[i]=two[i-middle];}cc(one);cc(two);cc(three);return c(three);}
-p push(p one,p two){co();ull x1=extent(one);ull x2=extent(two);ull s1=selfExtent(x1);ull s2=selfExtent(x2);ull t1=s1+x1;ull x3=t1+s2+x2;ull s3=selfExtent(x3);ull x4=s3+x3;cc(one);cc(two);return push1(c(one),c(two),uArrayNew(x4),s3,s3+t1,x4,x3);}
-p top(p list){co();ull x=extent(list);ull s=selfExtent(x);cc(list);return c(list+s);}
-p pop(p list){co();ull x=extent(list);ull s=selfExtent(x);ull tx=extent(list+s);ull ts=selfExtent(tx);cc(list);return c(list+s+ts+tx);}
+p push1(p one,p two,p three,ull left,ull middle,ull right,ull total)
+{
+  co();
+  three[0]='(';three[left-1]=')';
+  ull i;
+  for(i=left-2;i>0;--i)
+  {
+    three[i]=total%10+'0';
+    total/=10;
+  }
+  for(i=left;i<middle;++i)
+  {
+    three[i]=one[i-left];
+  }
+  for(i=middle;i<right;++i)
+  {
+    three[i]=two[i-middle];
+  }
+  cc(one);
+  cc(two);
+  cc(three);
+  return c(three);
+}
+
+p push(p one,p two)
+{
+  co();
+  ull x1=extent(one);
+  ull x2=extent(two);
+  ull s1=selfExtent(x1);
+  ull s2=selfExtent(x2);
+  ull t1=s1+x1;
+  ull x3=t1+s2+x2;
+  ull s3=selfExtent(x3);
+  ull x4=s3+x3;
+  cc(one);
+  cc(two);
+  return push1(c(one),c(two),uArrayNew(x4),s3,s3+t1,x4,x3);
+}
+
+p top(p list)
+{
+  co();
+  ull x=extent(list);
+  ull s=selfExtent(x);
+  cc(list);
+  return c(list+s);
+}
+
+p pop(p list)
+{
+  co();
+  ull x=extent(list);
+  ull s=selfExtent(x);
+  ull tx=extent(list+s);
+  ull ts=selfExtent(tx);
+  cc(list);
+  return c(list+s+ts+tx);
+}
 
 int main()
 {
