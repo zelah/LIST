@@ -239,9 +239,33 @@ p n(char* string)
   return n1(string,uArrayNew(t),s,t,x);
 }
 
-void cc(p list){gl=glExtend(list,gl);}
-p c1(p list,p temp,ull length){if(length==0){return temp;}else{temp[length-1]=list[length-1];return c1(list,temp,length-1);}}
-p c(p list){ull x=extent(list);ull s=selfExtent(x);ull length=s+x;p temp=(p)malloc(length*sizeof(u));return c1(list,temp,length);}
+void cc(p list)
+{
+  gl=glExtend(list,gl);
+}
+
+p c1(p list,p temp,ull length)
+{
+  if(length==0)
+  {
+    return temp;
+  }
+  else
+  {
+    temp[length-1]=list[length-1];
+    return c1(list,temp,length-1);
+  }
+}
+
+p c(p list)
+{
+  ull x=extent(list);
+  ull s=selfExtent(x);
+  ull length=s+x;
+  p temp=uArrayNew(length);
+  return c1(list,temp,length);
+}
+
 p ap1(p one,p two,p three,ull s1,ull s2,ull left,ull middle,ull right,ull extent){co();ull i;three[0]='(';three[left-1]=')';for(i=left-2;i>0;--i){three[i]=extent%10+'0';extent=extent/10;}for(i=left;i<middle;++i){three[i]=one[i-left+s1];}for(i=middle;i<right;++i){three[i]=two[i-middle+s2];}cc(one);cc(two);cc(three);return c(three);}
 p ap(p one,p two){co();ull x1=extent(one);ull x2=extent(two);ull x3=x1+x2;ull s1=selfExtent(x1);ull s2=selfExtent(x2);ull s3=selfExtent(x3);ull t=s3+x3;cc(one);cc(two);return ap1(c(one),c(two),uArrayNew(t),s1,s2,s3,s3+x1,t,x3);}
 p ad1(p one,p two,ull s1,ull t1,ull s2,ull t2,ull carry){co();if(t1<s1){if(carry){cc(one);cc(two);return ap(n("1"),c(one));}else{cc(one);cc(two);return c(one);}}else if(t2<s2){ull temp=one[t1];one[t1]=(temp-'0'+carry)%10+'0';if((temp-'0'+carry)>9){cc(one);cc(two);return ad1(c(one),c(two),s1,t1-1,s2,t2,1);}else{cc(one);cc(two);return c(one);}}else{ull temp=one[t1];one[t1]=(temp-'0'+two[t2]-'0'+carry)%10+'0';cc(one);cc(two);return ad1(c(one),c(two),s1,t1-1,s2,t2-1,(temp-'0'+two[t2]-'0'+carry)/10);}}
@@ -267,14 +291,7 @@ p pop(p list){co();ull x=extent(list);ull s=selfExtent(x);ull tx=extent(list+s);
 int main()
 {
 gl=glNew();
-co();
-co();
 p num=n("999876543217654321600543215432143210321211112304567892345678093456789045678956789678978098999999");
-cc(num);
-cc(num);
-cc(n("123"));
-cc(num);
-cc(num);
 displayLine(lt(c(num),c(num)));
 printf("%d\n",value(lt(c(num),c(num))));
 displayLine(gt(c(num),c(num)));
