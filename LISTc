@@ -1,6 +1,8 @@
 #include<stdio.h>
 #include<stdlib.h>
+
 #define DEFINE_ZED_TYPE(type_) typedef type_ ZED##type_;typedef type_ * type_##P;typedef type_##P ZED##type_##P;static type_##P type_##ArrayNew(ull size){return (type_##P)malloc(size*sizeof(type_));}
+
 typedef unsigned long long ull;
 typedef unsigned char u;
 DEFINE_ZED_TYPE(u)
@@ -9,26 +11,208 @@ typedef union{ull length;p pointer;}g;
 DEFINE_ZED_TYPE(g)
 typedef gP pp;
 pp gl;
-ull ullMax(ull one,ull two){if(one>two){return one;}else{return two;}}
-ull extent1(ull character){return character-'0';}
-ull extent2(ull index,p list,ull value){if(list[index]==')'){return value;}else{return extent2(index+1,list,extent1(list[index])+value*10);}}
-ull extent(p list){return extent2(1,list,0);}
-ull selfExtent1(ull extent,ull length,ull magnitude){if(extent<magnitude){return length;}else{return selfExtent1(extent,length+1,magnitude*10);}}
-ull selfExtent(ull extent){return selfExtent1(extent,3,10);}
-void display1(ull index,ull end,p list){if(index<end){printf("%c",list[index]);display1(index+1,end,list);}}
-void display(p list){ull ext=extent(list);ull start=selfExtent(ext);ull end=start+ext;display1(start,end,list);}
-void line(){printf("\n");}
-void space(){printf(" ");}
-void displayLine(p list){display(list);printf("\n");}
-void displaySpace(p list){display(list);printf(" ");}
-ull stringLength1(char* string,ull index){if(string[index]==0){return index;}else{return stringLength1(string,index+1);}}
-ull stringLength(char* string){return stringLength1(string,0);}
-u ullAssertLargePowerOfTwo1(ull number,ull t){if(t>number){return 0;}else if(t==number){return 1;}else{return ullAssertLargePowerOfTwo1(number,t*2);}}
-u ullAssertLargePowerOfTwo(ull number){return ullAssertLargePowerOfTwo1(number,1024);}
-pp glNew(){pp garbage=gArrayNew(1024);garbage[1023].length=0;return garbage+1023;}
-pp glExtend(p garbage,pp gl){ull i;ull count=0;ull length=gl[0].length;for(i=1;i<length+1;++i){if(gl[i].pointer==garbage){++count;}}if(count==0){if(ullAssertLargePowerOfTwo(gl[0].length+1)){pp temp=gArrayNew(2*(length+1));temp=temp+length;temp[0].length=length+1;temp[1].pointer=garbage;ull right=length+1;for(i=2;i<right;++i){temp[i].pointer=gl[i-1].pointer;}free(gl);return temp;}else{gl=gl-1;gl[0].length=length+1;gl[1].pointer=garbage;return gl;}}else{return gl;}}
-pp co1(pp gl,ull t){if(t-1<gl[0].length){return co1(gl,t*2);}else{return gl-(t-1-gl[0].length);}}
-void co(){ull right=gl[0].length;ull i;for(i=right;i>0;--i){free(gl[i].pointer);}gl=co1(gl,1024);free(gl);gl=glNew();}
+
+ull ullMax(ull one,ull two)
+{
+  if(one>two)
+  {
+    return one;
+  }
+  else
+  {
+    return two;
+  }
+}
+
+ull extent1(ull character)
+{
+  return character-'0';
+}
+
+ull extent2(ull index,p list,ull value)
+{
+  if(list[index]==')')
+  {
+    return value;
+  }
+  else
+  {
+    return extent2(index+1,list,extent1(list[index])+value*10);
+  }
+}
+
+ull extent(p list)
+{
+  return extent2(1,list,0);
+}
+
+ull selfExtent1(ull extent,ull length,ull magnitude)
+{
+  if(extent<magnitude)
+  {
+    return length;
+  }
+  else
+  {
+    return selfExtent1(extent,length+1,magnitude*10);
+  }
+}
+
+ull selfExtent(ull extent)
+{
+  return selfExtent1(extent,3,10);
+}
+
+void display1(ull index,ull end,p list)
+{
+  if(index<end)
+  {
+    printf("%c",list[index]);
+    display1(index+1,end,list);
+  }
+}
+
+void display(p list)
+{
+  ull ext=extent(list);
+  ull start=selfExtent(ext);
+  ull end=start+ext;
+  display1(start,end,list);
+}
+
+void line()
+{
+  printf("\n");
+}
+
+void space()
+{
+  printf(" ");
+}
+
+void displayLine(p list)
+{
+  display(list);
+  line();
+}
+
+void displaySpace(p list)
+{
+  display(list);
+  space();
+}
+
+ull stringLength1(char* string,ull index)
+{
+  if(string[index]==0)
+  {
+    return index;
+  }
+  else
+  {
+    return stringLength1(string,index+1);
+  }
+}
+
+ull stringLength(char* string)
+{
+  return stringLength1(string,0);
+}
+
+u ullAssertLargePowerOfTwo1(ull number,ull t)
+{
+  if(t>number)
+  {
+    return 0;
+  }
+  else if(t==number)
+  {
+    return 1;
+  }
+  else
+  {
+    return ullAssertLargePowerOfTwo1(number,t*2);
+  }
+}
+
+u ullAssertLargePowerOfTwo(ull number)
+{
+  return ullAssertLargePowerOfTwo1(number,1024);
+}
+
+pp glNew()
+{
+  pp garbage=gArrayNew(1024);
+  garbage[1023].length=0;
+  return garbage+1023;
+}
+
+pp glExtend(p garbage,pp gl)
+{
+  ull i;
+  ull count=0;
+  ull length=gl[0].length;
+  for(i=1;i<length+1;++i)
+  {
+    if(gl[i].pointer==garbage)
+    {
+      ++count;
+    }
+  }
+  if(count==0)
+  {
+    if(ullAssertLargePowerOfTwo(gl[0].length+1))
+    {
+      pp temp=gArrayNew(2*(length+1));
+      temp=temp+length;
+      temp[0].length=length+1;
+      temp[1].pointer=garbage;
+      ull right=length+1;
+      for(i=2;i<right;++i)
+      {
+        temp[i].pointer=gl[i-1].pointer;
+      }
+      free(gl);
+      return temp;
+      }
+      else
+      {
+        gl=gl-1;
+        gl[0].length=length+1;
+        gl[1].pointer=garbage;
+        return gl;
+      }
+  }
+  else
+  {
+    return gl;
+  }
+}
+
+pp co1(pp gl,ull t)
+{
+  if(t-1<gl[0].length)
+  {
+    return co1(gl,t*2);
+  }
+  else
+  {
+    return gl-(t-1-gl[0].length);
+  }
+}
+void co()
+{
+  ull right=gl[0].length;
+  ull i;
+  for(i=right;i>0;--i)
+  {
+    free(gl[i].pointer);
+  }
+  gl=co1(gl,1024);
+  free(gl);
+  gl=glNew();
+}
+
 p n1(char* string,p list,ull left,ull right,ull extent){list[0]='(';list[left-1]=')';ull i;for(i=left-2;i>0;--i){list[i]=(u)extent%10+'0';extent/=10;}for(i=left;i<right;++i){list[i]=(u)string[i-left];}return list;}
 p n(char* string){ull x=stringLength(string);ull s=selfExtent(x);ull t=s+x;return n1(string,uArrayNew(t),s,t,x);}
 void cc(p list){gl=glExtend(list,gl);}
