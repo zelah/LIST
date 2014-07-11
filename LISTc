@@ -200,6 +200,7 @@ pp co1(pp gl,ull t)
     return gl-(t-1-gl[0].length);
   }
 }
+
 void co()
 {
   ull right=gl[0].length;
@@ -213,8 +214,31 @@ void co()
   gl=glNew();
 }
 
-p n1(char* string,p list,ull left,ull right,ull extent){list[0]='(';list[left-1]=')';ull i;for(i=left-2;i>0;--i){list[i]=(u)extent%10+'0';extent/=10;}for(i=left;i<right;++i){list[i]=(u)string[i-left];}return list;}
-p n(char* string){ull x=stringLength(string);ull s=selfExtent(x);ull t=s+x;return n1(string,uArrayNew(t),s,t,x);}
+p n1(char* string,p list,ull left,ull right,ull extent)
+{
+  list[0]='(';
+  list[left-1]=')';
+  ull i;
+  for(i=left-2;i>0;--i)
+  {
+    list[i]=(u)extent%10+'0';
+    extent/=10;
+  }
+  for(i=left;i<right;++i)
+  {
+    list[i]=(u)string[i-left];
+  }
+  return list;
+}
+
+p n(char* string)
+{
+  ull x=stringLength(string);
+  ull s=selfExtent(x);
+  ull t=s+x;
+  return n1(string,uArrayNew(t),s,t,x);
+}
+
 void cc(p list){gl=glExtend(list,gl);}
 p c1(p list,p temp,ull length){if(length==0){return temp;}else{temp[length-1]=list[length-1];return c1(list,temp,length-1);}}
 p c(p list){ull x=extent(list);ull s=selfExtent(x);ull length=s+x;p temp=(p)malloc(length*sizeof(u));return c1(list,temp,length);}
