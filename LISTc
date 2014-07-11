@@ -266,10 +266,113 @@ p c(p list)
   return c1(list,temp,length);
 }
 
-p ap1(p one,p two,p three,ull s1,ull s2,ull left,ull middle,ull right,ull extent){co();ull i;three[0]='(';three[left-1]=')';for(i=left-2;i>0;--i){three[i]=extent%10+'0';extent=extent/10;}for(i=left;i<middle;++i){three[i]=one[i-left+s1];}for(i=middle;i<right;++i){three[i]=two[i-middle+s2];}cc(one);cc(two);cc(three);return c(three);}
-p ap(p one,p two){co();ull x1=extent(one);ull x2=extent(two);ull x3=x1+x2;ull s1=selfExtent(x1);ull s2=selfExtent(x2);ull s3=selfExtent(x3);ull t=s3+x3;cc(one);cc(two);return ap1(c(one),c(two),uArrayNew(t),s1,s2,s3,s3+x1,t,x3);}
-p ad1(p one,p two,ull s1,ull t1,ull s2,ull t2,ull carry){co();if(t1<s1){if(carry){cc(one);cc(two);return ap(n("1"),c(one));}else{cc(one);cc(two);return c(one);}}else if(t2<s2){ull temp=one[t1];one[t1]=(temp-'0'+carry)%10+'0';if((temp-'0'+carry)>9){cc(one);cc(two);return ad1(c(one),c(two),s1,t1-1,s2,t2,1);}else{cc(one);cc(two);return c(one);}}else{ull temp=one[t1];one[t1]=(temp-'0'+two[t2]-'0'+carry)%10+'0';cc(one);cc(two);return ad1(c(one),c(two),s1,t1-1,s2,t2-1,(temp-'0'+two[t2]-'0'+carry)/10);}}
-p ad(p one,p two){co();ull x1=extent(one);ull x2=extent(two);ull x3=ullMax(x1,x2);ull s1=selfExtent(x1);ull s2=selfExtent(x2);ull t1=s1+x1;ull t2=s2+x2;if(x3==x1){cc(one);cc(two);return ad1(c(one),c(two),s1,t1-1,s2,t2-1,0);}else{cc(one);cc(two);return ad1(c(two),c(one),s2,t2-1,s1,t1-1,0);}}
+p ap1(p one,p two,p three,ull s1,ull s2,ull left,ull middle,ull right,ull extent)
+{
+  co();
+  ull i;
+  three[0]='(';three[left-1]=')';
+  for(i=left-2;i>0;--i)
+  {
+    three[i]=extent%10+'0';
+    extent=extent/10;
+  }
+  for(i=left;i<middle;++i)
+  {
+    three[i]=one[i-left+s1];
+  }
+  for(i=middle;i<right;++i)
+  {
+    three[i]=two[i-middle+s2];
+  }
+  cc(one);
+  cc(two);
+  cc(three);
+  return c(three);
+}
+
+p ap(p one,p two)
+{
+  co();
+  ull x1=extent(one);
+  ull x2=extent(two);
+  ull x3=x1+x2;
+  ull s1=selfExtent(x1);
+  ull s2=selfExtent(x2);
+  ull s3=selfExtent(x3);
+  ull t=s3+x3;
+  cc(one);
+  cc(two);
+  return ap1(c(one),c(two),uArrayNew(t),s1,s2,s3,s3+x1,t,x3);
+}
+
+p ad1(p one,p two,ull s1,ull t1,ull s2,ull t2,ull carry)
+{
+  co();
+  if(t1<s1)
+  {
+    if(carry)
+    {
+      cc(one);
+      cc(two);
+      return ap(n("1"),c(one));
+    }
+    else
+    {
+      cc(one);
+      cc(two);
+      return c(one);
+    }
+  }
+  else if(t2<s2)
+  {
+    ull temp=one[t1];
+    one[t1]=(temp-'0'+carry)%10+'0';
+    if((temp-'0'+carry)>9)
+    {
+      cc(one);
+      cc(two);
+      return ad1(c(one),c(two),s1,t1-1,s2,t2,1);
+    }
+    else
+    {
+      cc(one);
+      cc(two);
+      return c(one);
+    }
+  }
+  else
+  {
+    ull temp=one[t1];
+    one[t1]=(temp-'0'+two[t2]-'0'+carry)%10+'0';
+    cc(one);
+    cc(two);
+    return ad1(c(one),c(two),s1,t1-1,s2,t2-1,(temp-'0'+two[t2]-'0'+carry)/10);
+  }
+}
+
+p ad(p one,p two)
+{
+  co();
+  ull x1=extent(one);
+  ull x2=extent(two);
+  ull x3=ullMax(x1,x2);
+  ull s1=selfExtent(x1);
+  ull s2=selfExtent(x2);
+  ull t1=s1+x1;
+  ull t2=s2+x2;
+  if(x3==x1)
+  {
+    cc(one);
+    cc(two);
+    return ad1(c(one),c(two),s1,t1-1,s2,t2-1,0);
+  }
+  else
+  {
+    cc(one);
+    cc(two);
+    return ad1(c(two),c(one),s2,t2-1,s1,t1-1,0);
+  }
+}
 
 p al(p one,p two){ull x1=extent(one);ull x2=extent(two);ull s1=selfExtent(x1);ull s2=selfExtent(x2);ull t1=s1+x1;ull t2=s2+x2;while(one[s1]==two[s2]&&s1<t1&&s2<t2){++s1;++s2;}if(s1<t1&&s2<t2){cc(one);cc(two);return (one[s1]<two[s2])?c(one):n("#fals");}else{cc(one);cc(two);return (x1<x2)?c(one):n("#fals");}}
 p lt(p one,p two){ull x1=extent(one);ull x2=extent(two);if(x1==x2){ull s=selfExtent(x1);ull t=s+x1;while(one[s]==two[s]&&s<t){++s;}if(s<t){cc(one);cc(two);return (one[s]<two[s])?c(one):n("#fals");}else{cc(one);cc(two);return n("#fals");}}else{cc(one);cc(two);return (x1<x2)?c(one):n("#fals");}}
