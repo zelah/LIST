@@ -374,8 +374,68 @@ p ad(p one,p two)
   }
 }
 
-p al(p one,p two){ull x1=extent(one);ull x2=extent(two);ull s1=selfExtent(x1);ull s2=selfExtent(x2);ull t1=s1+x1;ull t2=s2+x2;while(one[s1]==two[s2]&&s1<t1&&s2<t2){++s1;++s2;}if(s1<t1&&s2<t2){cc(one);cc(two);return (one[s1]<two[s2])?c(one):n("#fals");}else{cc(one);cc(two);return (x1<x2)?c(one):n("#fals");}}
-p lt(p one,p two){ull x1=extent(one);ull x2=extent(two);if(x1==x2){ull s=selfExtent(x1);ull t=s+x1;while(one[s]==two[s]&&s<t){++s;}if(s<t){cc(one);cc(two);return (one[s]<two[s])?c(one):n("#fals");}else{cc(one);cc(two);return n("#fals");}}else{cc(one);cc(two);return (x1<x2)?c(one):n("#fals");}}
+p al(p one,p two)
+{
+  co();
+  ull x1=extent(one);
+  ull x2=extent(two);
+  ull s1=selfExtent(x1);
+  ull s2=selfExtent(x2);
+  ull t1=s1+x1;
+  ull t2=s2+x2;
+  while(one[s1]==two[s2]&&s1<t1&&s2<t2)
+  {
+    ++s1;
+    ++s2;
+  }
+  if(s1<t1&&s2<t2)
+  {
+    cc(one);
+    cc(two);
+    return (one[s1]<two[s2])?c(one):n("#fals");
+  }
+  else
+  {
+    cc(one);
+    cc(two);
+    return (x1<x2)?c(one):n("#fals");
+  }
+}
+
+p lt(p one,p two)
+{
+  co();
+  ull x1=extent(one);
+  ull x2=extent(two);
+  if(x1==x2)
+  {
+    ull s=selfExtent(x1);
+    ull t=s+x1;
+    while(one[s]==two[s]&&s<t)
+    {
+      ++s;
+    }
+    if(s<t)
+    {
+      cc(one);
+      cc(two);
+      return (one[s]<two[s])?c(one):n("#fals");
+    }
+    else
+    {
+      cc(one);
+      cc(two);
+      return n("#fals");
+    }
+  }
+  else
+  {
+    cc(one);
+    cc(two);
+    return (x1<x2)?c(one):n("#fals");
+  }
+}
+
 p eq(p one,p two){ull x1=extent(one);ull x2=extent(two);if(x1==x2){ull s=selfExtent(x1);ull t=s+x1;while(s<t&&one[s]==two[s]){++s;}if(s==t){cc(one);cc(two);return c(one);}}return n("#fals");}
 p gt(p one,p two){ull x1=extent(one);ull x2=extent(two);if(x1==x2){ull s=selfExtent(x1);ull t=s+x1;while(one[s]==two[s]&&s<t){++s;}if(s<t){cc(one);cc(two);return (one[s]>two[s])?c(one):n("#fals");}else{cc(one);cc(two);return n("#fals");}}else{cc(one);cc(two);return (x1>x2)?c(one):n("#fals");}}
 u assert(p list){ull x=extent(list);cc(list);return !(x==5&&list[3]=='#'&&list[4]=='f'&&list[5]=='a'&&list[6]=='l'&&list[7]=='s')&&!(x==6&&list[3]=='#'&&list[4]=='f'&&list[5]=='a'&&list[6]=='l'&&list[7]=='s'&&list[8]=='e');}
