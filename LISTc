@@ -378,12 +378,12 @@ p al(p one,p two){ull x1=extent(one);ull x2=extent(two);ull s1=selfExtent(x1);ul
 p lt(p one,p two){ull x1=extent(one);ull x2=extent(two);if(x1==x2){ull s=selfExtent(x1);ull t=s+x1;while(one[s]==two[s]&&s<t){++s;}if(s<t){cc(one);cc(two);return (one[s]<two[s])?c(one):n("#fals");}else{cc(one);cc(two);return n("#fals");}}else{cc(one);cc(two);return (x1<x2)?c(one):n("#fals");}}
 p eq(p one,p two){ull x1=extent(one);ull x2=extent(two);if(x1==x2){ull s=selfExtent(x1);ull t=s+x1;while(s<t&&one[s]==two[s]){++s;}if(s==t){cc(one);cc(two);return c(one);}}return n("#fals");}
 p gt(p one,p two){ull x1=extent(one);ull x2=extent(two);if(x1==x2){ull s=selfExtent(x1);ull t=s+x1;while(one[s]==two[s]&&s<t){++s;}if(s<t){cc(one);cc(two);return (one[s]>two[s])?c(one):n("#fals");}else{cc(one);cc(two);return n("#fals");}}else{cc(one);cc(two);return (x1>x2)?c(one):n("#fals");}}
-u boolean(p list){ull x=extent(list);cc(list);return !(x==5&&list[3]=='#'&&list[4]=='f'&&list[5]=='a'&&list[6]=='l'&&list[7]=='s')&&!(x==6&&list[3]=='#'&&list[4]=='f'&&list[5]=='a'&&list[6]=='l'&&list[7]=='s'&&list[8]=='e');}
+u assert(p list){ull x=extent(list);cc(list);return !(x==5&&list[3]=='#'&&list[4]=='f'&&list[5]=='a'&&list[6]=='l'&&list[7]=='s')&&!(x==6&&list[3]=='#'&&list[4]=='f'&&list[5]=='a'&&list[6]=='l'&&list[7]=='s'&&list[8]=='e');}
 u assertValue(p list){ull x=extent(list);cc(list);return !(x==5&&list[3]=='#'&&list[4]=='f'&&list[5]=='a'&&list[6]=='l'&&list[7]=='s');}
-p no(p one){if(boolean(one)){cc(one);return n("#fals");}else{cc(one);return n("#true");}}
-p a(p one,p two){if(boolean(one)){cc(one);cc(two);return c(two);}else{cc(one);cc(two);return c(one);}}
-p o(p one,p two){if(boolean(one)){cc(one);cc(two);return c(one);}else{cc(one);cc(two);return c(two);}}
-p x(p one,p two){if(boolean(one)){cc(one);cc(two);return no(c(two));}else{cc(one);cc(two);return c(two);}}
+p no(p one){if(assert(one)){cc(one);return n("#fals");}else{cc(one);return n("#true");}}
+p a(p one,p two){if(assert(one)){cc(one);cc(two);return c(two);}else{cc(one);cc(two);return c(one);}}
+p o(p one,p two){if(assert(one)){cc(one);cc(two);return c(one);}else{cc(one);cc(two);return c(two);}}
+p x(p one,p two){if(assert(one)){cc(one);cc(two);return no(c(two));}else{cc(one);cc(two);return c(two);}}
 p nu(p list){cc(list);return (extent(list)==0)?c(list):n("#fals");}
 
 p push1(p one,p two,p three,ull left,ull middle,ull right,ull total){co();three[0]='(';three[left-1]=')';ull i;for(i=left-2;i>0;--i){three[i]=total%10+'0';total/=10;}for(i=left;i<middle;++i){three[i]=one[i-left];}for(i=middle;i<right;++i){three[i]=two[i-middle];}cc(one);cc(two);cc(three);return c(three);}
