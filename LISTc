@@ -519,7 +519,7 @@ u assert(p list)
 p no(p one)
 {
   co();
-  if(assertValue(one))
+  if(assert(c(one)))
   {
     cc(one);
     return n("#fals");
@@ -534,7 +534,7 @@ p no(p one)
 p a(p one,p two)
 {
   co();
-  if(assertValue(one))
+  if(assert(c(one)))
   {
     cc(one);
     cc(two);
@@ -551,7 +551,7 @@ p a(p one,p two)
 p o(p one,p two)
 {
   co();
-  if(assertValue(one))
+  if(assert(c(one)))
   {
     cc(one);
     cc(two);
@@ -568,7 +568,7 @@ p o(p one,p two)
 p x(p one,p two)
 {
   co();
-  if(assertValue(one))
+  if(assert(c(one)))
   {
     cc(one);
     cc(two);
@@ -642,6 +642,160 @@ p pop(p list)
   return c(list+s+ts+tx);
 }
 
+p rv1(p list,p collect)
+{
+  co();
+  if(assert(nu(c(list))))
+  {
+    cc(list);
+    cc(collect);
+    return c(collect);
+  }
+  else
+  {
+    cc(list);
+    cc(collect);
+    p list1=c(list);
+    p list2=c(list);
+    return rv1(pop(list1),push(top(list2),c(collect)));
+  }
+}
+
+p rv(p list)
+{
+  co();
+  cc(list);
+  return rv1(c(list),n(""));
+}
+
+p app1(p one,p two,p collect)
+{
+  co();
+  if(assert(nu(c(one))))
+  {
+    if(assert(nu(c(two))))
+    {
+      cc(one);
+      cc(two);
+      cc(collect);
+      return rv(c(collect));
+    }
+    else
+    {
+      cc(one);
+      cc(two);
+      cc(collect);
+      p two1=c(two);
+      p two2=c(two);
+      return app1(c(one),pop(two1),push(top(two2),c(collect)));
+    }
+  }
+  else
+  {
+    cc(one);
+    cc(two);
+    cc(collect);
+    p one1=c(one);
+    p one2=c(one);
+    return app1(pop(one1),c(two),push(top(one2),c(collect)));
+  }
+}
+
+p app(p one,p two)
+{
+  co();
+  cc(one);
+  cc(two);
+  return app1(c(one),c(two),n(""));
+}
+
+p mp1(p (*f)(p),p list,p collect)
+{
+  co();
+  if(assert(nu(c(list))))
+  {
+    cc(list);
+    cc(collect);
+    return rv(c(collect));
+  }
+  else
+  {
+    cc(list);
+    cc(collect);
+    return mp1(f,pop(c(list)),push(f(top(c(list))),c(collect)));
+  }
+}
+
+p mp(p (*f)(p),p list)
+{
+  co();
+  cc(list);
+  return mp1(f,c(list),n(""));
+}
+
+p fi1(p (*f)(p),p list,p collect)
+{
+  co();
+  if(assert(nu(c(list))))
+  {
+    cc(list);
+    cc(collect);
+    return rv(c(collect));
+  }
+  else
+  {
+    p v=top(c(list));
+    if(assert(f(c(v))))
+    {
+      cc(list);
+      cc(collect);
+      cc(v);
+      return fi1(f,pop(c(list)),push(c(v),c(collect)));
+    }
+    else
+    {
+      cc(list);
+      cc(collect);
+      cc(v);
+      return fi1(f,pop(c(list)),c(collect));
+    }
+  }
+}
+
+p fi(p (*f)(p),p list)
+{
+  co();
+  cc(list);
+  return fi1(f,c(list),n(""));
+}
+
+p rd1(p (*f)(p,p),p result,p list)
+{
+  co();
+  if(assert(nu(c(list))))
+  {
+    cc(result);
+    cc(list);
+    return c(result);
+  }
+  else
+  {
+    cc(result);
+    cc(list);
+    p list1=c(list);
+    p list2=c(list);
+    return rd1(f,f(top(list1),c(result)),pop(list2));
+  }
+}
+
+p rd(p (*f)(p,p),p fin,p list)
+{
+  co();
+  cc(fin);
+  cc(list);
+  return rd1(f,c(fin),rv(c(list)));
+}
+
 int main()
 {
 gl=glNew();
@@ -693,7 +847,9 @@ displayLine(x(n("#true"),c(num)));
 line();
 displayLine(a(eq(push(n("one"),n("two")),push(n("one"),n("two"))),n("success")));
 line();
-//displayLine(rd(&o,n("#false"),push(n("#false"),push(n("first"),push(n("second"),n(""))))));
+p list2=push(n("#false"),push(n("first"),push(n("second"),n(""))));
+displayLine(rv(c(list2)));
+//displayLine(app(c(list),c(list2)));
 line();
 printf("\n%llu\n",gl[0].length);
 co();
