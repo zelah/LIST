@@ -500,7 +500,7 @@ p nu(p list)
   return (extent(list)==0)?c(list):n("#fals");
 }
 
-u assert(p list)
+u assertValue(p list)
 {
   co();
   ull x=extent(list);
@@ -508,7 +508,7 @@ u assert(p list)
   return !(x==5&&list[3]=='#'&&list[4]=='f'&&list[5]=='a'&&list[6]=='l'&&list[7]=='s')&&!(x==6&&list[3]=='#'&&list[4]=='f'&&list[5]=='a'&&list[6]=='l'&&list[7]=='s'&&list[8]=='e');
 }
 
-u assertValue(p list)
+u assert(p list)
 {
   co();
   ull x=extent(list);
@@ -519,7 +519,7 @@ u assertValue(p list)
 p no(p one)
 {
   co();
-  if(assert(one))
+  if(assertValue(one))
   {
     cc(one);
     return n("#fals");
@@ -534,7 +534,7 @@ p no(p one)
 p a(p one,p two)
 {
   co();
-  if(assert(one))
+  if(assertValue(one))
   {
     cc(one);
     cc(two);
@@ -551,7 +551,7 @@ p a(p one,p two)
 p o(p one,p two)
 {
   co();
-  if(assert(one))
+  if(assertValue(one))
   {
     cc(one);
     cc(two);
@@ -568,7 +568,7 @@ p o(p one,p two)
 p x(p one,p two)
 {
   co();
-  if(assert(one))
+  if(assertValue(one))
   {
     cc(one);
     cc(two);
@@ -647,15 +647,15 @@ int main()
 gl=glNew();
 p num=n("999876543217654321600543215432143210321211112304567892345678093456789045678956789678978098999999");
 displayLine(lt(c(num),c(num)));
-printf("%d\n",assertValue(lt(c(num),c(num))));
+printf("%d\n",assert(lt(c(num),c(num))));
 displayLine(gt(c(num),c(num)));
-printf("%d\n",assertValue(gt(c(num),c(num))));
+printf("%d\n",assert(gt(c(num),c(num))));
 displayLine(eq(c(num),c(num)));
-printf("%d\n",assertValue(eq(c(num),c(num))));
+printf("%d\n",assert(eq(c(num),c(num))));
 displayLine(al(n("123"),n("999")));
-printf("%d\n",assertValue(al(n("123"),n("999"))));
+printf("%d\n",assert(al(n("123"),n("999"))));
 displayLine(al(n("#false"),n("#true")));
-printf("%d\n",assertValue(al(n("#false"),n("#true"))));
+printf("%d\n",assert(al(n("#false"),n("#true"))));
 line();
 displayLine(ap(c(num),c(num)));
 line();
