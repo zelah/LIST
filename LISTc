@@ -346,7 +346,9 @@ p ad1(p one,p two,ull s1,ull t1,ull s2,ull t2,ull carry)
     one[t1]=(temp-'0'+two[t2]-'0'+carry)%10+'0';
     cc(one);
     cc(two);
-    return ad1(c(one),c(two),s1,t1-1,s2,t2-1,(temp-'0'+two[t2]-'0'+carry)/10);
+    p two1=c(two);
+    p two2=c(two);
+    return ad1(c(one),two1,s1,t1-1,s2,t2-1,(temp-'0'+two2[t2]-'0'+carry)/10);
   }
 }
 
@@ -682,22 +684,22 @@ p app1(p one,p two,p collect)
     }
     else
     {
+      p two2=c(two);
       cc(one);
       cc(two);
+      cc(two2);
       cc(collect);
-      p two1=c(two);
-      p two2=c(two);
-      return app1(c(one),pop(two1),push(top(two2),c(collect)));
+      return app1(c(one),pop(c(two)),push(top(c(two2)),c(collect)));
     }
   }
   else
   {
+    p one2=c(one);
     cc(one);
+    cc(one2);
     cc(two);
     cc(collect);
-    p one1=c(one);
-    p one2=c(one);
-    return app1(pop(one1),c(two),push(top(one2),c(collect)));
+    return app1(pop(c(one)),c(two),push(top(c(one2)),c(collect)));
   }
 }
 
@@ -722,7 +724,9 @@ p mp1(p (*f)(p),p list,p collect)
   {
     cc(list);
     cc(collect);
-    return mp1(f,pop(c(list)),push(f(top(c(list))),c(collect)));
+    p list1=c(list);
+    p list2=c(list);
+    return mp1(f,pop(list1),push(f(top(list2)),c(collect)));
   }
 }
 
@@ -799,6 +803,10 @@ p rd(p (*f)(p,p),p fin,p list)
 int main()
 {
 gl=glNew();
+p list2=push(n("#false"),push(n("first"),push(n("second"),n(""))));
+displayLine(rv(c(list2)));
+displayLine(app(c(list2),c(list2)));
+line();
 p num=n("999876543217654321600543215432143210321211112304567892345678093456789045678956789678978098999999");
 displayLine(lt(c(num),c(num)));
 printf("%d\n",assert(lt(c(num),c(num))));
@@ -847,10 +855,7 @@ displayLine(x(n("#true"),c(num)));
 line();
 displayLine(a(eq(push(n("one"),n("two")),push(n("one"),n("two"))),n("success")));
 line();
-p list2=push(n("#false"),push(n("first"),push(n("second"),n(""))));
-displayLine(rv(c(list2)));
-//displayLine(app(c(list),c(list2)));
-line();
+
 printf("\n%llu\n",gl[0].length);
 co();
 printf("\n%llu\n",gl[0].length);
