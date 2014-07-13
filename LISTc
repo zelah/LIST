@@ -344,11 +344,11 @@ p ad1(p one,p two,ull s1,ull t1,ull s2,ull t2,ull carry)
   {
     ull temp=one[t1];
     one[t1]=(temp-'0'+two[t2]-'0'+carry)%10+'0';
+    p two2=c(two);
     cc(one);
     cc(two);
-    p two1=c(two);
-    p two2=c(two);
-    return ad1(c(one),two1,s1,t1-1,s2,t2-1,(temp-'0'+two2[t2]-'0'+carry)/10);
+    cc(two2);
+    return ad1(c(one),c(two),s1,t1-1,s2,t2-1,(temp-'0'+two2[t2]-'0'+carry)/10);
   }
 }
 
@@ -655,11 +655,15 @@ p rv1(p list,p collect)
   }
   else
   {
+    p list1=c(list);
     p list2=c(list);
+    p collect1=c(collect);
+    list1=pop(list1);
+    list2=top(list2);
+    collect1=push(list2,collect1);
     cc(list);
-    cc(list2);
     cc(collect);
-    return rv1(pop(c(list)),push(top(c(list2)),c(collect)));
+    return rv1(list1,collect1);
   }
 }
 
