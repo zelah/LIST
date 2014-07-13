@@ -759,25 +759,27 @@ p mp1(p (*f)(p),p list,p collect)
   co();
   if(as(nu(c(list))))
   {
+    p collect1=c(collect);
     cc(list);
     cc(collect);
-    return rv(c(collect));
+    return rv(collect1);
   }
   else
   {
+    p list1=pop(c(list));
+    p collect1=push(f(top(c(list))),c(collect));
     cc(list);
     cc(collect);
-    p list1=c(list);
-    p list2=c(list);
-    return mp1(f,pop(list1),push(f(top(list2)),c(collect)));
+    return mp1(f,list1,collect1);
   }
 }
 
 p mp(p (*f)(p),p list)
 {
   co();
+  p list1=c(list);
   cc(list);
-  return mp1(f,c(list),n(""));
+  return mp1(f,list1,n(""));
 }
 
 p fi1(p (*f)(p),p list,p collect)
@@ -846,10 +848,11 @@ p rd(p (*f)(p,p),p fin,p list)
 int main()
 {
 gl=glNew();
-p list2=push(n("#false"),push(n("first"),push(n("second"),n(""))));
+p list2=push(n("#fals"),push(n("first"),push(n("second"),n(""))));
 displayLine(c(list2));
 displayLine(rv(c(list2)));
 displayLine(ap(c(list2),c(list2)));
+displayLine(mp(&no,c(list2)));
 line();
 p num=n("999876543217654321600543215432143210321211112304567892345678093456789045678956789678978098999999");
 displayLine(lt(c(num),c(num)));
