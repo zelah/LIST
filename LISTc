@@ -266,7 +266,7 @@ p c(p list)
   return c1(list,temp,length);
 }
 
-p ap1(p one,p two,p three,ull s1,ull s2,ull left,ull middle,ull right,ull extent)
+p app1(p one,p two,p three,ull s1,ull s2,ull left,ull middle,ull right,ull extent)
 {
   co();
   ull i;
@@ -290,7 +290,7 @@ p ap1(p one,p two,p three,ull s1,ull s2,ull left,ull middle,ull right,ull extent
   return c(three);
 }
 
-p ap(p one,p two)
+p app(p one,p two)
 {
   co();
   ull x1=extent(one);
@@ -302,7 +302,7 @@ p ap(p one,p two)
   ull t=s3+x3;
   cc(one);
   cc(two);
-  return ap1(c(one),c(two),uArrayNew(t),s1,s2,s3,s3+x1,t,x3);
+  return app1(c(one),c(two),uArrayNew(t),s1,s2,s3,s3+x1,t,x3);
 }
 
 p ad1(p one,p two,ull s1,ull t1,ull s2,ull t2,ull carry)
@@ -314,7 +314,7 @@ p ad1(p one,p two,ull s1,ull t1,ull s2,ull t2,ull carry)
     {
       cc(one);
       cc(two);
-      return ap(n("1"),c(one));
+      return app(n("1"),c(one));
     }
     else
     {
@@ -675,7 +675,7 @@ p rv(p list)
   return rv1(list1,n(""));
 }
 
-p app1(p one,p two,p collect)
+p ap1(p one,p two,p collect)
 {
   displaySpace(c(one));
   displaySpace(c(two));
@@ -697,7 +697,7 @@ p app1(p one,p two,p collect)
       cc(two);
       cc(two2);
       cc(collect);
-      return app1(c(one),pop(c(two)),push(top(c(two2)),c(collect)));
+      return ap1(c(one),pop(c(two)),push(top(c(two2)),c(collect)));
     }
   }
   else
@@ -707,16 +707,16 @@ p app1(p one,p two,p collect)
     cc(one2);
     cc(two);
     cc(collect);
-    return app1(pop(c(one)),c(two),push(top(c(one2)),c(collect)));
+    return ap1(pop(c(one)),c(two),push(top(c(one2)),c(collect)));
   }
 }
 
-p app(p one,p two)
+p ap(p one,p two)
 {
   co();
   cc(one);
   cc(two);
-  return app1(c(one),c(two),n(""));
+  return ap1(c(one),c(two),n(""));
 }
 
 p mp1(p (*f)(p),p list,p collect)
@@ -815,7 +815,7 @@ p list2=push(n("#false"),push(n("first"),push(n("second"),n(""))));
 displayLine(c(list2));
 displayLine(rv(c(list2)));
 //displayLine(nu(c(list2)));
-//displayLine(app(c(list2),c(list2)));
+//displayLine(ap(c(list2),c(list2)));
 line();
 p num=n("999876543217654321600543215432143210321211112304567892345678093456789045678956789678978098999999");
 displayLine(lt(c(num),c(num)));
@@ -829,7 +829,7 @@ printf("%d\n",as(al(n("123"),n("999"))));
 displayLine(al(n("#false"),n("#true")));
 printf("%d\n",as(al(n("#false"),n("#true"))));
 line();
-displayLine(ap(c(num),c(num)));
+displayLine(app(c(num),c(num)));
 line();
 p list=push(c(num),n(""));
 displayLine(c(list));
