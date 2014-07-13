@@ -861,6 +861,16 @@ p mx(p one,p two)
   return o(one1,two1);
 }
 
+p mn(p one,p two)
+{
+  co();
+  p one1=lt(c(one),c(two));
+  p two1=c(two);
+  cc(one);
+  cc(two);
+  return o(one1,two1);
+}
+
 int main()
 {
 gl=glNew();
@@ -871,7 +881,7 @@ displayLine(ap(c(list2),c(list2)));
 displayLine(mp(&no,c(list2)));
 displayLine(fi(&no,c(list2)));
 p list3=push(n("123"),push(n("9999"),push(n("45"),n(""))));
-displayLine(rd(&mx,n("0"),list3));
+displayLine(rd(&mn,top(c(list3)),c(list3)));
 line();
 p num=n("999876543217654321600543215432143210321211112304567892345678093456789045678956789678978098999999");
 displayLine(lt(c(num),c(num)));
