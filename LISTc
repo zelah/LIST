@@ -284,10 +284,11 @@ p app1(p one,p two,p three,ull s1,ull s2,ull left,ull middle,ull right,ull exten
   {
     three[i]=two[i-middle+s2];
   }
+  p three1=c(three);
   cc(one);
   cc(two);
   cc(three);
-  return c(three);
+  return three1;
 }
 
 p app(p one,p two)
@@ -300,9 +301,11 @@ p app(p one,p two)
   ull s2=selfExtent(x2);
   ull s3=selfExtent(x3);
   ull t=s3+x3;
+  p one1=c(one);
+  p two1=c(two);
   cc(one);
   cc(two);
-  return app1(c(one),c(two),uArrayNew(t),s1,s2,s3,s3+x1,t,x3);
+  return app1(one1,two1,uArrayNew(t),s1,s2,s3,s3+x1,t,x3);
 }
 
 p ad1(p one,p two,ull s1,ull t1,ull s2,ull t2,ull carry)
@@ -312,15 +315,17 @@ p ad1(p one,p two,ull s1,ull t1,ull s2,ull t2,ull carry)
   {
     if(carry)
     {
+      p one1=c(one);
       cc(one);
       cc(two);
-      return app(n("1"),c(one));
+      return app(n("1"),one1);
     }
     else
     {
+      p one1=c(one);
       cc(one);
       cc(two);
-      return c(one);
+      return one1;
     }
   }
   else if(t2<s2)
@@ -329,26 +334,29 @@ p ad1(p one,p two,ull s1,ull t1,ull s2,ull t2,ull carry)
     one[t1]=(temp-'0'+carry)%10+'0';
     if((temp-'0'+carry)>9)
     {
+      p one1=c(one);
+      p two1=c(two);
       cc(one);
       cc(two);
-      return ad1(c(one),c(two),s1,t1-1,s2,t2,1);
+      return ad1(one1,two1,s1,t1-1,s2,t2,1);
     }
     else
     {
+      p one1=c(one);
       cc(one);
       cc(two);
-      return c(one);
+      return one1;
     }
   }
   else
   {
     ull temp=one[t1];
     one[t1]=(temp-'0'+two[t2]-'0'+carry)%10+'0';
-    p two2=c(two);
+    p one1=c(one);
+    p two1=c(two);
     cc(one);
     cc(two);
-    cc(two2);
-    return ad1(c(one),c(two),s1,t1-1,s2,t2-1,(temp-'0'+two2[t2]-'0'+carry)/10);
+    return ad1(one1,two1,s1,t1-1,s2,t2-1,(temp-'0'+two[t2]-'0'+carry)/10);
   }
 }
 
@@ -364,15 +372,19 @@ p ad(p one,p two)
   ull t2=s2+x2;
   if(x3==x1)
   {
+    p one1=c(one);
+    p two1=c(two);
     cc(one);
     cc(two);
-    return ad1(c(one),c(two),s1,t1-1,s2,t2-1,0);
+    return ad1(one1,two1,s1,t1-1,s2,t2-1,0);
   }
   else
   {
+    p one1=c(one);
+    p two1=c(two);
     cc(one);
     cc(two);
-    return ad1(c(two),c(one),s2,t2-1,s1,t1-1,0);
+    return ad1(two1,one1,s2,t2-1,s1,t1-1,0);
   }
 }
 
@@ -392,15 +404,17 @@ p al(p one,p two)
   }
   if(s1<t1&&s2<t2)
   {
+    p one1=c(one);
     cc(one);
     cc(two);
-    return (one[s1]<two[s2])?c(one):n("#fals");
+    return (one[s1]<two[s2])?one1:n("#fals");
   }
   else
   {
+    p one1=c(one);
     cc(one);
     cc(two);
-    return (x1<x2)?c(one):n("#fals");
+    return (x1<x2)?one1:n("#fals");
   }
 }
 
@@ -419,9 +433,10 @@ p lt(p one,p two)
     }
     if(s<t)
     {
+      p one1=c(one);
       cc(one);
       cc(two);
-      return (one[s]<two[s])?c(one):n("#fals");
+      return (one[s]<two[s])?one1:n("#fals");
     }
     else
     {
@@ -432,9 +447,10 @@ p lt(p one,p two)
   }
   else
   {
+    p one1=c(one);
     cc(one);
     cc(two);
-    return (x1<x2)?c(one):n("#fals");
+    return (x1<x2)?one1:n("#fals");
   }
 }
 
@@ -453,11 +469,14 @@ p eq(p one,p two)
     }
     if(s==t)
     {
+      p one1=c(one);
       cc(one);
       cc(two);
-      return c(one);
+      return one1;
     }
   }
+  cc(one);
+  cc(two);
   return n("#fals");
 }
 
@@ -476,9 +495,10 @@ p gt(p one,p two)
     }
     if(s<t)
     {
+      p one1=c(one);
       cc(one);
       cc(two);
-      return (one[s]>two[s])?c(one):n("#fals");
+      return (one[s]>two[s])?one1:n("#fals");
     }
     else
     {
@@ -489,17 +509,19 @@ p gt(p one,p two)
   }
   else
   {
+    p one1=c(one);
     cc(one);
     cc(two);
-    return (x1>x2)?c(one):n("#fals");
+    return (x1>x2)?one1:n("#fals");
   }
 }
 
 p nu(p list)
 {
   co();
+  p list1=c(list);
   cc(list);
-  return (extent(list)==0)?c(list):n("#fals");
+  return (extent(list)==0)?list1:n("#fals");
 }
 
 u asValue(p list)
@@ -538,15 +560,17 @@ p a(p one,p two)
   co();
   if(as(c(one)))
   {
+    p two1=c(two);
     cc(one);
     cc(two);
-    return c(two);
+    return two1;
   }
   else
   {
+    p one1=c(one);
     cc(one);
     cc(two);
-    return c(one);
+    return one1;
   }
 }
 
@@ -555,15 +579,17 @@ p o(p one,p two)
   co();
   if(as(c(one)))
   {
+    p one1=c(one);
     cc(one);
     cc(two);
-    return c(one);
+    return one1;
   }
   else
   {
+    p two1=c(two);
     cc(one);
     cc(two);
-    return c(two);
+    return two1;
   }
 }
 
@@ -572,15 +598,17 @@ p x(p one,p two)
   co();
   if(as(c(one)))
   {
+    p two1=no(c(two));
     cc(one);
     cc(two);
-    return no(c(two));
+    return two1;
   }
   else
   {
+    p two1=c(two);
     cc(one);
     cc(two);
-    return c(two);
+    return two1;
   }
 }
 
@@ -602,10 +630,11 @@ p push1(p one,p two,p three,ull left,ull middle,ull right,ull total)
   {
     three[i]=two[i-middle];
   }
+  p three1=c(three);
   cc(one);
   cc(two);
   cc(three);
-  return c(three);
+  return three1;
 }
 
 p push(p one,p two)
@@ -619,9 +648,11 @@ p push(p one,p two)
   ull x3=t1+s2+x2;
   ull s3=selfExtent(x3);
   ull x4=s3+x3;
+  p one1=c(one);
+  p two1=c(two);
   cc(one);
   cc(two);
-  return push1(c(one),c(two),uArrayNew(x4),s3,s3+t1,x4,x3);
+  return push1(one1,two1,uArrayNew(x4),s3,s3+t1,x4,x3);
 }
 
 p top(p list)
@@ -629,8 +660,9 @@ p top(p list)
   co();
   ull x=extent(list);
   ull s=selfExtent(x);
+  p list1=c(list+s);
   cc(list);
-  return c(list+s);
+  return list1;
 }
 
 p pop(p list)
@@ -640,8 +672,9 @@ p pop(p list)
   ull s=selfExtent(x);
   ull tx=extent(list+s);
   ull ts=selfExtent(tx);
+  p list1=c(list+s+ts+tx);
   cc(list);
-  return c(list+s+ts+tx);
+  return list1;
 }
 
 p rv1(p list,p collect)
@@ -677,9 +710,6 @@ p rv(p list)
 
 p ap1(p one,p two,p collect)
 {
-  displaySpace(c(one));
-  displaySpace(c(two));
-  displayLine(c(collect));
   co();
   if(as(nu(c(one))))
   {
