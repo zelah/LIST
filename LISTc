@@ -663,7 +663,6 @@ p rv1(p list,p collect)
     collect1=push(top(list2),collect1);
     cc(list);
     cc(collect);
-    cc(list2);
     return rv1(list1,collect1);
   }
 }
