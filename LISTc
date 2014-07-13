@@ -649,9 +649,10 @@ p rv1(p list,p collect)
   co();
   if(as(nu(c(list))))
   {
+    p collect1=c(collect);
     cc(list);
     cc(collect);
-    return c(collect);
+    return collect1;
   }
   else
   {
@@ -659,8 +660,7 @@ p rv1(p list,p collect)
     p list2=c(list);
     p collect1=c(collect);
     list1=pop(list1);
-    list2=top(list2);
-    collect1=push(list2,collect1);
+    collect1=push(top(list2),collect1);
     cc(list);
     cc(collect);
     return rv1(list1,collect1);
@@ -670,8 +670,9 @@ p rv1(p list,p collect)
 p rv(p list)
 {
   co();
+  p list1=c(list);
   cc(list);
-  return rv1(c(list),n(""));
+  return rv1(list1,n(""));
 }
 
 p app1(p one,p two,p collect)
