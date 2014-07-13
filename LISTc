@@ -655,11 +655,11 @@ p rv1(p list,p collect)
   }
   else
   {
-    cc(list);
-    cc(collect);
-    p list1=c(list);
     p list2=c(list);
-    return rv1(pop(list1),push(top(list2),c(collect)));
+    cc(list);
+    cc(list2);
+    cc(collect);
+    return rv1(pop(c(list)),push(top(c(list2)),c(collect)));
   }
 }
 
@@ -806,8 +806,9 @@ p rd(p (*f)(p,p),p fin,p list)
 int main()
 {
 gl=glNew();
-//p list2=push(n("#false"),push(n("first"),push(n("second"),n(""))));
-//displayLine(rv(c(list2)));
+p list2=push(n("#false"),push(n("first"),push(n("second"),n(""))));
+displayLine(c(list2));
+displayLine(rv(c(list2)));
 //displayLine(nu(c(list2)));
 //displayLine(app(c(list2),c(list2)));
 line();
