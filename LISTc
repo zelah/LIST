@@ -524,7 +524,7 @@ p nu(p list)
   return (extent(list)==0)?list1:n("#fals");
 }
 
-u asValue(p list)
+u asv(p list)
 {
   co();
   ull x=extent(list);
