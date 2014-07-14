@@ -388,6 +388,130 @@ p ad(p one,p two)
   }
 }
 
+p su1(p one,p two,ull s1,ull t1,ull s2,ull t2,ull borrow)
+{
+  co();
+  if(t1<s1)
+  {
+    p one1=c(one);
+    cc(one);
+    cc(two);
+    return one1;
+  }
+  else if(t2<s2)
+  {
+    if(borrow)
+    {
+      if(one[t1]=='0')
+      {
+        one[t1]='9';
+        p one1=c(one);
+        p two1=c(two);
+        cc(one);
+        cc(two);
+        return su1(one1,two1,s1,t1-1,s2,t2,1);
+      }
+      else
+      {
+        --(one[t1]);
+        p one1=c(one);
+        p two1=c(two);
+        cc(one);
+        cc(two);
+        return su1(one1,two1,s1,t1-1,s2,t2,0);
+      }
+    }
+    else
+    {
+      p one1=c(one);
+      cc(one);
+      cc(two);
+      return one1;
+    }
+  }
+  else
+  {
+    u futureBorrow=((10+one[t1]-two[t2]-borrow)<10);
+    if(futureBorrow)
+    {
+      one[t1]=10+one[t1]-two[t2]-borrow+'0';
+      p one1=c(one);
+      p two1=c(two);
+      cc(one);
+      cc(two);
+      return su1(one1,two1,s1,t1-1,s2,t2-1,1);
+    }
+    else
+    {
+      one[t1]=one[t1]-two[t2]-borrow+'0';
+      p one1=c(one);
+      p two1=c(two);
+      cc(one);
+      cc(two);
+      return su1(one1,two1,s1,t1-1,s2,t2-1,0);
+    }
+  }
+}
+
+void su2(p list,ull ext,ull index)
+{
+  ull i;
+  for(i=index;i>0;--i)
+  {
+    list[i]=ext%10+'0';ext/=10;
+  }
+}
+
+p su3(p list)
+{
+  co();
+  ull x=extent(list);
+  ull s=selfExtent(x);
+  if(list[s]=='0')
+  {
+    ull t=s+x;
+    while(s<t-1&&list[s]=='0')
+    {
+      ++s;
+    }
+    ull ext=t-s;
+    ull sel=selfExtent(ext);
+    p temp=uArrayNew(sel+ext);
+    temp[0]='(';
+    temp[sel-1]=')';
+    su2(temp,ext,sel-2);
+    ull i;
+    for(i=sel;i<t;++i)
+    {
+      temp[i]=list[s];
+      ++s;
+    }
+    cc(list);
+    return temp;
+  }
+  else
+  {
+    p list1=c(list);
+    cc(list);
+    return list1;
+  }
+}
+
+p su(p one,p two)
+{
+  co();
+  ull x1=extent(one);
+  ull x2=extent(two);
+  ull s1=selfExtent(x1);
+  ull s2=selfExtent(x2);
+  ull t1=s1+x1;
+  ull t2=s2+x2;
+  p one1=su1(c(one),c(two),s1,t1-1,s2,t2-1,0);
+  cc(one);
+  cc(two);
+  return su3(one1);
+}
+
 p al(p one,p two)
 {
   co();
@@ -904,6 +1028,8 @@ pop(c(list));
 displayLine(top(c(list)));
 line();
 displayLine(ad(c(num),c(num)));
+line();
+displayLine(su(c(num),su(c(num),n("999999"))));
 line();
 displayLine(a(n("#fals"),n("#false")));
 line();
