@@ -648,6 +648,14 @@ p nu(p list)
   return (extent(list)==0)?list1:n("#fals");
 }
 
+u as(p list)
+{
+  co();
+  ull x=extent(list);
+  cc(list);
+  return !(x==5&&list[3]=='#'&&list[4]=='f'&&list[5]=='a'&&list[6]=='l'&&list[7]=='s');
+}
+
 u asv(p list)
 {
   co();
@@ -656,12 +664,12 @@ u asv(p list)
   return !(x==5&&list[3]=='#'&&list[4]=='f'&&list[5]=='a'&&list[6]=='l'&&list[7]=='s')&&!(x==6&&list[3]=='#'&&list[4]=='f'&&list[5]=='a'&&list[6]=='l'&&list[7]=='s'&&list[8]=='e');
 }
 
-u as(p list)
+u tr(p list)
 {
   co();
-  ull x=extent(list);
+  u result=as(c(list))+asv(c(list));
   cc(list);
-  return !(x==5&&list[3]=='#'&&list[4]=='f'&&list[5]=='a'&&list[6]=='l'&&list[7]=='s');
+  return result;
 }
 
 p no(p one)
@@ -998,6 +1006,7 @@ p mn(p one,p two)
 int main()
 {
 gl=glNew();
+printf("%d%d%d\n",tr(n("#fals")),tr(n("#false")),tr(n("123")));
 p list2=push(n("#fals"),push(n("first"),push(n("second"),n(""))));
 displayLine(c(list2));
 displayLine(rv(c(list2)));
