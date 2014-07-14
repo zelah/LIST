@@ -413,7 +413,7 @@ p su1(p one,p two,ull s1,ull t1,ull s2,ull t2,ull borrow)
       }
       else
       {
-        --one[t1];
+        --(one[t1]);
         p one1=c(one);
         p two1=c(two);
         cc(one);
@@ -995,83 +995,6 @@ p mn(p one,p two)
   return o(one1,two1);
 }
 
-p db(p number)
-{
-  co();
-  p result=ad(c(number),c(number));
-  cc(number);
-  return result;
-}
-
-p mu1(p one,p tryOne,p two,p tryTwo,p product)
-{
-  co();
-  if(as(nu(c(tryOne))))
-  {
-    p result=c(product);
-    cc(one);
-    cc(tryOne);
-    cc(two);
-    cc(tryTwo);
-    cc(product);
-    return result;
-  }
-  else if(as(gt(top(c(tryOne)),c(one))))
-  {
-    p result=mu1(c(one),pop(c(tryOne)),c(two),pop(c(tryTwo)),c(product));
-    cc(one);
-    cc(tryOne);
-    cc(two);
-    cc(tryTwo);
-    cc(product);
-    return result;
-  }
-  else
-  {
-    p result=mu1(su(c(one),top(c(tryOne))),pop(c(tryOne)),c(two),pop(c(tryTwo)),ad(c(product),top(c(tryTwo))));
-    cc(one);
-    cc(tryOne);
-    cc(two);
-    cc(tryTwo);
-    cc(product);
-    return result;
-  }
-}
-
-p mu2(p one,p tryOne,p two,p tryTwo,p product)
-{
-  co();
-  if(as(gt(top(c(tryOne)),c(one))))
-  {
-    p result=mu1(c(one),pop(c(tryOne)),c(two),pop(c(tryTwo)),c(product));
-    cc(one);
-    cc(tryOne);
-    cc(two);
-    cc(tryTwo);
-    cc(product);
-    return result;
-  }
-  else
-  {
-    p result=mu2(c(one),push(db(top(c(tryOne))),c(tryOne)),c(two),push(db(top(c(tryTwo))),c(tryTwo)),c(product));
-    cc(one);
-    cc(tryOne);
-    cc(two);
-    cc(tryTwo);
-    cc(product);
-    return result;
-  }
-}
-
-p mu(p one,p two)
-{
-  co();
-  p result=mu2(c(one),push(n("1"),n("")),c(two),push(c(two),n("")),n("0"));
-  cc(one);
-  cc(two);
-  return result;
-}
-
 int main()
 {
 gl=glNew();
@@ -1107,8 +1030,6 @@ line();
 displayLine(ad(c(num),c(num)));
 line();
 displayLine(su(c(num),su(c(num),n("999999"))));
-line();
-displayLine(mu(n("333"),n("3")));
 line();
 displayLine(a(n("#fals"),n("#false")));
 line();
