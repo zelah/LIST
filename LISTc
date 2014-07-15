@@ -13,15 +13,22 @@ union V
   long lo;
   unsigned long ul;
   long long ll;
-  unsigned long long uu;
+  unsigned long long ull;
+  float fl;
   double db;
   long double ld;
   union V *pointer;
+  union V (*zero)();
   union V (*one)(union V);
   union V (*two)(union V,union V);
   union V (*three)(union V,union V,union V);
   union V (*four)(union V,union V,union V,union V);
   union V (*five)(union V,union V,union V,union V,union V);
+  union V (*six)(union V,union V,union V,union V,union V,union V);
+  union V (*seven)(union V,union V,union V,union V,union V,union V,union V);
+  union V (*eight)(union V,union V,union V,union V,union V,union V,union V,union V);
+  union V (*nine)(union V,union V,union V,union V,union V,union V,union V,union V,union V);
+  union V (*ten)(union V,union V,union V,union V,union V,union V,union V,union V,union V,union V);
 };
 typedef union V v;
 
@@ -40,5 +47,6 @@ int main()
   value=function.one(value);
   printf("%c\n",value.uc);
   printf("%d\n",sizeof(v));
+  printf("%d\n",sizeof(char));
   return 0;
 }
