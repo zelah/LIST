@@ -18,17 +18,27 @@ union Z
   double db;
   long double ld;
   union Z *next;
-  union Z (*zero)();
-  union Z (*one)(union Z);
-  union Z (*two)(union Z,union Z);
-  union Z (*three)(union Z,union Z,union Z);
-  union Z (*four)(union Z,union Z,union Z,union Z);
-  union Z (*five)(union Z,union Z,union Z,union Z,union Z);
-  union Z (*six)(union Z,union Z,union Z,union Z,union Z,union Z);
-  union Z (*seven)(union Z,union Z,union Z,union Z,union Z,union Z,union Z);
-  union Z (*eight)(union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z);
-  union Z (*nine)(union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z);
-  union Z (*ten)(union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z);
+  union Z (*f0)();
+  union Z (*f1)(union Z);
+  union Z (*f2)(union Z,union Z);
+  union Z (*f3)(union Z,union Z,union Z);
+  union Z (*f4)(union Z,union Z,union Z,union Z);
+  union Z (*f5)(union Z,union Z,union Z,union Z,union Z);
+  union Z (*f6)(union Z,union Z,union Z,union Z,union Z,union Z);
+  union Z (*f7)(union Z,union Z,union Z,union Z,union Z,union Z,union Z);
+  union Z (*f8)(union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z);
+  union Z (*f9)(union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z);
+  union Z (*f10)(union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z);
+  union Z (*f11)(union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z);
+  union Z (*f12)(union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z);
+  union Z (*f13)(union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z);
+  union Z (*f14)(union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z);
+  union Z (*f15)(union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z);
+  union Z (*f16)(union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z);
+  union Z (*f17)(union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z);
+  union Z (*f18)(union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z);
+  union Z (*f19)(union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z);
+  union Z (*f20)(union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z);
 };
 typedef union Z z;
 
@@ -40,11 +50,11 @@ z ident(z one)
 int main()
 {
   z value;
-  z function;
+  z f;
   value.uc='Z';
-  function.one=&ident;
+  f.f1=&ident;
 
-  value=function.one(value);
+  value=f.f1(value);
   printf("%c\n",value.uc);
   printf("%d\n",sizeof(z));
   printf("%d\n",sizeof(char));
