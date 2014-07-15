@@ -1,1 +1,44 @@
+#include<stdio.h>
+#include<stdlib.h>
 
+typedef union V V;
+union V
+{
+  char ch;
+  unsigned char uc;
+  short sh;
+  unsigned short us;
+  int in;
+  unsigned int ui;
+  long lo;
+  unsigned long ul;
+  long long ll;
+  unsigned long long uu;
+  double db;
+  long double ld;
+  union V *pointer;
+  union V (*one)(union V);
+  union V (*two)(union V,union V);
+  union V (*three)(union V,union V,union V);
+  union V (*four)(union V,union V,union V,union V);
+  union V (*five)(union V,union V,union V,union V,union V);
+};
+typedef union V v;
+
+v ident(v one)
+{
+  return one;
+}
+
+int main()
+{
+  v value;
+  v function;
+  value.uc='Z';
+  function.one=&ident;
+
+  value=function.one(value);
+  printf("%c\n",value.uc);
+  printf("%d\n",sizeof(v));
+  return 0;
+}
