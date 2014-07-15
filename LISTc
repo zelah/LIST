@@ -41,21 +41,43 @@ union Z
   union Z (*f20)(union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z);
 };
 typedef union Z z;
+typedef z* p;
+typedef char ch;
+typedef unsigned char uc;
+typedef short sh;
+typedef unsigned short us;
+typedef int in;
+typedef unsigned int ui;
+typedef long lo;
+typedef unsigned long ul;
+typedef long long ll;
+typedef unsigned long long ull;
+typedef float fl;
+typedef double db;
+typedef long double ld;
 
-z ident(z one)
+p arrayNew(ull size)
+{
+  return (p)malloc(size*sizeof(z));
+}
+
+z identity(z one)
 {
   return one;
 }
 
 int main()
 {
-  z value;
+  z v;
   z f;
-  value.uc='Z';
-  f.f1=&ident;
+  p array;
+  v.uc='Z';
+  f.f1=&identity;
+  array=arrayNew(222);
+  array[0].f1=f.f1;
 
-  value=f.f1(value);
-  printf("%c\n",value.uc);
+  v=array[0].f1(v);
+  printf("%c\n",v.uc);
   printf("%d\n",sizeof(z));
   printf("%d\n",sizeof(char));
   return 0;
