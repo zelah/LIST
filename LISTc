@@ -1,8 +1,8 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-typedef union Z Z;
-union Z
+typedef union z z;
+union z
 {
   char ch;
   unsigned char uc;
@@ -22,30 +22,29 @@ union Z
   float fl;
   double db;
   long double ld;
-  union Z *p;
-  union Z (*f0)();
-  union Z (*f1)(union Z);
-  union Z (*f2)(union Z,union Z);
-  union Z (*f3)(union Z,union Z,union Z);
-  union Z (*f4)(union Z,union Z,union Z,union Z);
-  union Z (*f5)(union Z,union Z,union Z,union Z,union Z);
-  union Z (*f6)(union Z,union Z,union Z,union Z,union Z,union Z);
-  union Z (*f7)(union Z,union Z,union Z,union Z,union Z,union Z,union Z);
-  union Z (*f8)(union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z);
-  union Z (*f9)(union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z);
-  union Z (*f10)(union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z);
-  union Z (*f11)(union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z);
-  union Z (*f12)(union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z);
-  union Z (*f13)(union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z);
-  union Z (*f14)(union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z);
-  union Z (*f15)(union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z);
-  union Z (*f16)(union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z);
-  union Z (*f17)(union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z);
-  union Z (*f18)(union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z);
-  union Z (*f19)(union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z);
-  union Z (*f20)(union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z);
+  z *p;
+  z (*f0)();
+  z (*f1)(z);
+  z (*f2)(z,z);
+  z (*f3)(z,z,z);
+  z (*f4)(z,z,z,z);
+  z (*f5)(z,z,z,z,z);
+  z (*f6)(z,z,z,z,z,z);
+  z (*f7)(z,z,z,z,z,z,z);
+  z (*f8)(z,z,z,z,z,z,z,z);
+  z (*f9)(z,z,z,z,z,z,z,z,z);
+  z (*f10)(z,z,z,z,z,z,z,z,z,z);
+  z (*f11)(z,z,z,z,z,z,z,z,z,z,z);
+  z (*f12)(z,z,z,z,z,z,z,z,z,z,z,z);
+  z (*f13)(z,z,z,z,z,z,z,z,z,z,z,z,z);
+  z (*f14)(z,z,z,z,z,z,z,z,z,z,z,z,z,z);
+  z (*f15)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
+  z (*f16)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
+  z (*f17)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
+  z (*f18)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
+  z (*f19)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
+  z (*f20)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
 };
-typedef union Z z;
 typedef char ch;
 typedef unsigned char uc;
 typedef signed char sc;
@@ -86,11 +85,12 @@ typedef z (*f17)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
 typedef z (*f18)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
 typedef z (*f19)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
 typedef z (*f20)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
+const in allocationSize=1024;
 
 p n()
 {
-  p result=(p)malloc((1025)*sizeof(z));
-  result=result+1024;
+  p result=(p)malloc((allocationSize+1)*sizeof(z));
+  result=result+allocationSize;
   result[0].ull=0;
   return result;
 }
@@ -98,6 +98,13 @@ p n()
 ull e(p one)
 {
   return one[0].ull;
+}
+
+void f(p one)
+{
+  ull size=allocationSize*(e(one)/allocationSize+1);
+  one-=size-e(one);
+  free(one);
 }
 
 z identity(z one)
@@ -108,12 +115,12 @@ z identity(z one)
 int main()
 {
   z v;
-  z f;
+  z fu;
   p array;
 
-  v.uc='Z';
-  f.f1=&identity;
-  v=f.f1(v);
+  v.uc='z';
+  fu.f1=&identity;
+  v=fu.f1(v);
   printf("%c\n",v.uc);
   printf("%d\n",sizeof(z));
   printf("%d\n",sizeof(char));
@@ -121,6 +128,7 @@ int main()
   array=n();
   v.ull=e(array);
   printf("%llu\n",v.ull);
+  f(array);
 
   return 0;
 }
