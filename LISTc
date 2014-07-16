@@ -22,7 +22,7 @@ union Z
   float fl;
   double db;
   long double ld;
-  union Z *next;
+  union Z *p;
   union Z (*f0)();
   union Z (*f1)(union Z);
   union Z (*f2)(union Z,union Z);
@@ -46,7 +46,6 @@ union Z
   union Z (*f20)(union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z,union Z);
 };
 typedef union Z z;
-typedef z* p;
 typedef char ch;
 typedef unsigned char uc;
 typedef signed char sc;
@@ -65,7 +64,7 @@ typedef signed long long sll;
 typedef float fl;
 typedef double db;
 typedef long double ld;
-typedef z *next;
+typedef z* p;
 typedef z (*f0)();
 typedef z (*f1)(z);
 typedef z (*f2)(z,z);
