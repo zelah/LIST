@@ -64,7 +64,7 @@ typedef signed long long sll;
 typedef float fl;
 typedef double db;
 typedef long double ld;
-typedef z* p;
+typedef z *p;
 typedef z (*f0)();
 typedef z (*f1)(z);
 typedef z (*f2)(z,z);
@@ -87,9 +87,17 @@ typedef z (*f18)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
 typedef z (*f19)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
 typedef z (*f20)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
 
-p arrayNew(ull size)
+p n()
 {
-  return (p)malloc(size*sizeof(z));
+  p result=(p)malloc((1025)*sizeof(z));
+  result=result+1024;
+  result[0].ull=0;
+  return result;
+}
+
+ull e(p one)
+{
+  return one[0].ull;
 }
 
 z identity(z one)
@@ -102,14 +110,17 @@ int main()
   z v;
   z f;
   p array;
+
   v.uc='Z';
   f.f1=&identity;
-  array=arrayNew(222);
-  array[0].f1=f.f1;
-
-  v=array[0].f1(v);
+  v=f.f1(v);
   printf("%c\n",v.uc);
   printf("%d\n",sizeof(z));
   printf("%d\n",sizeof(char));
+
+  array=n();
+  v.ull=e(array);
+  printf("%llu\n",v.ull);
+
   return 0;
 }
