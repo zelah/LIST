@@ -65,6 +65,28 @@ typedef signed long long sll;
 typedef float fl;
 typedef double db;
 typedef long double ld;
+typedef z *next;
+typedef z (*f0)();
+typedef z (*f1)(z);
+typedef z (*f2)(z,z);
+typedef z (*f3)(z,z,z);
+typedef z (*f4)(z,z,z,z);
+typedef z (*f5)(z,z,z,z,z);
+typedef z (*f6)(z,z,z,z,z,z);
+typedef z (*f7)(z,z,z,z,z,z,z);
+typedef z (*f8)(z,z,z,z,z,z,z,z);
+typedef z (*f9)(z,z,z,z,z,z,z,z,z);
+typedef z (*f10)(z,z,z,z,z,z,z,z,z,z);
+typedef z (*f11)(z,z,z,z,z,z,z,z,z,z,z);
+typedef z (*f12)(z,z,z,z,z,z,z,z,z,z,z,z);
+typedef z (*f13)(z,z,z,z,z,z,z,z,z,z,z,z,z);
+typedef z (*f14)(z,z,z,z,z,z,z,z,z,z,z,z,z,z);
+typedef z (*f15)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
+typedef z (*f16)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
+typedef z (*f17)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
+typedef z (*f18)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
+typedef z (*f19)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
+typedef z (*f20)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
 
 p arrayNew(ull size)
 {
