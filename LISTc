@@ -85,7 +85,7 @@ typedef z (*f17)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
 typedef z (*f18)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
 typedef z (*f19)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
 typedef z (*f20)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
-const ull allocationBlockSize=1024;
+const ull allocationBlockSize=4;
 
 z n()
 {
@@ -108,6 +108,49 @@ void f(z one)
   free(one.p);
 }
 
+z push(z one,z stack)
+{
+  uc timeToAllocate=e(stack).ull>0&&e(stack).ull%allocationBlockSize==0;
+  if(timeToAllocate)
+  {
+    ull newSize=e(stack).ull+allocationBlockSize+1;
+    z result;
+    result.p=(p)malloc(newSize*sizeof(z));
+    result.p+=allocationBlockSize-1;
+    result.p[0].ull=stack.p[0].ull+1;
+    result.p[1]=one;
+    ++result.p;
+    ull i;
+    ull right=allocationBlockSize+1;
+    for(i=1;i<right;++i)
+    {
+      result.p[i]=stack.p[i];
+    }
+    --result.p;
+    f(stack);
+    return result;
+  }
+  else
+  {
+    --stack.p;
+    stack.p[0].ull=stack.p[1].ull+1;
+    stack.p[1]=one;
+    return stack;
+  }
+}
+
+z pop(z one)
+{
+  one.p[1].ull=one.p[0].ull-1;
+  one.p+=1;
+  return one;
+}
+
+z top(z one)
+{
+  return one.p[1];
+}
+
 z identity(z one)
 {
   return one;
@@ -117,19 +160,35 @@ int main()
 {
   z v;
   z fu;
-  z array;
+  z stack;
 
-  v.uc='Q';
+  v.uc='Z';
   fu.f1=&identity;
   v=fu.f1(v);
   printf("%c\n",v.uc);
   printf("%d\n",sizeof(z));
   printf("%d\n",sizeof(char));
 
-  array=n();
-  v=e(array);
-  printf("%llu\n",v.ull);
-  f(array);
+  stack=n();
+  stack=push(v,stack);
+  printf("%c%llu\n",top(stack).uc,e(stack).ull);
+  v.uc='E';
+  stack=push(v,stack);
+  printf("%c%llu\n",top(stack).uc,e(stack).ull);
+  v.uc='D';
+  stack=push(v,stack);
+  printf("%c%llu\n",top(stack).uc,e(stack).ull);
+  v.uc='E';
+  stack=push(v,stack);
+  printf("%c%llu\n",top(stack).uc,e(stack).ull);
+  v.uc='D';
+  stack=push(v,stack);
+  printf("%c%llu\n",top(stack).uc,e(stack).ull);
+  stack=pop(stack);
+  printf("%c%llu\n",top(stack).uc,e(stack).ull);
+  stack=pop(stack);
+  printf("%c%llu\n",top(stack).uc,e(stack).ull);
+  f(stack);  
 
   return 0;
 }
