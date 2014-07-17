@@ -2,49 +2,6 @@
 #include<stdlib.h>
 
 typedef union z z;
-union z
-{
-  char ch;
-  unsigned char uc;
-  signed char sc;
-  short sh;
-  unsigned short us;
-  signed short ss;
-  int in;
-  unsigned int ui;
-  signed int si;
-  long lo;
-  unsigned long ul;
-  signed long sl;
-  long long ll;
-  unsigned long long ull;
-  signed long long sll;
-  float fl;
-  double db;
-  long double ld;
-  z *p;
-  z (*f0)();
-  z (*f1)(z);
-  z (*f2)(z,z);
-  z (*f3)(z,z,z);
-  z (*f4)(z,z,z,z);
-  z (*f5)(z,z,z,z,z);
-  z (*f6)(z,z,z,z,z,z);
-  z (*f7)(z,z,z,z,z,z,z);
-  z (*f8)(z,z,z,z,z,z,z,z);
-  z (*f9)(z,z,z,z,z,z,z,z,z);
-  z (*f10)(z,z,z,z,z,z,z,z,z,z);
-  z (*f11)(z,z,z,z,z,z,z,z,z,z,z);
-  z (*f12)(z,z,z,z,z,z,z,z,z,z,z,z);
-  z (*f13)(z,z,z,z,z,z,z,z,z,z,z,z,z);
-  z (*f14)(z,z,z,z,z,z,z,z,z,z,z,z,z,z);
-  z (*f15)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
-  z (*f16)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
-  z (*f17)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
-  z (*f18)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
-  z (*f19)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
-  z (*f20)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
-};
 typedef char ch;
 typedef unsigned char uc;
 typedef signed char sc;
@@ -85,13 +42,14 @@ typedef z (*f17)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
 typedef z (*f18)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
 typedef z (*f19)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
 typedef z (*f20)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
-const in allocationSize=1024;
+union z{ch ch;uc uc;sc sc;sh sh;us us;ss ss;in in;ui ui;si si;lo lo;ul ul;sl sl;ll ll;ull ull;sll sll;fl fl;db db;ld ld;p p;f0 f0;f1 f1;f2 f2;f3 f3;f4 f4;f5 f5;f6 f6;f7 f7;f8 f8;f9 f9;f10 f10;f11 f11;f12 f12;f13 f13;f14 f14;f15 f15;f16 f16;f17 f17;f18 f18;f19 f19;f20 f20;};
+const ull allocationBlockSize=1024;
 
 z n()
 {
   z result;
-  result.p=(p)malloc((allocationSize+1)*sizeof(z));
-  result.p=result.p+allocationSize;
+  result.p=(p)malloc((allocationBlockSize+1)*sizeof(z));
+  result.p=result.p+allocationBlockSize;
   result.p[0].ull=0;
   return result;
 }
@@ -103,7 +61,7 @@ z e(z one)
 
 void f(z one)
 {
-  ull size=allocationSize*(e(one).ull/allocationSize+1);
+  ull size=allocationBlockSize*(e(one).ull/allocationBlockSize+1);
   one.p-=size-e(one).ull;
   free(one.p);
 }
@@ -119,7 +77,7 @@ int main()
   z fu;
   z array;
 
-  v.uc='Q';
+  v.uc='R';
   fu.f1=&identity;
   v=fu.f1(v);
   printf("%c\n",v.uc);
