@@ -108,6 +108,20 @@ void f(z one)
   free(one.p);
 }
 
+z c(z one)
+{
+  ull size=allocationBlockSize*((e(one).ull-1)/allocationBlockSize+1)+1;
+  z result;
+  result.p=(p)malloc(size*sizeof(z));
+  result.p+=size-1-e(one).ull;
+  ull i;
+  for(i=0;i<size;++i)
+  {
+    result.p[i]=one.p[i];
+  }
+  return result;
+}
+
 z push(z one,z stack)
 {
   uc timeToAllocate=e(stack).ull>0&&e(stack).ull%allocationBlockSize==0;
@@ -203,6 +217,7 @@ int main()
   printf("%c%llu\n",top(stack).uc,e(stack).ull);
   v.uc='Z';
   stack=push(v,stack);
+  stack=c(stack);
   printf("%c%llu\n",top(stack).uc,e(stack).ull);
   stack=pop(stack);
   printf("%c%llu\n",top(stack).uc,e(stack).ull);
