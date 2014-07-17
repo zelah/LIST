@@ -87,24 +87,25 @@ typedef z (*f19)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
 typedef z (*f20)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
 const in allocationSize=1024;
 
-p n()
+z n()
 {
-  p result=(p)malloc((allocationSize+1)*sizeof(z));
-  result=result+allocationSize;
-  result[0].ull=0;
+  z result;
+  result.p=(p)malloc((allocationSize+1)*sizeof(z));
+  result.p=result.p+allocationSize;
+  result.p[0].ull=0;
   return result;
 }
 
-ull e(p one)
+ull e(z one)
 {
-  return one[0].ull;
+  return one.p[0].ull;
 }
 
-void f(p one)
+void f(z one)
 {
   ull size=allocationSize*(e(one)/allocationSize+1);
-  one-=size-e(one);
-  free(one);
+  one.p-=size-e(one);
+  free(one.p);
 }
 
 z identity(z one)
@@ -116,9 +117,9 @@ int main()
 {
   z v;
   z fu;
-  p array;
+  z array;
 
-  v.uc='z';
+  v.uc='Q';
   fu.f1=&identity;
   v=fu.f1(v);
   printf("%c\n",v.uc);
