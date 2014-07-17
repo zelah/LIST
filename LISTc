@@ -96,15 +96,15 @@ z n()
   return result;
 }
 
-ull e(z one)
+z e(z one)
 {
-  return one.p[0].ull;
+  return one.p[0];
 }
 
 void f(z one)
 {
-  ull size=allocationSize*(e(one)/allocationSize+1);
-  one.p-=size-e(one);
+  ull size=allocationSize*(e(one).ull/allocationSize+1);
+  one.p-=size-e(one).ull;
   free(one.p);
 }
 
@@ -127,7 +127,7 @@ int main()
   printf("%d\n",sizeof(char));
 
   array=n();
-  v.ull=e(array);
+  v=e(array);
   printf("%llu\n",v.ull);
   f(array);
 
