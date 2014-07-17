@@ -103,7 +103,7 @@ z e(z one)
 
 void f(z one)
 {
-  ull size=allocationBlockSize*(e(one).ull/allocationBlockSize+1);
+  ull size=allocationBlockSize*((e(one).ull-1)/allocationBlockSize+1);
   one.p-=size-e(one).ull;
   free(one.p);
 }
@@ -127,8 +127,7 @@ z push(z one,z stack)
       result.p[i]=stack.p[i];
     }
     --result.p;
-printf("u%llu\n",e(stack).ull);
-    //f(stack);
+    f(stack);
     return result;
   }
   else
@@ -156,7 +155,6 @@ z pop(z stack)
       result.p[i]=stack.p[i];
     }
     --stack.p;
-printf("o%llu\n",e(stack).ull);
     f(stack);
     return result;
   }
@@ -203,14 +201,13 @@ int main()
   v.uc='E';
   stack=push(v,stack);
   printf("%c%llu\n",top(stack).uc,e(stack).ull);
-  v.uc='D';
+  v.uc='Z';
   stack=push(v,stack);
   printf("%c%llu\n",top(stack).uc,e(stack).ull);
   stack=pop(stack);
   printf("%c%llu\n",top(stack).uc,e(stack).ull);
   stack=pop(stack);
   printf("%c%llu\n",top(stack).uc,e(stack).ull);
-printf("m%llu\n",e(stack).ull);
   f(stack);  
 
   return 0;
