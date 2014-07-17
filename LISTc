@@ -208,6 +208,12 @@ int main()
   printf("%c%llu\n",top(stack).uc,e(stack).ull);
   stack=pop(stack);
   printf("%c%llu\n",top(stack).uc,e(stack).ull);
+  stack=pop(stack);
+  printf("%c%llu\n",top(stack).uc,e(stack).ull);
+  stack=pop(stack);
+  printf("%c%llu\n",top(stack).uc,e(stack).ull);
+  stack=pop(stack);
+  printf("%llu\n",e(stack).ull);
   f(stack);  
 
   return 0;
