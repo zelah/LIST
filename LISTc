@@ -127,7 +127,8 @@ z push(z one,z stack)
       result.p[i]=stack.p[i];
     }
     --result.p;
-    f(stack);
+printf("u%llu\n",e(stack).ull);
+    //f(stack);
     return result;
   }
   else
@@ -139,16 +140,37 @@ z push(z one,z stack)
   }
 }
 
-z pop(z one)
+z pop(z stack)
 {
-  one.p[1].ull=one.p[0].ull-1;
-  one.p+=1;
-  return one;
+  uc timeToReclaim=e(stack).ull%allocationBlockSize==1;
+  if(timeToReclaim)
+  {
+    ull newSize=e(stack).ull;
+    z result;
+    result.p=(p)malloc(newSize*sizeof(z));
+    result.p[0].ull=stack.p[0].ull-1;
+    ++stack.p;
+    ull i;
+    for(i=1;i<newSize;++i)
+    {
+      result.p[i]=stack.p[i];
+    }
+    --stack.p;
+printf("o%llu\n",e(stack).ull);
+    f(stack);
+    return result;
+  }
+  else
+  {
+    stack.p[1].ull=stack.p[0].ull-1;
+    stack.p+=1;
+    return stack;
+  }
 }
 
-z top(z one)
+z top(z stack)
 {
-  return one.p[1];
+  return stack.p[1];
 }
 
 z identity(z one)
@@ -188,6 +210,7 @@ int main()
   printf("%c%llu\n",top(stack).uc,e(stack).ull);
   stack=pop(stack);
   printf("%c%llu\n",top(stack).uc,e(stack).ull);
+printf("m%llu\n",e(stack).ull);
   f(stack);  
 
   return 0;
