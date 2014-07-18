@@ -91,7 +91,7 @@ z n()
 {
   z result;
   result.y=(y)malloc((allocationBlockSize+1)*sizeof(z));
-  result.y=result.y+allocationBlockSize;
+  result.y+=allocationBlockSize;
   result.y[0].ul=0;
   return result;
 }
@@ -185,6 +185,29 @@ z top(z stack)
   return stack.y[1];
 }
 
+z u(z one,z two)
+{
+  ul size=e(one).ul+e(two).ul+2;
+  z result;
+  result.y=(y)malloc((size+1)*sizeof(z));
+  result.y[0].ul=size;
+  ++result.y;
+  ul i;
+  for(i=0;i<=e(one).ul;++i)
+  {
+    result.y[i]=one.y[i];
+  }
+  result.y+=i;
+  for(i=0;i<=e(two).ul;++i)
+  {
+    result.y[i]=two.y[i];
+  }
+  result.y-=e(one).ul+2;
+  f(one);
+  f(two);
+  return result;
+}
+
 z identity(z one)
 {
   return one;
@@ -231,5 +254,12 @@ int main()
   printf("%llu\n",e(stack).ul);
   f(stack);  
 
+  v.uc='Z';
+  stack=n();
+  //stack=push(v,stack);
+  //stack=push(v,stack);
+  //stack=push(v,stack);
+  
+  f(stack);
   return 0;
 }
