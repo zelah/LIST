@@ -17,8 +17,8 @@ union z
   unsigned long ul;
   signed long sl;
   long long ll;
-  unsigned long long ull;
-  signed long long sll;
+  unsigned long long u;
+  signed long long s;
   float fl;
   double db;
   long double ld;
@@ -58,8 +58,8 @@ typedef long lo;
 typedef unsigned long ul;
 typedef signed long sl;
 typedef long long ll;
-typedef unsigned long long ull;
-typedef signed long long sll;
+typedef unsigned long long u;
+typedef signed long long s;
 typedef float fl;
 typedef double db;
 typedef long double ld;
@@ -85,14 +85,14 @@ typedef z (*f17)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
 typedef z (*f18)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
 typedef z (*f19)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
 typedef z (*f20)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
-const ull allocationBlockSize=4;
+const u allocationBlockSize=4;
 
 z n()
 {
   z result;
   result.y=(y)malloc((allocationBlockSize+1)*sizeof(z));
   result.y=result.y+allocationBlockSize;
-  result.y[0].ull=0;
+  result.y[0].u=0;
   return result;
 }
 
@@ -103,18 +103,18 @@ z e(z one)
 
 void f(z one)
 {
-  ull size=allocationBlockSize*((e(one).ull-1)/allocationBlockSize+1);
-  one.y-=size-e(one).ull;
+  u size=allocationBlockSize*((e(one).u-1)/allocationBlockSize+1);
+  one.y-=size-e(one).u;
   free(one.y);
 }
 
 z c(z one)
 {
-  ull size=allocationBlockSize*((e(one).ull-1)/allocationBlockSize+1)+1;
+  u size=allocationBlockSize*((e(one).u-1)/allocationBlockSize+1)+1;
   z result;
   result.y=(y)malloc(size*sizeof(z));
-  result.y+=size-1-e(one).ull;
-  ull i;
+  result.y+=size-1-e(one).u;
+  u i;
   for(i=0;i<size;++i)
   {
     result.y[i]=one.y[i];
@@ -124,18 +124,18 @@ z c(z one)
 
 z push(z one,z stack)
 {
-  uc timeToAllocate=e(stack).ull>0&&e(stack).ull%allocationBlockSize==0;
+  uc timeToAllocate=e(stack).u>0&&e(stack).u%allocationBlockSize==0;
   if(timeToAllocate)
   {
-    ull newSize=e(stack).ull+allocationBlockSize+1;
+    u newSize=e(stack).u+allocationBlockSize+1;
     z result;
     result.y=(y)malloc(newSize*sizeof(z));
     result.y+=allocationBlockSize-1;
-    result.y[0].ull=stack.y[0].ull+1;
+    result.y[0].u=stack.y[0].u+1;
     result.y[1]=one;
     ++result.y;
-    ull i;
-    ull right=allocationBlockSize+1;
+    u i;
+    u right=allocationBlockSize+1;
     for(i=1;i<right;++i)
     {
       result.y[i]=stack.y[i];
@@ -147,7 +147,7 @@ z push(z one,z stack)
   else
   {
     --stack.y;
-    stack.y[0].ull=stack.y[1].ull+1;
+    stack.y[0].u=stack.y[1].u+1;
     stack.y[1]=one;
     return stack;
   }
@@ -155,15 +155,15 @@ z push(z one,z stack)
 
 z pop(z stack)
 {
-  uc timeToReclaim=e(stack).ull%allocationBlockSize==1;
+  uc timeToReclaim=e(stack).u%allocationBlockSize==1;
   if(timeToReclaim)
   {
-    ull newSize=e(stack).ull;
+    u newSize=e(stack).u;
     z result;
     result.y=(y)malloc(newSize*sizeof(z));
-    result.y[0].ull=stack.y[0].ull-1;
+    result.y[0].u=stack.y[0].u-1;
     ++stack.y;
-    ull i;
+    u i;
     for(i=1;i<newSize;++i)
     {
       result.y[i]=stack.y[i];
@@ -174,7 +174,7 @@ z pop(z stack)
   }
   else
   {
-    stack.y[1].ull=stack.y[0].ull-1;
+    stack.y[1].u=stack.y[0].u-1;
     stack.y+=1;
     return stack;
   }
@@ -193,42 +193,42 @@ z identity(z one)
 int main()
 {
   z v;
-  z fu;
+  z fun;
   z stack;
 
   v.uc='Z';
-  fu.f1=&identity;
-  v=fu.f1(v);
+  fun.f1=&identity;
+  v=fun.f1(v);
   printf("%c\n",v.uc);
   printf("%d\n",sizeof(z));
   printf("%d\n",sizeof(char));
 
   stack=n();
   stack=push(v,stack);
-  printf("%c%llu\n",top(stack).uc,e(stack).ull);
+  printf("%c%llu\n",top(stack).uc,e(stack).u);
   v.uc='E';
   stack=push(v,stack);
-  printf("%c%llu\n",top(stack).uc,e(stack).ull);
+  printf("%c%llu\n",top(stack).uc,e(stack).u);
   v.uc='D';
   stack=push(v,stack);
-  printf("%c%llu\n",top(stack).uc,e(stack).ull);
+  printf("%c%llu\n",top(stack).uc,e(stack).u);
   v.uc='E';
   stack=push(v,stack);
-  printf("%c%llu\n",top(stack).uc,e(stack).ull);
+  printf("%c%llu\n",top(stack).uc,e(stack).u);
   v.uc='Z';
   stack=push(v,stack);
   stack=c(stack);
-  printf("%c%llu\n",top(stack).uc,e(stack).ull);
+  printf("%c%llu\n",top(stack).uc,e(stack).u);
   stack=pop(stack);
-  printf("%c%llu\n",top(stack).uc,e(stack).ull);
+  printf("%c%llu\n",top(stack).uc,e(stack).u);
   stack=pop(stack);
-  printf("%c%llu\n",top(stack).uc,e(stack).ull);
+  printf("%c%llu\n",top(stack).uc,e(stack).u);
   stack=pop(stack);
-  printf("%c%llu\n",top(stack).uc,e(stack).ull);
+  printf("%c%llu\n",top(stack).uc,e(stack).u);
   stack=pop(stack);
-  printf("%c%llu\n",top(stack).uc,e(stack).ull);
+  printf("%c%llu\n",top(stack).uc,e(stack).u);
   stack=pop(stack);
-  printf("%llu\n",e(stack).ull);
+  printf("%llu\n",e(stack).u);
   f(stack);  
 
   return 0;
