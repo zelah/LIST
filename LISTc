@@ -22,7 +22,7 @@ union z
   float fl;
   double db;
   long double ld;
-  z *p;
+  z *y;
   z (*f0)();
   z (*f1)(z);
   z (*f2)(z,z);
@@ -63,7 +63,7 @@ typedef signed long long sll;
 typedef float fl;
 typedef double db;
 typedef long double ld;
-typedef z *p;
+typedef z *y;
 typedef z (*f0)();
 typedef z (*f1)(z);
 typedef z (*f2)(z,z);
@@ -90,34 +90,34 @@ const ull allocationBlockSize=4;
 z n()
 {
   z result;
-  result.p=(p)malloc((allocationBlockSize+1)*sizeof(z));
-  result.p=result.p+allocationBlockSize;
-  result.p[0].ull=0;
+  result.y=(y)malloc((allocationBlockSize+1)*sizeof(z));
+  result.y=result.y+allocationBlockSize;
+  result.y[0].ull=0;
   return result;
 }
 
 z e(z one)
 {
-  return one.p[0];
+  return one.y[0];
 }
 
 void f(z one)
 {
   ull size=allocationBlockSize*((e(one).ull-1)/allocationBlockSize+1);
-  one.p-=size-e(one).ull;
-  free(one.p);
+  one.y-=size-e(one).ull;
+  free(one.y);
 }
 
 z c(z one)
 {
   ull size=allocationBlockSize*((e(one).ull-1)/allocationBlockSize+1)+1;
   z result;
-  result.p=(p)malloc(size*sizeof(z));
-  result.p+=size-1-e(one).ull;
+  result.y=(y)malloc(size*sizeof(z));
+  result.y+=size-1-e(one).ull;
   ull i;
   for(i=0;i<size;++i)
   {
-    result.p[i]=one.p[i];
+    result.y[i]=one.y[i];
   }
   return result;
 }
@@ -129,26 +129,26 @@ z push(z one,z stack)
   {
     ull newSize=e(stack).ull+allocationBlockSize+1;
     z result;
-    result.p=(p)malloc(newSize*sizeof(z));
-    result.p+=allocationBlockSize-1;
-    result.p[0].ull=stack.p[0].ull+1;
-    result.p[1]=one;
-    ++result.p;
+    result.y=(y)malloc(newSize*sizeof(z));
+    result.y+=allocationBlockSize-1;
+    result.y[0].ull=stack.y[0].ull+1;
+    result.y[1]=one;
+    ++result.y;
     ull i;
     ull right=allocationBlockSize+1;
     for(i=1;i<right;++i)
     {
-      result.p[i]=stack.p[i];
+      result.y[i]=stack.y[i];
     }
-    --result.p;
+    --result.y;
     f(stack);
     return result;
   }
   else
   {
-    --stack.p;
-    stack.p[0].ull=stack.p[1].ull+1;
-    stack.p[1]=one;
+    --stack.y;
+    stack.y[0].ull=stack.y[1].ull+1;
+    stack.y[1]=one;
     return stack;
   }
 }
@@ -160,29 +160,29 @@ z pop(z stack)
   {
     ull newSize=e(stack).ull;
     z result;
-    result.p=(p)malloc(newSize*sizeof(z));
-    result.p[0].ull=stack.p[0].ull-1;
-    ++stack.p;
+    result.y=(y)malloc(newSize*sizeof(z));
+    result.y[0].ull=stack.y[0].ull-1;
+    ++stack.y;
     ull i;
     for(i=1;i<newSize;++i)
     {
-      result.p[i]=stack.p[i];
+      result.y[i]=stack.y[i];
     }
-    --stack.p;
+    --stack.y;
     f(stack);
     return result;
   }
   else
   {
-    stack.p[1].ull=stack.p[0].ull-1;
-    stack.p+=1;
+    stack.y[1].ull=stack.y[0].ull-1;
+    stack.y+=1;
     return stack;
   }
 }
 
 z top(z stack)
 {
-  return stack.p[1];
+  return stack.y[1];
 }
 
 z identity(z one)
