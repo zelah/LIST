@@ -85,7 +85,7 @@ typedef z (*f17)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
 typedef z (*f18)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
 typedef z (*f19)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
 typedef z (*f20)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
-const ul allocationBlockSize=4;
+const ul allocationBlockSize=2;
 
 z n()
 {
@@ -99,6 +99,21 @@ z n()
 z e(z one)
 {
   return one.y[0];
+}
+
+void display(z one)
+{
+  ul i;
+  for(i=1;i<=e(one).ul;++i)
+  {
+    printf("%c",one.y[i].uc);
+  }
+}
+
+void displayLine(z one)
+{
+  display(one);
+  printf("\n");
 }
 
 void f(z one)
@@ -131,7 +146,7 @@ z c(z one)
   return result;
 }
 
-z push(z one,z stack)
+z push(z one,z stack)//problem with allocations
 {
   uc timeToAllocate=e(stack).ul>0&&e(stack).ul%allocationBlockSize==0;
   if(timeToAllocate)
@@ -226,7 +241,9 @@ int main()
   printf("%c%llu\n",top(stack).uc,e(stack).ul);
   v.uc='Z';
   stack=push(v,stack);
+displayLine(stack);
   stack=c(stack);
+displayLine(stack);
   printf("%c%llu\n",top(stack).uc,e(stack).ul);
   stack=pop(stack);
   printf("%c%llu\n",top(stack).uc,e(stack).ul);
