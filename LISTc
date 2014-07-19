@@ -103,8 +103,17 @@ z e(z one)
 
 void f(z one)
 {
-  ul size=allocationBlockSize*((e(one).ul-1)/allocationBlockSize+1);
-  one.y-=size-e(one).ul;
+  ul size;
+  if(e(one).ul)
+  {
+    size=allocationBlockSize*((e(one).ul-1)/allocationBlockSize+1);
+    one.y-=size-e(one).ul;
+  }
+  else
+  {
+    size=allocationBlockSize;
+    one.y-=size;
+  }
   free(one.y);
 }
 
