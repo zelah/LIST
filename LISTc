@@ -164,7 +164,7 @@ z push(z one,z stack)
 
 z pop(z stack)
 {
-  uc timeToReclaim=e(stack).ul%allocationBlockSize==1;
+  uc timeToReclaim=e(stack).ul!=1&&e(stack).ul%allocationBlockSize==1;
   if(timeToReclaim)
   {
     ul newSize=e(stack).ul;
@@ -184,7 +184,7 @@ z pop(z stack)
   else
   {
     stack.y[1].ul=stack.y[0].ul-1;
-    stack.y+=1;
+    ++stack.y;
     return stack;
   }
 }
@@ -265,9 +265,9 @@ int main()
 
   v.uc='Z';
   stack=n();
-  //stack=push(v,stack);
-  //stack=push(v,stack);
-  //stack=push(v,stack);
+  stack=push(v,stack);
+  stack=push(v,stack);
+  stack=push(v,stack);
   
   f(stack);
   return 0;
