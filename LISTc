@@ -159,8 +159,7 @@ z push(z one,z stack)//problem with allocations
     result.y[1]=one;
     ++result.y;
     ul i;
-    ul right=allocationBlockSize+1;
-    for(i=1;i<right;++i)
+    for(i=1;i<=allocationBlockSize;++i)
     {
       result.y[i]=stack.y[i];
     }
@@ -208,7 +207,6 @@ z top(z stack)
 {
   z result;
   result=stack.y[1];
-  f(stack);
   return result;
 }
 
@@ -231,41 +229,41 @@ int main()
   printf("%d\n",sizeof(char));
 
   stack=n();
-  stack=push(v,c(stack));
-  printf("%c%llu\n",top(c(stack)).uc,e(stack).ul);
+  stack=push(v,stack);
+  printf("%c%llu\n",top(stack).uc,e(stack).ul);
   v.uc='E';
-  stack=push(v,c(stack));
-  printf("%c%llu\n",top(c(stack)).uc,e(stack).ul);
+  stack=push(v,stack);
+  printf("%c%llu\n",top(stack).uc,e(stack).ul);
   v.uc='D';
-  stack=push(v,c(stack));
-  printf("%c%llu\n",top(c(stack)).uc,e(stack).ul);
+  stack=push(v,stack);
+  printf("%c%llu\n",top(stack).uc,e(stack).ul);
 /*
   v.uc='E';
-  stack=push(v,c(stack));
-  printf("%c%llu\n",top(c(stack)).uc,e(stack).ul);
+  stack=push(v,stack);
+  printf("%c%llu\n",top(stack).uc,e(stack).ul);
   v.uc='Z';
-  stack=push(v,c(stack));
+  stack=push(v,stack);
 displayLine(stack);
   stack=c(stack);
 displayLine(stack);
-  printf("%c%llu\n",top(c(stack)).uc,e(stack).ul);
-  stack=pop(c(stack));
-  printf("%c%llu\n",top(c(stack)).uc,e(stack).ul);
-  stack=pop(c(stack));
-  printf("%c%llu\n",top(c(stack)).uc,e(stack).ul);
-  stack=pop(c(stack));
-  printf("%c%llu\n",top(c(stack)).uc,e(stack).ul);
-  stack=pop(c(stack));
-  printf("%c%llu\n",top(c(stack)).uc,e(stack).ul);
-  stack=pop(c(stack));
+  printf("%c%llu\n",top(stack).uc,e(stack).ul);
+  stack=pop(stack);
+  printf("%c%llu\n",top(stack).uc,e(stack).ul);
+  stack=pop(stack);
+  printf("%c%llu\n",top(stack).uc,e(stack).ul);
+  stack=pop(stack);
+  printf("%c%llu\n",top(stack).uc,e(stack).ul);
+  stack=pop(stack);
+  printf("%c%llu\n",top(stack).uc,e(stack).ul);
+  stack=pop(stack);
   printf("%llu\n",e(stack).ul);
   f(stack);  
 */
   v.uc='Z';
   stack=n();
-  //stack=push(v,c(stack));
-  //stack=push(v,c(stack));
-  //stack=push(v,c(stack));
+  //stack=push(v,stack);
+  //stack=push(v,stack);
+  //stack=push(v,stack);
   //stack=u(c(stack),c(stack));
   f(stack);
   return 0;
