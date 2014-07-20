@@ -159,7 +159,7 @@ z push(z one,z stack)//problem with allocations
     result.y[1]=one;
     ++result.y;
     ul i;
-    for(i=1;i<=allocationBlockSize;++i)
+    for(i=1;i<=e(stack).ul;++i)
     {
       result.y[i]=stack.y[i];
     }
@@ -237,15 +237,12 @@ int main()
   v.uc='D';
   stack=push(v,stack);
   printf("%c%llu\n",top(stack).uc,e(stack).ul);
-/*
   v.uc='E';
   stack=push(v,stack);
   printf("%c%llu\n",top(stack).uc,e(stack).ul);
   v.uc='Z';
   stack=push(v,stack);
-displayLine(stack);
   stack=c(stack);
-displayLine(stack);
   printf("%c%llu\n",top(stack).uc,e(stack).ul);
   stack=pop(stack);
   printf("%c%llu\n",top(stack).uc,e(stack).ul);
@@ -258,7 +255,7 @@ displayLine(stack);
   stack=pop(stack);
   printf("%llu\n",e(stack).ul);
   f(stack);  
-*/
+
   v.uc='Z';
   stack=n();
   //stack=push(v,stack);
