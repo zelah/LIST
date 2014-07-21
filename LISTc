@@ -101,12 +101,58 @@ ul e(z object)
   return object.y[0].ul;
 }
 
+void display(z object)
+{
+  printf("(%llu)",e(object));
+  ul i;
+  for(i=1;i<=e(object);++i)
+  {
+    printf("%c",object.y[i].uc);
+  }
+}
+
+void displayLine(z object)
+{
+  display(object);
+  printf("\n");
+}
+
+void displaySpace(z object)
+{
+  display(object);
+  printf(" ");
+}
+
+z c(z object)
+{
+  z result;
+  result.y=(y)malloc((e(object)+1)*sizeof(z));
+  ul i;
+  for(i=0;i<=e(object);++i)
+  {
+    result.y[i]=object.y[i];
+  }
+  return result;
+}
+
+ul size(ul extent)
+{
+  return (extent==0)?block:((extent-1)/block+1)*block;
+}
+
 int main()
 {
   z v;
   z fun;
   z stack;
   stack=n();
-  printf("%llu\n",e(stack));
+  displayLine(stack);
+  displayLine(c(c(stack)));
+  printf("%llu\n",size(0));
+  printf("%llu\n",size(1));
+  printf("%llu\n",size(2));
+  printf("%llu\n",size(3));
+  printf("%llu\n",size(4));
+  printf("%llu\n",size(5));
   return 0;
 }
