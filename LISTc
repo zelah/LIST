@@ -210,6 +210,16 @@ z top(z stack)
   return result;
 }
 
+z u(z one,z two)
+{
+  ul extent=e(one).ul+e(two).ul+2;
+  ul size=((extent-1)/allocationBlockSize+1)*allocationBlockSize;
+  z result;
+  //result.y=(y)malloc((size+1)*sizeof(z));
+
+  return result;
+}
+
 z identity(z one)
 {
   return one;
@@ -258,10 +268,10 @@ int main()
 
   v.uc='Z';
   stack=n();
-  //stack=push(v,stack);
-  //stack=push(v,stack);
-  //stack=push(v,stack);
-  //stack=u(c(stack),c(stack));
+  stack=push(v,stack);
+  stack=push(v,stack);
+  stack=push(v,stack);
+  stack=c(c(stack));
   f(stack);
   return 0;
 }
