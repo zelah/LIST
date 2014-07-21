@@ -134,6 +134,8 @@ void f(z one)
 
 z c(z one)
 {
+printf("%llu ",e(one).ul);
+displayLine(one);
   ul size=allocationBlockSize*((e(one).ul-1)/allocationBlockSize+1)+1;
   z result;
   result.y=(y)malloc(size*sizeof(z));
@@ -212,6 +214,10 @@ z top(z stack)
 
 z u(z one,z two)
 {
+printf("%llu,%llu ",e(one).ul,e(two).ul);
+display(one);
+printf(",");
+displayLine(two);
   ul extent=e(one).ul+e(two).ul+2;
   ul size=((extent-1)/allocationBlockSize+1)*allocationBlockSize;
   z result;
@@ -271,7 +277,7 @@ int main()
   stack=push(v,stack);
   stack=push(v,stack);
   stack=push(v,stack);
-  stack=c(c(stack));
+  stack=u(c(stack),c(stack));
   f(stack);
   return 0;
 }
