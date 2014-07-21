@@ -85,13 +85,28 @@ typedef z (*f17)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
 typedef z (*f18)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
 typedef z (*f19)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
 typedef z (*f20)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
-const ul allocationBlockSize=2;
+const ul block=2;
+
+z n()
+{
+  z result;
+  result.y=(y)malloc((block+1)*sizeof(z));
+  result.y+=block;
+  result.y[0].ul=0;
+  return result;
+}
+
+ul e(z object)
+{
+  return object.y[0].ul;
+}
 
 int main()
 {
   z v;
   z fun;
   z stack;
-
+  stack=n();
+  printf("%llu\n",e(stack));
   return 0;
 }
