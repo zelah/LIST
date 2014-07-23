@@ -175,6 +175,32 @@ z push(z object,z stack)
     return stack;
   }
 }
+
+z pop(z stack)
+{
+  ul sz=size(e(stack)-1);
+  if(sz<e(stack))
+  {
+    z result;
+    result.y=(y)malloc((sz+1)*sizeof(z));
+    result.y[0].ul=e(stack)-1;
+    ++stack.y;
+    ul i;
+    for(i=1;i<=e(result);++i)
+    {
+      result.y[i]=stack.y[i];
+    }
+    --stack.y;
+    f(stack);
+    return result;
+  }
+  else
+  {
+    stack.y[1].ul=stack.y[0].ul-1;
+    ++stack.y;
+    return stack;
+  }
+}
     
 int main()
 {
@@ -188,6 +214,19 @@ int main()
   stack=push(v,stack);
   stack=push(v,stack);
   stack=push(v,stack);
+  stack=push(v,stack);
+  displayLine(stack);
+  stack=pop(stack);
+  displayLine(stack);
+  stack=pop(stack);
+  displayLine(stack);
+  stack=pop(stack);
+  displayLine(stack);
+  stack=pop(stack);
+  displayLine(stack);
+  stack=pop(stack);
+  displayLine(stack);
+  stack=pop(stack);
   displayLine(stack);
   f(stack);
   return 0;
