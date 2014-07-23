@@ -201,6 +201,11 @@ z pop(z stack)
     return stack;
   }
 }
+
+z top(z stack)
+{
+  return stack.y[1];
+}
     
 int main()
 {
@@ -215,6 +220,7 @@ int main()
   stack=push(v,stack);
   stack=push(v,stack);
   stack=push(v,stack);
+  printf("%c\n",top(stack).uc);
   displayLine(stack);
   stack=pop(stack);
   displayLine(stack);
