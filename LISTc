@@ -146,6 +146,35 @@ void f(z stack)
   stack.y-=sz-e(stack);
   free(stack.y);
 }
+
+z push(z object,z stack)
+{
+  ul sz=size(e(stack)+1);
+  if(e(stack)+block==sz)
+  {
+    z result;
+    result.y=(y)malloc((sz+1)*sizeof(z));
+    result.y+=sz-e(stack)-1;
+    result.y[0].ul=e(stack)+1;
+    result.y[1]=object;
+    ++result.y;
+    ul i;
+    for(i=1;i<=e(stack);++i)
+    {
+     result.y[i]=stack.y[i];
+    }
+    --result.y;
+    f(stack);
+    return result;
+  }
+  else
+  {
+    --stack.y;
+    stack.y[0].ul=stack.y[1].ul+1;
+    stack.y[1]=object;
+    return stack;
+  }
+}
     
 int main()
 {
@@ -154,6 +183,11 @@ int main()
   z stack;
   v.uc='Z';
   stack=n();
+  stack=push(v,stack);
+  stack=push(v,stack);
+  stack=push(v,stack);
+  stack=push(v,stack);
+  stack=push(v,stack);
   displayLine(stack);
   f(stack);
   return 0;
