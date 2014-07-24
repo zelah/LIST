@@ -225,6 +225,16 @@ z reverse(z stack)
   return stack;
 }
 
+z map(z fun,z stack)
+{
+  ul i;
+  for(i=1;i<=e(stack);++i)
+  {
+    stack.y[i]=fun.f1(stack.y[i]);
+  }
+  return stack;
+}
+
 z ps(z object,z stack)
 {
   return push(object,c(stack));
@@ -244,13 +254,30 @@ z rv(z stack)
 {
   return reverse(c(stack));
 }
-    
+
+z mp(z fun,z stack)
+{
+  return map(fun,c(stack));
+}
+
+z identity(z object)
+{
+  return object;
+}
+
+z inc(z character)
+{
+  character.uc=character.uc+1;
+  return character;
+}
+
 int main()
 {
   z v;
   z fun;
   z stack;
   v.uc='Z';
+  fun.f1=&inc;
   stack=n();
   stack=push(v,stack);
   v.uc='E';
@@ -261,6 +288,7 @@ int main()
   stack=push(v,stack);
   v.uc='H';
   stack=push(v,stack);
+  stack=map(fun,stack);
   stack=reverse(stack);
   printf("%c\n",tp(stack).uc);
   displayLine(stack);
