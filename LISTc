@@ -204,7 +204,9 @@ z pop(z stack)
 
 z top(z stack)
 {
-  return stack.y[1];
+  z result=stack.y[1];
+  f(stack);
+  return result;
 }
 
 z reverse(z stack)
@@ -221,6 +223,26 @@ z reverse(z stack)
     --r;
   }
   return stack;
+}
+
+z ps(z object,z stack)
+{
+  return push(object,c(stack));
+}
+
+z pp(z stack)
+{
+  return pop(c(stack));
+}
+
+z tp(z stack)
+{
+  return stack.y[1];
+}
+
+z rv(z stack)
+{
+  return reverse(c(stack));
 }
     
 int main()
@@ -240,7 +262,7 @@ int main()
   v.uc='H';
   stack=push(v,stack);
   stack=reverse(stack);
-  printf("%c\n",top(stack).uc);
+  printf("%c\n",tp(stack).uc);
   displayLine(stack);
   stack=pop(stack);
   stack=reverse(stack);
