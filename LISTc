@@ -343,8 +343,8 @@ int main()
   stack=push(v,stack);
   v.uc='H';
   stack=push(v,stack);
-  stack2=c(stack);
   stack=keep(fun,stack);
+  stack2=c(stack);
   fun.f1=&inc;
   stack=map(fun,stack);
   stack=reverse(stack);
