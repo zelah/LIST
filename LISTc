@@ -262,6 +262,33 @@ z mp(z fun,z stack)
   return map(fun,c(stack));
 }
 
+z keep1(z fun,z stack,z result)
+{
+  if(e(stack))
+  {
+    if(fun.f1(tp(stack)).uc)
+    {
+      result=push(tp(stack),result);
+    }
+    return keep1(fun,pop(stack),result);
+  }
+  else
+  {
+    f(stack);
+    return result;
+  }
+}
+
+z keep(z fun,z stack)
+{
+  return keep1(fun,rv(stack),n());
+}
+
+z kp(z fun,z stack)
+{
+  return keep(fun,c(stack));
+}
+
 z u(z stack1,z stack2)
 {
   ul sz=size(e(stack1)+e(stack2)+2);
@@ -318,6 +345,8 @@ int main()
   stack=push(v,stack);
   stack2=c(stack);
   stack=map(fun,stack);
+  fun.f1=&identity;
+  stack=keep(fun,stack);
   stack=reverse(stack);
   printf("%c\n",tp(stack).uc);
   displayLine(stack);
