@@ -123,21 +123,23 @@ void displaySpace(z object)
   printf(" ");
 }
 
+ul size(ul extent)
+{
+  return (extent==0)?block:((extent-1)/block+1)*block;
+}
+
 z c(z object)
 {
+  ul sz=size(e(object));
   z result;
-  result.y=(y)malloc((e(object)+1)*sizeof(z));
+  result.y=(y)malloc((sz+1)*sizeof(z));
+  result.y+=sz-e(object);
   ul i;
   for(i=0;i<=e(object);++i)
   {
     result.y[i]=object.y[i];
   }
   return result;
-}
-
-ul size(ul extent)
-{
-  return (extent==0)?block:((extent-1)/block+1)*block;
 }
 
 void f(z stack)
@@ -260,6 +262,31 @@ z mp(z fun,z stack)
   return map(fun,c(stack));
 }
 
+z u(z stack1,z stack2)
+{
+  ul sz=size(e(stack1)+e(stack2)+2);
+  z result;
+  result.y=(y)malloc((sz+1)*sizeof(z));
+  result.y+=sz-e(stack1)-e(stack2)-2;
+  result.y[0].ul=e(stack1)+e(stack2)+2;
+  ++result.y;
+  ul i;
+  for(i=0;i<=e(stack1);++i)
+  {
+    result.y[i]=stack1.y[i];
+  }
+  result.y+=e(stack1)+1;
+  for(i=0;i<=e(stack2);++i)
+  {
+    result.y[i]=stack2.y[i];
+  }
+  result.y-=e(stack1)+1;
+  --result.y;
+  f(stack1);
+  f(stack2);
+  return result;
+}
+
 z identity(z object)
 {
   return object;
@@ -276,6 +303,7 @@ int main()
   z v;
   z fun;
   z stack;
+  z stack2;
   v.uc='Z';
   fun.f1=&inc;
   stack=n();
@@ -288,6 +316,7 @@ int main()
   stack=push(v,stack);
   v.uc='H';
   stack=push(v,stack);
+  stack2=c(stack);
   stack=map(fun,stack);
   stack=reverse(stack);
   printf("%c\n",tp(stack).uc);
@@ -304,5 +333,10 @@ int main()
   stack=pop(stack);
   displayLine(stack);
   f(stack);
+  stack=c(stack2);
+  stack=u(stack,c(stack2));
+  displayLine(stack);
+  f(stack);
+  f(stack2);
   return 0;
 }
