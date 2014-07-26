@@ -289,6 +289,31 @@ z kp(z fun,z stack)
   return keep(fun,c(stack));
 }
 
+z reduce1(z fun,z stack)
+{
+  if(e(stack)==1)
+  {
+    return top(stack);
+  }
+  else
+  {
+    z combined;
+    combined=fun.f2(top(pp(stack)),tp(stack));
+    stack=pop(pop(stack));
+    return reduce1(fun,push(combined,stack));
+  }
+}
+
+z reduce(z fin,z fun,z stack)
+{
+  return reduce1(fun,push(fin,reverse(stack)));
+}
+
+z rd(z fin,z fun,z stack)
+{
+  return reduce(fin,fun,c(stack));
+}
+
 z u(z stack1,z stack2)
 {
   ul sz=size(e(stack1)+e(stack2)+2);
@@ -325,10 +350,16 @@ z inc(z character)
   return character;
 }
 
+z wrap(z object)
+{
+  return push(object,n());
+}
+
 int main()
 {
   z v;
   z fun;
+  z fun2;
   z stack;
   z stack2;
   v.uc=0;
@@ -363,6 +394,10 @@ int main()
   stack=c(stack2);
   stack=u(stack,c(stack2));
   displayLine(stack);
+  fun.f1=&wrap;
+  fun2.f2=&push;
+  stack2=reduce(n(),fun2,stack2);
+  displayLine(stack2);
   f(stack);
   f(stack2);
   return 0;
