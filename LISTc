@@ -269,7 +269,7 @@ z rd1(z fun,z stack)
   {
     z combined;
     combined=fun.f2(tp(pp(c(stack))),tp(c(stack)));
-    stack=pp(pp(c(stack)));
+    stack=pp(pp(stack));
     return rd1(fun,ps(combined,stack));
   }
 }
@@ -315,6 +315,13 @@ z inc(z character)
   return character;
 }
 
+z notExclaim(z character)
+{
+  z result;
+  result.uc=character.uc!='!';
+  return result;
+}
+
 int main()
 {
   z v;
@@ -322,9 +329,12 @@ int main()
   z fun2;
   z stack;
   z stack2;
-  v.uc='Z';
   stack=n();
   displayLine(stack);
+  v.uc='!';
+  stack=ps(v,stack);
+  displayLine(stack);
+  v.uc='Z';
   stack=ps(v,stack);
   displayLine(stack);
   v.uc='E';
@@ -332,6 +342,12 @@ int main()
   displayLine(stack);
   v.uc='D';
   stack=ps(v,stack);
+  displayLine(stack);
+  v.uc='!';
+  stack=ps(v,stack);
+  displayLine(stack);
+  fun.f1=&notExclaim;
+  stack=kp(fun,stack);
   displayLine(stack);
   fun.f1=&identity;
   stack=mp(fun,stack);
