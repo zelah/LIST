@@ -149,7 +149,7 @@ void f(z stack)
   free(stack.y);
 }
 
-z push(z object,z stack)
+z ps(z object,z stack)
 {
   ul sz=size(e(stack)+1);
   if(e(stack)+block==sz)
@@ -178,7 +178,7 @@ z push(z object,z stack)
   }
 }
 
-z pop(z stack)
+z pp(z stack)
 {
   ul sz=size(e(stack)-1);
   if(sz<e(stack))
@@ -204,14 +204,14 @@ z pop(z stack)
   }
 }
 
-z top(z stack)
+z tp(z stack)
 {
   z result=stack.y[1];
   f(stack);
   return result;
 }
 
-z reverse(z stack)
+z rv(z stack)
 {
   ul i;
   z temp;
@@ -227,7 +227,7 @@ z reverse(z stack)
   return stack;
 }
 
-z map(z fun,z stack)
+z mp(z fun,z stack)
 {
   ul i;
   for(i=1;i<=e(stack);++i)
@@ -237,40 +237,15 @@ z map(z fun,z stack)
   return stack;
 }
 
-z ps(z object,z stack)
-{
-  return push(object,c(stack));
-}
-
-z pp(z stack)
-{
-  return pop(c(stack));
-}
-
-z tp(z stack)
-{
-  return stack.y[1];
-}
-
-z rv(z stack)
-{
-  return reverse(c(stack));
-}
-
-z mp(z fun,z stack)
-{
-  return map(fun,c(stack));
-}
-
-z keep1(z fun,z stack,z result)
+z kp1(z fun,z stack,z result)
 {
   if(e(stack))
   {
-    if(fun.f1(tp(stack)).uc)
+    if(fun.f1(tp(c(stack))).uc)
     {
-      result=push(tp(stack),result);
+      result=ps(tp(c(stack)),result);
     }
-    return keep1(fun,pop(stack),result);
+    return kp1(fun,pp(stack),result);
   }
   else
   {
@@ -279,39 +254,29 @@ z keep1(z fun,z stack,z result)
   }
 }
 
-z keep(z fun,z stack)
-{
-  return keep1(fun,rv(stack),n());
-}
-
 z kp(z fun,z stack)
 {
-  return keep(fun,c(stack));
+  return kp1(fun,rv(stack),n());
 }
 
-z reduce1(z fun,z stack)
+z rd1(z fun,z stack)
 {
   if(e(stack)==1)
   {
-    return top(stack);
+    return tp(stack);
   }
   else
   {
     z combined;
-    combined=fun.f2(top(pp(stack)),tp(stack));
-    stack=pop(pop(stack));
-    return reduce1(fun,push(combined,stack));
+    combined=fun.f2(tp(pp(c(stack))),tp(c(stack)));
+    stack=pp(pp(c(stack)));
+    return rd1(fun,ps(combined,stack));
   }
-}
-
-z reduce(z fin,z fun,z stack)
-{
-  return reduce1(fun,push(fin,reverse(stack)));
 }
 
 z rd(z fin,z fun,z stack)
 {
-  return reduce(fin,fun,c(stack));
+  return rd1(fun,ps(fin,rv(stack)));
 }
 
 z u(z stack1,z stack2)
@@ -350,11 +315,6 @@ z inc(z character)
   return character;
 }
 
-z wrap(z object)
-{
-  return push(object,n());
-}
-
 int main()
 {
   z v;
@@ -362,43 +322,27 @@ int main()
   z fun2;
   z stack;
   z stack2;
-  v.uc=0;
-  fun.f1=&identity;
+  v.uc='Z';
   stack=n();
-  stack=push(v,stack);
+  displayLine(stack);
+  stack=ps(v,stack);
+  displayLine(stack);
   v.uc='E';
-  stack=push(v,stack);
-  v.uc='L';
-  stack=push(v,stack);
-  v.uc='A';
-  stack=push(v,stack);
-  v.uc='H';
-  stack=push(v,stack);
-  stack=keep(fun,stack);
-  stack2=c(stack);
-  fun.f1=&inc;
-  stack=map(fun,stack);
-  stack=reverse(stack);
-  printf("%c\n",tp(stack).uc);
+  stack=ps(v,stack);
   displayLine(stack);
-  stack=pop(stack);
-  stack=reverse(stack);
+  v.uc='D';
+  stack=ps(v,stack);
   displayLine(stack);
-  stack=pop(stack);
+  fun.f1=&identity;
+  stack=mp(fun,stack);
   displayLine(stack);
-  stack=pop(stack);
+  stack=rv(stack);
   displayLine(stack);
-  stack=pop(stack);
+  stack=pp(stack);
   displayLine(stack);
-  f(stack);
-  stack=c(stack2);
-  stack=u(stack,c(stack2));
+  stack=pp(stack);
   displayLine(stack);
-  fun.f1=&wrap;
-  fun2.f2=&push;
-  stack2=reduce(n(),fun2,stack2);
-  displayLine(stack2);
-  f(stack);
-  f(stack2);
+  stack=pp(stack);
+  displayLine(stack);
   return 0;
 }
