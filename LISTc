@@ -389,6 +389,25 @@ z p(z stack)
   return result;
 }
 
+z v1(z stack,z result)
+{
+  if(e(stack))
+  {
+    result=u(t(c(stack)),result);
+    return v1(p(stack),result);
+  }
+  else
+  {
+    f(stack);
+    return result;
+  }
+}
+
+z v(z stack)
+{
+  return v1(stack,n());
+}
+
 z identity(z object)
 {
   return object;
@@ -414,27 +433,27 @@ z notEmpty(z stack)
 
 int main()
 {
-  z v;
+  z val;
   z fun;
   z fun2;
   z stack;
   z stack2;
   stack=n();
   displayLine(stack);
-  v.uc='!';
-  stack=ps(v,stack);
+  val.uc='!';
+  stack=ps(val,stack);
   displayLine(stack);
-  v.uc='Z';
-  stack=ps(v,stack);
+  val.uc='Z';
+  stack=ps(val,stack);
   displayLine(stack);
-  v.uc='E';
-  stack=ps(v,stack);
+  val.uc='E';
+  stack=ps(val,stack);
   displayLine(stack);
-  v.uc='D';
-  stack=ps(v,stack);
+  val.uc='D';
+  stack=ps(val,stack);
   displayLine(stack);
-  v.uc='!';
-  stack=ps(v,stack);
+  val.uc='!';
+  stack=ps(val,stack);
   displayLine(stack);
   fun.f1=&notExclaim;
   stack=kp(fun,stack);
@@ -454,7 +473,7 @@ int main()
   fun2.f2=&ps;
   stack2=rd(n(),fun2,stack2);
   displayLine(stack2);
-  stack=ps(c(stack2),stack);
+  stack=ps(ps(val,n()),stack);
   stack=ps(c(stack2),stack);
   stack=ps(n(),stack);
   stack=ps(c(stack2),stack);
@@ -465,6 +484,6 @@ int main()
   stack=mf(fun,stack);
   fun2.f2=&u;
   stack=rf(n(),fun2,stack);
-  displayLine(t(p(p(c(stack)))));
+  displayLine(t(p(p(v(c(stack))))));
   return 0;
 }
