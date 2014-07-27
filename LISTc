@@ -279,6 +279,68 @@ z rd(z fin,z fun,z stack)
   return rd1(fun,ps(fin,rv(stack)));
 }
 
+z mf(z fun,z stack)
+{
+  ul i;
+  z temp;
+  for(i=1;i<=e(stack);++i)
+  {
+    temp=fun.f1(c(stack.y[i]));
+    f(stack.y[i]);
+    stack.y[i]=temp;
+  }
+  return stack;
+}
+
+z kf1(z fun,z stack,z result)
+{
+  if(e(stack))
+  {
+    if(fun.f1(tp(c(stack))).uc)
+    {
+      result=ps(tp(c(stack)),result);
+      return kf1(fun,pp(stack),result);
+    }
+    else
+    {
+      f(stack.y[1]);
+      return kf1(fun,pp(stack),result);
+    }
+  }
+  else
+  {
+    f(stack);
+    return result;
+  }
+}
+
+z kf(z fun,z stack)
+{
+  return kf1(fun,rv(stack),n());
+}
+
+z rf1(z fun,z stack)
+{
+  if(e(stack)==1)
+  {
+    return tp(stack);
+  }
+  else
+  {
+    z combined;
+    combined=fun.f2(tp(pp(c(stack))),tp(c(stack)));
+    f(stack.y[1]);
+    f(stack.y[2]);
+    stack=pp(pp(stack));
+    return rf1(fun,ps(combined,stack));
+  }
+}
+
+z rf(z fin,z fun,z stack)
+{
+  return rf1(fun,ps(fin,rv(stack)));
+}
+
 z u(z stack1,z stack2)
 {
   ul sz=size(e(stack1)+e(stack2)+2);
@@ -317,9 +379,14 @@ z inc(z character)
 
 z notExclaim(z character)
 {
-  z result;
-  result.uc=character.uc!='!';
-  return result;
+  character.uc=character.uc!='!';
+  return character;
+}
+
+z notEmpty(z stack)
+{
+  stack.uc=e(stack)!=0;
+  return stack;
 }
 
 int main()
@@ -364,5 +431,15 @@ int main()
   fun2.f2=&ps;
   stack2=rd(n(),fun2,stack2);
   displayLine(stack2);
+  stack=ps(c(stack2),stack);
+  stack=ps(c(stack2),stack);
+  stack=ps(n(),stack);
+  stack=ps(c(stack2),stack);
+  stack=ps(n(),stack);
+  fun.f1=&notEmpty;
+  stack=kf(fun,stack);
+  displayLine(stack.y[1]);
+  displayLine(stack.y[2]);
+  displayLine(stack.y[3]);
   return 0;
 }
