@@ -366,6 +366,16 @@ z u(z stack1,z stack2)
   return result;
 }
 
+z t(z stack)
+{
+  z result;
+  ++stack.y;
+  result=c(stack);
+  --stack.y;
+  f(stack);
+  return result;
+}
+
 z identity(z object)
 {
   return object;
@@ -440,11 +450,8 @@ int main()
   stack=kf(fun,stack);
   fun.f1=&identity;
   stack=mf(fun,stack);
-  displayLine(stack.y[1]);
-  displayLine(stack.y[2]);
-  displayLine(stack.y[3]);
   fun2.f2=&u;
   stack=rf(n(),fun2,stack);
-  displayLine(stack);
+  displayLine(t(c(stack)));
   return 0;
 }
