@@ -328,7 +328,9 @@ z rf1(z fun,z stack)
   else
   {
     z combined;
-    combined=fun.f2(tp(pp(c(stack))),tp(c(stack)));
+    z fun;
+    fun.f1=&c;
+    combined=fun.f2(tp(pp(mp(fun,c(stack)))),tp(mp(fun,c(stack))));
     f(stack.y[1]);
     f(stack.y[2]);
     stack=pp(pp(stack));
@@ -438,8 +440,13 @@ int main()
   stack=ps(n(),stack);
   fun.f1=&notEmpty;
   stack=kf(fun,stack);
+  fun.f1=&identity;
+  stack=mf(fun,stack);
   displayLine(stack.y[1]);
   displayLine(stack.y[2]);
   displayLine(stack.y[3]);
+  fun2.f2=&u;
+  stack=rf(n(),fun2,stack);
+  displayLine(stack);
   return 0;
 }
