@@ -328,9 +328,7 @@ z rf1(z fun,z stack)
   else
   {
     z combined;
-    z fun;
-    fun.f1=&c;
-    combined=fun.f2(tp(pp(mp(fun,c(stack)))),tp(mp(fun,c(stack))));
+    combined=fun.f2(c(stack.y[2]),c(stack.y[1]));
     f(stack.y[1]);
     f(stack.y[2]);
     stack=pp(pp(stack));
