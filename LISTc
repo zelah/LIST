@@ -408,6 +408,25 @@ z v(z stack)
   return v1(stack,n());
 }
 
+z m1(z fun,z stack,z result)
+{
+  if(e(stack))
+  {
+    result=u(fun.f1(t(c(stack))),result);
+    return m1(fun,p(stack),result);
+  }
+  else
+  {
+    f(stack);
+    return result;
+  }
+}
+
+z m(z fun,z stack)
+{
+  return m1(fun,v(stack),n());
+}
+
 z identity(z object)
 {
   return object;
@@ -484,6 +503,7 @@ int main()
   stack=mf(fun,stack);
   fun2.f2=&u;
   stack=rf(n(),fun2,stack);
-  displayLine(t(p(p(v(c(stack))))));
+  fun.f1=&rv;
+  displayLine(t(p(p(v(m(fun,c(stack)))))));
   return 0;
 }
