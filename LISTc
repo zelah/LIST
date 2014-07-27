@@ -376,6 +376,19 @@ z t(z stack)
   return result;
 }
 
+z p(z stack)
+{
+  z result;
+  ++stack.y;
+  ul jump=e(stack)+1;
+  stack.y+=jump;
+  result=c(stack);
+  stack.y-=jump;
+  --stack.y;
+  f(stack);
+  return result;
+}
+
 z identity(z object)
 {
   return object;
@@ -452,6 +465,6 @@ int main()
   stack=mf(fun,stack);
   fun2.f2=&u;
   stack=rf(n(),fun2,stack);
-  displayLine(t(c(stack)));
+  displayLine(t(p(p(c(stack)))));
   return 0;
 }
