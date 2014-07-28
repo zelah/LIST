@@ -85,7 +85,7 @@ typedef z (*f17)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
 typedef z (*f18)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
 typedef z (*f19)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
 typedef z (*f20)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
-ul const block=2;
+ul const block=8;
 
 z n()
 {
@@ -344,26 +344,46 @@ z rf(z fin,z fun,z stack)
 z u(z stack1,z stack2)
 {
   ul sz=size(e(stack1)+e(stack2)+2);
-  z result;
-  result.y=(y)malloc((sz+1)*sizeof(z));
-  result.y+=sz-e(stack1)-e(stack2)-2;
-  result.y[0].ul=e(stack1)+e(stack2)+2;
-  ++result.y;
   ul i;
-  for(i=0;i<=e(stack1);++i)
+  if(sz==size(e(stack2)))
   {
-    result.y[i]=stack1.y[i];
+printf("sz%llu\n",sz);
+printf("ex%llu\n",e(stack2));
+    stack2.y-=e(stack1)+1;
+    for(i=0;i<=e(stack1);++i)
+    {
+      stack2.y[i]=stack1.y[i];
+    }
+printf("ex%llu\n",e(stack2));
+    --stack2.y;
+    stack2.y[0].ul=sz;
+printf("here\n");
+    f(stack1);
+printf("not\n");
+    return stack2;
   }
-  result.y+=e(stack1)+1;
-  for(i=0;i<=e(stack2);++i)
+  else
   {
-    result.y[i]=stack2.y[i];
+    z result;
+    result.y=(y)malloc((sz+1)*sizeof(z));
+    result.y+=sz-e(stack1)-e(stack2)-2;
+    result.y[0].ul=e(stack1)+e(stack2)+2;
+    ++result.y;
+    for(i=0;i<=e(stack1);++i)
+    {
+      result.y[i]=stack1.y[i];
+    }
+    result.y+=e(stack1)+1;
+    for(i=0;i<=e(stack2);++i)
+    {
+      result.y[i]=stack2.y[i];
+    }
+    result.y-=e(stack1)+1;
+    --result.y;
+    f(stack1);
+    f(stack2);
+    return result;
   }
-  result.y-=e(stack1)+1;
-  --result.y;
-  f(stack1);
-  f(stack2);
-  return result;
 }
 
 z t(z stack)
@@ -523,10 +543,17 @@ int main()
   stack=ps(n(),stack);
   fun.f1=&identity;
   stack=mf(fun,stack);
+
   fun2.f2=&u;
+/*
+  stack=u(ps(val,n()),n());
+*/
+  f(stack);
+/*  
   stack=rf(n(),fun2,stack);
   fun.f1=&rv;
   fun2.f1=&notEmpty;
   displayLine(t(p(p(v(k(fun2,m(fun,c(stack))))))));
+*/
   return 0;
 }
