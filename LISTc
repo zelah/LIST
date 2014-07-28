@@ -343,23 +343,19 @@ z rf(z fin,z fun,z stack)
 
 z u(z stack1,z stack2)
 {
-  ul sz=size(e(stack1)+e(stack2)+2);
+  ul ex=e(stack1)+e(stack2)+2;
+  ul sz=size(ex);
   ul i;
   if(sz==size(e(stack2)))
   {
-printf("sz%llu\n",sz);
-printf("ex%llu\n",e(stack2));
     stack2.y-=e(stack1)+1;
     for(i=0;i<=e(stack1);++i)
     {
       stack2.y[i]=stack1.y[i];
     }
-printf("ex%llu\n",e(stack2));
     --stack2.y;
-    stack2.y[0].ul=sz;
-printf("here\n");
+    stack2.y[0].ul=ex;
     f(stack1);
-printf("not\n");
     return stack2;
   }
   else
@@ -545,15 +541,11 @@ int main()
   stack=mf(fun,stack);
 
   fun2.f2=&u;
-/*
-  stack=u(ps(val,n()),n());
-*/
-  f(stack);
-/*  
   stack=rf(n(),fun2,stack);
   fun.f1=&rv;
   fun2.f1=&notEmpty;
   displayLine(t(p(p(v(k(fun2,m(fun,c(stack))))))));
-*/
+
+  f(stack);
   return 0;
 }
