@@ -565,7 +565,10 @@ int main()
 
   fun3.f2=&u;
   stack=rf(n(),fun3,stack);
+  fun3.f2=&ps;
   stack=r(n(),fun3,stack);
+  fun3.f2=&u;
+  stack=rf(n(),fun3,stack);
   fun.f1=&rv;
   fun2.f1=&notEmpty;
   displayLine(t(p(p(v(k(fun2,m(fun,c(stack))))))));
