@@ -467,6 +467,28 @@ z k(z fun,z stack)
   return k1(fun,v(stack),n());
 }
 
+z r1(z fun,z stack)
+{
+  z rest;
+  rest=p(c(stack));
+  if(e(rest)==0)
+  {
+    f(rest);
+    return t(stack);
+  }
+  else
+  {
+    z temp;
+    temp=fun.f2(t(rest),t(c(stack)));
+    return r1(fun,u(temp,p(p(stack))));
+  }
+}
+
+z r(z fin,z fun,z stack)
+{
+  return r1(fun,u(fin,v(stack)));
+}
+
 z identity(z object)
 {
   return object;
@@ -495,6 +517,7 @@ int main()
   z val;
   z fun;
   z fun2;
+  z fun3;
   z stack;
   z stack2;
   stack=n();
@@ -540,8 +563,9 @@ int main()
   fun.f1=&identity;
   stack=mf(fun,stack);
 
-  fun2.f2=&u;
-  stack=rf(n(),fun2,stack);
+  fun3.f2=&u;
+  stack=rf(n(),fun3,stack);
+  stack=r(n(),fun3,stack);
   fun.f1=&rv;
   fun2.f1=&notEmpty;
   displayLine(t(p(p(v(k(fun2,m(fun,c(stack))))))));
