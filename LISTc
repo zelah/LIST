@@ -190,9 +190,10 @@ z pp(z stack)
     z result;
     result.y=(y)malloc((sz+1)*sizeof(z));
     result.y[0].ul=e(stack)-1;
+    result.y[1].ul=0;
     ++stack.y;
     ul i;
-    for(i=1;i<=e(result);++i)
+    for(i=2;i<=e(result);++i)
     {
       result.y[i]=stack.y[i];
     }
@@ -202,7 +203,8 @@ z pp(z stack)
   }
   else
   {
-    stack.y[1].ul=stack.y[0].ul-1;
+    stack.y[2].ul=0;
+    stack.y[1].ul=e(stack)-1;
     ++stack.y;
     return stack;
   }
@@ -210,7 +212,7 @@ z pp(z stack)
 
 z tp(z stack)
 {
-  z result=stack.y[1];
+  z result=stack.y[2];
   f(stack);
   return result;
 }
@@ -573,6 +575,8 @@ int main()
   stack=ps(val,stack);
   val.uc='!'; 
   stack=ps(val,stack);
+  displayLine(stack);
+  stack=pp(stack);
   displayLine(stack);
 /*
   fun.f1=&notExclaim;
