@@ -105,7 +105,7 @@ ul e(z object)
 
 void display(z object)
 {
-  printf("(%llu)",e(object)-1);
+  printf("(%llu)",e(object)-2);
   ul i;
   for(i=2;i<=e(object);++i)
   {
@@ -160,10 +160,11 @@ z ps(z object,z stack)
     result.y=(y)malloc((sz+1)*sizeof(z));
     result.y+=sz-e(stack)-1;
     result.y[0].ul=e(stack)+1;
-    result.y[1]=object;
+    result.y[1].ul=0;
+    result.y[2]=object;
     ++result.y;
     ul i;
-    for(i=1;i<=e(stack);++i)
+    for(i=2;i<=e(stack);++i)
     {
      result.y[i]=stack.y[i];
     }
@@ -175,7 +176,8 @@ z ps(z object,z stack)
   {
     --stack.y;
     stack.y[0].ul=stack.y[1].ul+1;
-    stack.y[1]=object;
+    stack.y[1].ul=0;
+    stack.y[2]=object;
     return stack;
   }
 }
@@ -506,8 +508,6 @@ z tr()
   result=ps(v,result);
   v.uc='#';
   result=ps(v,result);
-  v.ul=0;
-  result=ps(v,result);
   return result;
 }
 
@@ -527,8 +527,6 @@ z fa()
   v.uc='f';
   result=ps(v,result);
   v.uc='#';
-  result=ps(v,result);
-  v.ul=0;
   result=ps(v,result);
   return result;
 }
@@ -573,8 +571,10 @@ int main()
   stack=ps(val,stack);
   val.uc='D';
   stack=ps(val,stack);
-  val.uc='!';
+  val.uc='!'; 
   stack=ps(val,stack);
+  displayLine(stack);
+/*
   fun.f1=&notExclaim;
   stack=kp(fun,stack);
   stack2=c(stack);
@@ -604,6 +604,7 @@ int main()
   fun2.f1=&notEmpty;
   stack=t(p(p(v(k(fun2,m(fun,stack))))));
   displayLine(stack);
+*/
   displayLine(tr());
   displayLine(fa());
 
