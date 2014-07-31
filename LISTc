@@ -244,7 +244,7 @@ z mp(z fun,z stack)
 
 z kp1(z fun,z stack,z result)
 {
-  if(e(stack))
+  if(e(stack)>1)
   {
     if(fun.f1(tp(c(stack))).uc)
     {
@@ -599,8 +599,8 @@ int main()
   stack=mp(fun,stack);
   displayLine(stack);
   fun.f1=&notB;
-  stack=kp(fun,stack);
-  displayLine(stack);
+  //stack=kp(fun,stack);
+  //displayLine(stack);
   stack=pp(stack);
   displayLine(stack);
   stack=rv(stack);
