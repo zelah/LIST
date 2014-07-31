@@ -85,7 +85,7 @@ typedef z (*f17)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
 typedef z (*f18)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
 typedef z (*f19)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
 typedef z (*f20)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
-ul const block=5;
+ul const block=4;
 
 z n()
 {
@@ -235,7 +235,7 @@ z rv(z stack)
 z mp(z fun,z stack)
 {
   ul i;
-  for(i=1;i<=e(stack);++i)
+  for(i=2;i<=e(stack);++i)
   {
     stack.y[i]=fun.f1(stack.y[i]);
   }
@@ -539,7 +539,13 @@ z identity(z object)
 
 z inc(z character)
 {
-  character.uc=character.uc+1;
+  character.uc+=1;
+  return character;
+}
+
+z dec(z character)
+{
+  character.uc-=1;
   return character;
 }
 
@@ -564,30 +570,27 @@ int main()
   z stack;
   z stack2;
   stack=n();
-  val.uc='!';
+  val.uc='L';
   stack=ps(val,stack);
-  val.uc='D';
+  val.uc='A';
   stack=ps(val,stack);
-  val.uc='E';
+  val.uc='H';
   stack=ps(val,stack);
-  val.uc='Z';
+    val.uc='L';
   stack=ps(val,stack);
-  val.uc='!'; 
+  val.uc='A';
   stack=ps(val,stack);
-  val.uc='!';
+  val.uc='H';
   stack=ps(val,stack);
-  val.uc='Z';
+    val.uc='L';
   stack=ps(val,stack);
-  val.uc='E';
+  val.uc='A';
   stack=ps(val,stack);
-  val.uc='D';
-  stack=ps(val,stack);
-  val.uc='!'; 
+  val.uc='H';
   stack=ps(val,stack);
   displayLine(stack);
-  stack=pp(stack);
-  displayLine(stack);
-  stack=rv(stack);
+  fun.f1=&inc;
+  stack=mp(fun,stack);
   displayLine(stack);
   stack=pp(stack);
   displayLine(stack);
