@@ -85,7 +85,7 @@ typedef z (*f17)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
 typedef z (*f18)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
 typedef z (*f19)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
 typedef z (*f20)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
-ul const block=8;
+ul const block=5;
 
 z n()
 {
@@ -105,7 +105,7 @@ ul e(z object)
 
 void display(z object)
 {
-  printf("(%llu)",e(object)-2);
+  printf("(%llu)",e(object)-1);
   ul i;
   for(i=2;i<=e(object);++i)
   {
@@ -191,11 +191,12 @@ z pp(z stack)
     result.y=(y)malloc((sz+1)*sizeof(z));
     result.y[0].ul=e(stack)-1;
     result.y[1].ul=0;
-    ++stack.y;
     ul i;
+    ++stack.y;
     for(i=2;i<=e(result);++i)
     {
       result.y[i]=stack.y[i];
+ printf("%d\n",stack.y[i].uc);
     }
     --stack.y;
     f(stack);
@@ -222,9 +223,10 @@ z rv(z stack)
   ul i;
   z temp;
   ul r=e(stack);
-  ul m=r/2;
-  for(i=1;i<=m;++i)
+  ul m=(r+1)/2;
+  for(i=2;i<=m;++i)
   {
+printf("%llu<->%llu\n",i,r);
     temp=stack.y[i];
     stack.y[i]=stack.y[r];
     stack.y[r]=temp;
@@ -575,8 +577,43 @@ int main()
   stack=ps(val,stack);
   val.uc='!'; 
   stack=ps(val,stack);
+  val.uc='!';
+  stack=ps(val,stack);
+  val.uc='Z';
+  stack=ps(val,stack);
+  val.uc='E';
+  stack=ps(val,stack);
+  val.uc='D';
+  stack=ps(val,stack);
+  val.uc='!'; 
+  stack=ps(val,stack);
   displayLine(stack);
   stack=pp(stack);
+  displayLine(stack);
+  stack=rv(stack);
+  displayLine(stack);
+  stack=pp(stack);
+  displayLine(stack);
+ stack=rv(stack);
+  displayLine(stack);
+  stack=pp(stack);
+  displayLine(stack);
+  stack=rv(stack);
+  displayLine(stack);
+  printf("here\n");
+  stack=pp(stack);
+  displayLine(stack);
+  stack=pp(stack);
+  displayLine(stack);
+  stack=pp(stack);
+  displayLine(stack);
+    stack=pp(stack);
+  displayLine(stack);
+    stack=pp(stack);
+  displayLine(stack);
+    stack=pp(stack);
+  displayLine(stack);
+    stack=pp(stack);
   displayLine(stack);
 /*
   fun.f1=&notExclaim;
