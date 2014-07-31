@@ -599,11 +599,7 @@ int main()
   stack=mp(fun,stack);
   displayLine(stack);
   fun.f1=&notB;
-  //stack=kp(fun,stack);
-  //displayLine(stack);
-  stack=pp(stack);
-  displayLine(stack);
-  stack=rv(stack);
+  stack=kp(fun,stack);
   displayLine(stack);
   stack=pp(stack);
   displayLine(stack);
