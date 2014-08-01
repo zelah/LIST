@@ -532,6 +532,13 @@ z fa()
   return result;
 }
 
+uc as(z value)
+{
+  uc result=!(value.y[0].ul==7&&value.y[1].ul==0&&value.y[2].uc=='#'&&value.y[3].uc=='f'&&value.y[4].uc=='a'&&value.y[5].uc=='l'&&value.y[6].uc=='s'&&value.y[7].uc=='e');
+  f(value);
+  return result;
+}
+
 z identity(z object)
 {
   return object;
@@ -668,6 +675,8 @@ int main()
   fun.f1=&identity;
   stack=m(fun,stack);
   displayLine(t(c(stack)));
+  printf("%d",as(c(stack)));
+  printf("%d\n",as(fa()));
   
   displayLine(tr());
   displayLine(fa());
