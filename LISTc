@@ -412,15 +412,15 @@ z p(z stack)
 
 z v1(z stack,z result)
 {
-  if(e(stack))
-  {
-    result=u(t(c(stack)),result);
-    return v1(p(stack),result);
-  }
-  else
+  if(e(stack)==1)
   {
     f(stack);
     return result;
+  }
+  else
+  {
+    result=u(t(c(stack)),result);
+    return v1(p(stack),result);
   }
 }
 
@@ -431,15 +431,15 @@ z v(z stack)
 
 z m1(z fun,z stack,z result)
 {
-  if(e(stack))
-  {
-    result=u(fun.f1(t(c(stack))),result);
-    return m1(fun,p(stack),result);
-  }
-  else
+  if(e(stack)==1)
   {
     f(stack);
     return result;
+  }
+  else
+  {
+    result=u(fun.f1(t(c(stack))),result);
+    return m1(fun,p(stack),result);
   }
 }
 
@@ -450,7 +450,12 @@ z m(z fun,z stack)
 
 z k1(z fun,z stack,z result)
 {
-  if(e(stack))
+  if(e(stack)==1)
+  {
+    f(stack);
+    return result;
+  }
+  else
   {
     z top;
     top=t(c(stack));
@@ -459,11 +464,6 @@ z k1(z fun,z stack,z result)
       result=u(top,result);
     }
     return k1(fun,p(stack),result);
-  }
-  else
-  {
-    f(stack);
-    return result;
   }
 }
 
@@ -476,7 +476,7 @@ z r1(z fun,z stack)
 {
   z rest;
   rest=p(c(stack));
-  if(e(rest)==0)
+  if(e(rest)==1)
   {
     f(rest);
     return t(stack);
@@ -657,10 +657,18 @@ int main()
   fun2.f2=&u;
   fun3.f2=&ps;
   stack=rf(n(),fun2,stack);
-  //stack=r(n(),fun3,stack);
-  //stack=rf(n(),fun2,stack);
+  stack=r(n(),fun3,stack);
+  stack=rf(n(),fun2,stack);
   displayLine(t(c(stack)));
-
+  fun.f1=&notEmpty;
+  stack=k(fun,stack);
+  displayLine(t(c(stack)));
+  stack=v(stack);
+  displayLine(t(c(stack)));
+  fun.f1=&identity;
+  stack=m(fun,stack);
+  displayLine(t(c(stack)));
+  
   displayLine(tr());
   displayLine(fa());
 
