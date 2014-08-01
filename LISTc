@@ -551,6 +551,19 @@ z no(z value)
   }
 }
 
+z nl(z value)
+{
+  if(e(value)==1)
+  {
+    return value;
+  }
+  else
+  {
+    f(value);
+    return fa();
+  }
+}
+
 z identity(z object)
 {
   return object;
@@ -692,6 +705,8 @@ int main()
   
   displayLine(no(tr()));
   displayLine(no(fa()));
+  displayLine(nl(n()));
+  displayLine(nl(c(stack)));
 
   f(stack);
   return 0;
