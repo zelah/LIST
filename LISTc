@@ -564,6 +564,19 @@ z nl(z value)
   }
 }
 
+z a(z one,z two)
+{
+  if(as(one))
+  {
+    return two;
+  }
+  else
+  {
+    f(two);
+    return fa();
+  }
+}
+
 z identity(z object)
 {
   return object;
@@ -707,6 +720,10 @@ int main()
   displayLine(no(fa()));
   displayLine(nl(n()));
   displayLine(nl(c(stack)));
+  displayLine(a(fa(),fa()));
+  displayLine(a(fa(),t(c(stack))));
+  displayLine(a(t(c(stack)),fa()));
+  displayLine(a(t(c(stack)),tr()));
 
   f(stack);
   return 0;
