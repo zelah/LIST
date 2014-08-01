@@ -539,6 +539,18 @@ uc as(z value)
   return result;
 }
 
+z no(z value)
+{
+  if(as(value))
+  {
+    return fa();
+  }
+  else
+  {
+    return tr();
+  }
+}
+
 z identity(z object)
 {
   return object;
@@ -675,11 +687,11 @@ int main()
   fun.f1=&identity;
   stack=m(fun,stack);
   displayLine(t(c(stack)));
-  printf("%d",as(c(stack)));
+  printf("%d\n",as(c(stack)));
   printf("%d\n",as(fa()));
   
-  displayLine(tr());
-  displayLine(fa());
+  displayLine(no(tr()));
+  displayLine(no(fa()));
 
   f(stack);
   return 0;
