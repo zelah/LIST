@@ -620,6 +620,19 @@ z x(z one,z two)
   }
 }
 
+z pr(z value)
+{
+  if(value.y[1].ul==0)
+  {
+    f(value);
+    return fa();
+  }
+  else
+  {
+    return value;
+  }
+}
+
 z identity(z object)
 {
   return object;
@@ -775,6 +788,8 @@ int main()
   displayLine(x(fa(),t(c(stack))));
   displayLine(x(tr(),fa()));
   displayLine(x(tr(),tr()));
+  displayLine(t(pr(c(stack))));
+  displayLine(pr(t(c(stack))));
 
   f(stack);
   return 0;
