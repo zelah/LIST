@@ -496,38 +496,33 @@ z r(z fin,z fun,z stack)
 
 uc as(z value)
 {
-  uc result=!(value.y[0].ul>7&&value.y[1].ul==0&&value.y[2].uc=='#'&&value.y[3].uc=='f'&&value.y[4].uc=='a'&&value.y[5].uc=='l'&&value.y[6].uc=='s'&&value.y[7].uc=='e');
+  uc result=!(value.y[0].ul>6&&value.y[1].ul==0&&value.y[2].uc=='#'&&value.y[3].uc=='f'&&value.y[4].uc=='a'&&value.y[5].uc=='l'&&value.y[6].uc=='s'&&value.y[7].uc=='e');
   f(value);
   return result;
-}
-
-z fa(z value)
-{
-  z v;
-  v.uc='e';
-  value=ps(v,value);
-  v.uc='s';
-  value=ps(v,value);
-  v.uc='l';
-  value=ps(v,value);
-  v.uc='a';
-  value=ps(v,value);
-  v.uc='f';
-  value=ps(v,value);
-  v.uc='#';
-  value=ps(v,value);
-  return value;
 }
 
 z no(z value)
 {
   if(as(c(value)))
   {
-    return fa(value);
+    z v;
+    v.uc='e';
+    value=ps(v,value);
+    v.uc='s';
+    value=ps(v,value);
+    v.uc='l';
+    value=ps(v,value);
+    v.uc='a';
+    value=ps(v,value);
+    v.uc='f';
+    value=ps(v,value);
+    v.uc='#';
+    value=ps(v,value);
+    return value;
   }
   else
   {
-    return value;
+    return pp(pp(pp(pp(pp(pp(value))))));
   }
 }
 
@@ -667,6 +662,8 @@ int main()
   fun.f1=&identity;
   stack=m(fun,stack);
   displayLine(t(c(stack)));
+  displayLine(no(n()));
+  displayLine(no(no(n())));
 
 
   f(stack);
