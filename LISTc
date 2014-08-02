@@ -543,6 +543,26 @@ z nu(z value)
   }
 }
 
+z pr(z value)
+{
+  if(value.y[1].ul==0)
+  {
+    if(as(nu(c(value))))
+    {
+      f(value);
+      return no(n());
+    }
+    else
+    {
+      return no(value);
+    }
+  }
+  else
+  {
+    return value;
+  }
+}
+
 z identity(z object)
 {
   return object;
@@ -684,7 +704,10 @@ int main()
   displayLine(nu(no(n())));
   displayLine(nu(no(no(n()))));
   displayLine(nu(t(c(stack))));
-
+  displayLine(pr(no(n())));
+  displayLine(pr(no(no(n()))));
+  displayLine(pr(t(c(stack))));
+  displayLine(t(pr(c(stack))));
 
   f(stack);
   return 0;
