@@ -496,7 +496,7 @@ z r(z fin,z fun,z stack)
 
 uc as(z value)
 {
-  uc result=!(value.y[0].ul>6&&value.y[1].ul==0&&value.y[2].uc=='#'&&value.y[3].uc=='f'&&value.y[4].uc=='a'&&value.y[5].uc=='l'&&value.y[6].uc=='s'&&value.y[7].uc=='e');
+  uc result=!(e(value)>6&&value.y[1].ul==0&&value.y[2].uc=='#'&&value.y[3].uc=='f'&&value.y[4].uc=='a'&&value.y[5].uc=='l'&&value.y[6].uc=='s'&&value.y[7].uc=='e');
   f(value);
   return result;
 }
@@ -523,6 +523,23 @@ z no(z value)
   else
   {
     return pp(pp(pp(pp(pp(pp(value))))));
+  }
+}
+
+z nu(z value)
+{
+  if(e(value)==1||(e(value)==7&&value.y[1].ul==0&&value.y[2].uc=='#'&&value.y[3].uc=='f'&&value.y[4].uc=='a'&&value.y[5].uc=='l'&&value.y[6].uc=='s'&&value.y[7].uc=='e'))
+  {
+    f(value);
+    return n();
+  }
+  else if(as(c(value)))
+  {
+    return no(value);
+  }
+  else
+  {
+    return value;
   }
 }
 
@@ -664,6 +681,9 @@ int main()
   displayLine(t(c(stack)));
   displayLine(no(n()));
   displayLine(no(no(n())));
+  displayLine(nu(no(n())));
+  displayLine(nu(no(no(n()))));
+  displayLine(nu(t(c(stack))));
 
 
   f(stack);
