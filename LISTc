@@ -519,55 +519,9 @@ z fa(z value)
   return value;
 }
 
-z tr(z value)
-{
-  if(as(c(value)))
-  {
-    return value;
-  }
-  else
-  {
-    return pp(pp(pp(pp(pp(pp(value))))));
-  }
-}
-
-z false()
-{
-  return fa(fa(n()));
-}
-
-z true()
-{
-  return n();
-}
-
 z no(z value)
 {
   if(as(c(value)))
-  {
-    return fa(value);
-  }
-  else
-  {
-    return tr(value);
-  }
-}
-
-z nl(z value)
-{
-  if(e(value)==1)
-  {
-    return value;
-  }
-  else
-  {
-    return fa(value);
-  }
-}
-
-z pr(z value)
-{
-  if(value.y[1].ul==0)
   {
     return fa(value);
   }
