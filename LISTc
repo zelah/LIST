@@ -591,6 +591,36 @@ z o(z one,z two)
   }
 }
 
+z x(z one,z two)
+{
+  if(as(c(one)))
+  {
+    if(as(c(two)))
+    {
+      f(two);
+      return no(one);
+    }
+    else
+    {
+      f(one);
+      return no(two);
+    }
+  }
+  else
+  {
+    if(as(c(two)))
+    {
+      f(one);
+      return two;
+    }
+    else
+    {
+      f(two);
+      return one;
+    }
+  }
+}
+
 z identity(z object)
 {
   return object;
@@ -746,6 +776,11 @@ int main()
   displayLine(o(no(n()),n()));
   displayLine(o(n(),no(n())));
   displayLine(o(n(),n()));
+  printf("  x\n");
+  displayLine(x(no(n()),no(n())));
+  displayLine(x(no(n()),n()));
+  displayLine(x(n(),no(n())));
+  displayLine(x(n(),n()));
 
   f(stack);
   return 0;
