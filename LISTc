@@ -496,7 +496,7 @@ z r(z fin,z fun,z stack)
 
 uc as(z value)
 {
-  uc result=!(e(value)>6&&value.y[1].ul==0&&value.y[2].uc=='#'&&value.y[3].uc=='f'&&value.y[4].uc=='a'&&value.y[5].uc=='l'&&value.y[6].uc=='s'&&value.y[7].uc=='e');
+  uc result=!(e(value)>1&&value.y[1].ul==0&&value.y[2].uc==0);
   f(value);
   return result;
 }
@@ -506,29 +506,19 @@ z no(z value)
   if(as(c(value)))
   {
     z v;
-    v.uc='e';
-    value=ps(v,value);
-    v.uc='s';
-    value=ps(v,value);
-    v.uc='l';
-    value=ps(v,value);
-    v.uc='a';
-    value=ps(v,value);
-    v.uc='f';
-    value=ps(v,value);
-    v.uc='#';
+    v.uc=0;
     value=ps(v,value);
     return value;
   }
   else
   {
-    return pp(pp(pp(pp(pp(pp(value))))));
+    return pp(value);
   }
 }
 
 z nu(z value)
 {
-  if(e(value)==1||(e(value)==7&&value.y[1].ul==0&&value.y[2].uc=='#'&&value.y[3].uc=='f'&&value.y[4].uc=='a'&&value.y[5].uc=='l'&&value.y[6].uc=='s'&&value.y[7].uc=='e'))
+  if(e(value)==1||(e(value)==2&&value.y[1].ul==0&&value.y[2].uc==0))
   {
     f(value);
     return n();
