@@ -611,6 +611,91 @@ z x(z one,z two)
   }
 }
 
+z eq1(z one,z two)
+{
+  if(as(nu(c(one))))
+  {
+    if(as(nu(two)))
+    {
+      f(one);
+      return n();
+    }
+    else
+    {
+      f(one);
+      return no(n());
+    }
+  }
+  else
+  {
+    if(as(nu(c(two))))
+    {
+      f(one);
+      f(two);
+      return no(n());
+    }
+    else
+    {
+      if(as(pr(c(one))))
+      {
+        if(as(pr(c(two))))
+        {
+          if(as(eq1(t(c(one)),t(c(two)))))
+          {
+            return eq1(p(one),p(two));
+          }
+          else
+          {
+            f(one);
+            f(two);
+            return no(n());
+          }
+        }
+        else
+        {
+          f(one);
+          f(two);
+          return no(n());
+        }
+      }
+      else
+      {
+        if(as(pr(c(two))))
+        {
+          f(one);
+          f(two);
+          return no(n());
+        }
+        else
+        {
+          if(one.y[2].uc==two.y[2].uc)
+          {
+            return eq1(pp(one),pp(two));
+          }
+          else
+          {
+            f(one);
+            f(two);
+            return no(n());
+          }
+        }
+      }
+    }
+  }
+}
+
+z eq(z one,z two)//should not compare false
+{
+  if(as(eq1(one,c(two))))
+  {
+    return two;
+  }
+  else
+  {
+    return no(two);
+  }
+}
+
 z identity(z object)
 {
   return object;
@@ -771,6 +856,17 @@ int main()
   displayLine(x(no(n()),n()));
   displayLine(x(n(),no(n())));
   displayLine(x(n(),n()));
+  printf("  eq\n");
+  displayLine(eq(n(),n()));
+  displayLine(eq(n(),t(c(stack))));
+  displayLine(eq(t(c(stack)),n()));
+  displayLine(eq(t(c(stack)),t(c(stack))));
+  displayLine(eq(t(c(stack)),c(stack)));
+  displayLine(eq(c(stack),t(c(stack))));
+  displayLine(eq(c(stack),c(stack)));
+  printf("  eq\n");
+  displayLine(eq(u(c(stack),c(stack)),u(c(stack),c(stack))));
+  displayLine(eq(c(stack),u(c(stack),c(stack))));
 
   f(stack);
   return 0;
