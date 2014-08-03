@@ -563,6 +563,20 @@ z pr(z value)
   }
 }
 
+z a(z one,z two)
+{
+  if(as(c(one)))
+  {
+    f(one);
+    return two;
+  }
+  else
+  {
+    f(two);
+    return one;
+  }
+}
+
 z identity(z object)
 {
   return object;
@@ -708,6 +722,11 @@ int main()
   displayLine(pr(no(no(n()))));
   displayLine(pr(t(c(stack))));
   displayLine(t(pr(c(stack))));
+  printf("  a\n");
+  displayLine(a(no(n()),no(n())));
+  displayLine(a(no(n()),n()));
+  displayLine(a(n(),no(n())));
+  displayLine(a(n(),n()));
 
   f(stack);
   return 0;
