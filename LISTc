@@ -676,6 +676,7 @@ z eq(z one,z two)//should not compare false
 
 void display(z object)
 {
+  printf("%d",as(c(object)));
   printf("(%llu)",e(object)-1);
   if(!as(c(object)))
   {
@@ -852,7 +853,8 @@ printf("here\n");
   displayLine(nu(no(n())));
   displayLine(nu(no(no(n()))));
   
-  printf("here\n");
+printf("here\n");
+//displayLine(no(t(c(stack))));
   
   //displayLine(nu(t(c(stack))));
   displayLine(pr(no(n())));
