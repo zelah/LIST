@@ -102,28 +102,6 @@ ul e(z object)
   return object.y[0].ul;
 }
 
-void display(z object)
-{
-  printf("(%llu)",e(object)-1);
-  ul i;
-  for(i=2;i<=e(object);++i)
-  {
-    printf("%c",object.y[i].uc);
-  }
-}
-
-void displayLine(z object)
-{
-  display(object);
-  printf("\n");
-}
-
-void displaySpace(z object)
-{
-  display(object);
-  printf(" ");
-}
-
 ul size(ul extent)
 {
   return (extent==0)?block:((extent-1)/block+1)*block;
@@ -696,6 +674,33 @@ z eq(z one,z two)//should not compare false
   }
 }
 
+void display(z object)
+{
+  printf("(%llu)",e(object)-1);
+  if(object.y[2].uc==0)
+  {
+    printf("#false");
+  }
+  ul i;
+  for(i=2;i<=e(object);++i)
+  {
+    printf("%c",object.y[i].uc);
+  } 
+  f(object);
+}
+
+void displayLine(z object)
+{
+  display(object);
+  printf("\n");
+}
+
+void displaySpace(z object)
+{
+  display(object);
+  printf(" ");
+}
+
 z identity(z object)
 {
   return object;
@@ -764,54 +769,54 @@ int main()
   stack=ps(val,stack);
   val.uc='H';
   stack=ps(val,stack);
-  displayLine(stack);
+  displayLine(c(stack));
   stack2=c(stack);
   fun.f1=&inc;
   stack=mp(fun,stack);
-  displayLine(stack);
+  displayLine(c(stack));
   fun.f1=&notB;
   stack=kp(fun,stack);
-  displayLine(stack);
+  displayLine(c(stack));
   stack=pp(stack);
-  displayLine(stack);
+  displayLine(c(stack));
   stack=rv(stack);
-  displayLine(stack);
+  displayLine(c(stack));
   stack=pp(stack);
-  displayLine(stack);
+  displayLine(c(stack));
   stack=rv(stack);
-  displayLine(stack);
+  displayLine(c(stack));
   stack=pp(stack);
-  displayLine(stack);
+  displayLine(c(stack));
   stack=rv(stack);
-  displayLine(stack);
+  displayLine(c(stack));
   stack=pp(stack);
-  displayLine(stack);
+  displayLine(c(stack));
   stack=rv(stack);
-  displayLine(stack);
+  displayLine(c(stack));
   stack=pp(stack);
-  displayLine(stack);
+  displayLine(c(stack));
   stack=rv(stack);
-  displayLine(stack);
+  displayLine(c(stack));
   stack=pp(stack);
-  displayLine(stack);
+  displayLine(c(stack));
   stack=rv(stack);
-  displayLine(stack);
+  displayLine(c(stack));
   stack=pp(stack);
-  displayLine(stack);
+  displayLine(c(stack));
   stack=rv(stack);
-  displayLine(stack);
+  displayLine(c(stack));
   stack=pp(stack);
-  displayLine(stack);
+  displayLine(c(stack));
   stack=rv(stack);
-  displayLine(stack);
+  displayLine(c(stack));
   stack=pp(stack);
-  displayLine(stack);
+  displayLine(c(stack));
   stack=rv(stack);
-  displayLine(stack);
+  displayLine(c(stack));
   stack=pp(stack);
-  displayLine(stack);
+  displayLine(c(stack));
   stack=rv(stack);
-  displayLine(stack);
+  displayLine(c(stack));
   stack=ps(c(stack2),stack);
   stack=ps(n(),stack);
   stack=ps(c(stack2),stack);
