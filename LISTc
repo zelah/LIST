@@ -498,7 +498,7 @@ z nu(z value)
 {
   if(e(value)==1||(e(value)==2&&value.y[1].ul==0&&value.y[2].uc==0))
   {
-    f(value);
+	f(value);
     return n();
   }
   else if(as(c(value)))
@@ -681,11 +681,19 @@ void display(z object)
   {
     printf("#false ");
   }
-  ul i;
-  for(i=2;i<=e(object);++i)
+  if(as(pr(c(object))))
   {
-    printf("%c",object.y[i].uc);
-  } 
+    display(t(c(object)));
+    display(p(c(object)));
+  }
+  else
+  {
+    ul i;
+    for(i=2;i<=e(object);++i)
+    {
+      printf("%c",object.y[i].uc);
+    } 
+  }
   f(object);
 }
 
@@ -823,6 +831,8 @@ int main()
   fun.f1=&identity;
   stack=mf(fun,stack);
 
+printf("here\n");
+
   fun2.f2=&u;
   fun3.f2=&ps;
   stack=rf(n(),fun2,stack);
@@ -841,10 +851,13 @@ int main()
   displayLine(no(no(n())));
   displayLine(nu(no(n())));
   displayLine(nu(no(no(n()))));
-  displayLine(nu(t(c(stack))));
+  
+  printf("here\n");
+  
+  //displayLine(nu(t(c(stack))));
   displayLine(pr(no(n())));
   displayLine(pr(no(no(n()))));
-  displayLine(pr(t(c(stack))));
+  //displayLine(pr(t(c(stack))));
   displayLine(t(pr(c(stack))));
   printf("  a\n");
   displayLine(a(no(n()),no(n())));
@@ -863,15 +876,15 @@ int main()
   displayLine(x(n(),n()));
   printf("  eq\n");
   displayLine(eq(n(),n()));
-  displayLine(eq(n(),t(c(stack))));
+  //displayLine(eq(n(),t(c(stack))));
   displayLine(eq(t(c(stack)),n()));
   displayLine(eq(t(c(stack)),t(c(stack))));
   displayLine(eq(t(c(stack)),c(stack)));
-  displayLine(eq(c(stack),t(c(stack))));
+  //displayLine(eq(c(stack),t(c(stack))));
   displayLine(eq(c(stack),c(stack)));
   printf("  eq\n");
   displayLine(eq(u(c(stack),c(stack)),u(c(stack),c(stack))));
-  displayLine(eq(c(stack),u(c(stack),c(stack))));
+  //displayLine(eq(c(stack),u(c(stack),c(stack))));
 
   f(stack);
   return 0;
