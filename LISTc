@@ -677,9 +677,9 @@ z eq(z one,z two)//should not compare false
 void display(z object)
 {
   printf("(%llu)",e(object)-1);
-  if(object.y[2].uc==0)
+  if(!as(c(object)))
   {
-    printf("#false");
+    printf("#false ");
   }
   ul i;
   for(i=2;i<=e(object);++i)
