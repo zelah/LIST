@@ -251,7 +251,7 @@ z kp(z fun,z stack)
 
 z rd1(z fun,z stack)
 {
-  if(e(stack)==2)
+  if(e(stack)==3)
   {
     return tp(stack);
   }
@@ -779,6 +779,9 @@ int main()
   displayLine(c(stack));
   fun.f1=&notB;
   stack=kp(fun,stack);
+  displayLine(c(stack));
+  fun2.f2=&ps;
+  stack=rd(n(),fun2,stack);
   displayLine(c(stack));
 
   stack=pp(stack);
