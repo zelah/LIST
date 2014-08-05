@@ -229,7 +229,7 @@ z mp(z fun,z stack)
 
 z kp1(z fun,z stack,z result)
 {
-  if(e(stack)==1)
+  if(e(stack)==2)
   {
     f(stack);
     return result;
@@ -777,11 +777,10 @@ int main()
   fun.f1=&inc;
   stack=mp(fun,stack);
   displayLine(c(stack));
-/*
   fun.f1=&notB;
   stack=kp(fun,stack);
   displayLine(c(stack));
-*/
+
   stack=pp(stack);
   displayLine(c(stack));
   stack=rv(stack);
@@ -822,7 +821,6 @@ int main()
   displayLine(c(stack));
   stack=rv(stack);
   displayLine(c(stack));
-  printf("%c\n",tp(c(stack)).uc);
 /*
   stack=ps(c(stack2),stack);
   stack=ps(n(),stack);
