@@ -706,6 +706,9 @@ int main()
   stack=ps(val,stack);
   displayLine(c(stack));
   stack2=c(stack);
+  fun.f1=&identity;
+  stack=mp(fun,stack);
+  stack=mp(fun,stack);
   fun.f1=&inc;
   stack=mp(fun,stack);
   displayLine(c(stack));
@@ -759,29 +762,6 @@ int main()
 
 /*
 printf("here\n");
-
-  fun2.f2=&u;
-  fun3.f2=&ps;
-  stack=rf(n(),fun2,stack);
-  stack=r(n(),fun3,stack);
-  stack=rf(n(),fun2,stack);
-  displayLine(t(c(stack)));
-  fun.f1=&notEmpty;
-  stack=k(fun,stack);
-  displayLine(t(c(stack)));
-  stack=v(stack);
-  displayLine(t(c(stack)));
-  fun.f1=&identity;
-  stack=m(fun,stack);
-  displayLine(t(c(stack)));
-  displayLine(no(n()));
-  displayLine(no(no(n())));
-  displayLine(nu(no(n())));
-  displayLine(nu(no(no(n()))));
-  
-printf("here\n");
-//displayLine(no(t(c(stack))));
-  
   //displayLine(nu(t(c(stack))));
   displayLine(pr(no(n())));
   displayLine(pr(no(no(n()))));
