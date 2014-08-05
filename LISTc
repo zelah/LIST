@@ -171,9 +171,10 @@ z pp(z stack)
     result.y=(y)malloc((sz+1)*sizeof(z));
     result.y[0].ul=e(stack)-1;
     result.y[1].ul=0;
+    result.y[2].ul=0;
     ul i;
     ++stack.y;
-    for(i=2;i<=e(result);++i)
+    for(i=3;i<=e(result);++i)
     {
       result.y[i]=stack.y[i];
     }
@@ -183,6 +184,7 @@ z pp(z stack)
   }
   else
   {
+    stack.y[3].ul=0;
     stack.y[2].ul=0;
     stack.y[1].ul=e(stack)-1;
     ++stack.y;
@@ -777,46 +779,48 @@ int main()
   fun.f1=&notB;
   stack=kp(fun,stack);
   displayLine(c(stack));
+*/
   stack=pp(stack);
   displayLine(c(stack));
-  stack=rv(stack);
-  displayLine(c(stack));
-  stack=pp(stack);
-  displayLine(c(stack));
-  stack=rv(stack);
+  //stack=rv(stack);
   displayLine(c(stack));
   stack=pp(stack);
   displayLine(c(stack));
-  stack=rv(stack);
+  //stack=rv(stack);
   displayLine(c(stack));
   stack=pp(stack);
   displayLine(c(stack));
-  stack=rv(stack);
+  //stack=rv(stack);
   displayLine(c(stack));
   stack=pp(stack);
   displayLine(c(stack));
-  stack=rv(stack);
+  //stack=rv(stack);
   displayLine(c(stack));
   stack=pp(stack);
   displayLine(c(stack));
-  stack=rv(stack);
+  //stack=rv(stack);
   displayLine(c(stack));
   stack=pp(stack);
   displayLine(c(stack));
-  stack=rv(stack);
+  //stack=rv(stack);
   displayLine(c(stack));
   stack=pp(stack);
   displayLine(c(stack));
-  stack=rv(stack);
+  //stack=rv(stack);
   displayLine(c(stack));
   stack=pp(stack);
   displayLine(c(stack));
-  stack=rv(stack);
+  //stack=rv(stack);
   displayLine(c(stack));
   stack=pp(stack);
   displayLine(c(stack));
-  stack=rv(stack);
+  //stack=rv(stack);
   displayLine(c(stack));
+  stack=pp(stack);
+  displayLine(c(stack));
+  //stack=rv(stack);
+  displayLine(c(stack));
+/*
   stack=ps(c(stack2),stack);
   stack=ps(n(),stack);
   stack=ps(c(stack2),stack);
