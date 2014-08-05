@@ -218,8 +218,9 @@ z rv(z stack)
 
 z mp(z fun,z stack)
 {
+  stack.y[1].uc=1;
   ul i;
-  for(i=2;i<=e(stack);++i)
+  for(i=3;i<=e(stack);++i)
   {
     stack.y[i]=fun.f1(stack.y[i]);
   }
@@ -772,11 +773,11 @@ int main()
   val.uc='H';
   stack=ps(val,stack);
   displayLine(c(stack));
-/*
   stack2=c(stack);
   fun.f1=&inc;
   stack=mp(fun,stack);
   displayLine(c(stack));
+/*
   fun.f1=&notB;
   stack=kp(fun,stack);
   displayLine(c(stack));
