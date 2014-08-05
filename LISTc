@@ -85,15 +85,16 @@ typedef z (*f17)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
 typedef z (*f18)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
 typedef z (*f19)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
 typedef z (*f20)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
-ul const block=4;
+ul const block=5;
 
 z n()
 {
   z result;
   result.y=(y)malloc((block+1)*sizeof(z));
-  result.y+=block-1;
-  result.y[0].ul=1;
+  result.y+=block-2;
+  result.y[0].ul=2;
   result.y[1].ul=0;
+  result.y[2].ul=0;
   return result;
 }
 
@@ -104,7 +105,7 @@ ul e(z object)
 
 ul size(ul extent)
 {
-  return (extent==0)?block:((extent-1)/block+1)*block;
+  return ((extent-2)/block+1)*block;
 }
 
 z c(z object)
@@ -750,6 +751,7 @@ int main()
   stack=n();
   val.uc='L';
   stack=ps(val,stack);
+/*  
   val.uc='A';
   stack=ps(val,stack);
   val.uc='H';
@@ -887,7 +889,7 @@ printf("here\n");
   printf("  eq\n");
   displayLine(eq(u(c(stack),c(stack)),u(c(stack),c(stack))));
   //displayLine(eq(c(stack),u(c(stack),c(stack))));
-
+*/
   f(stack);
   return 0;
 }
