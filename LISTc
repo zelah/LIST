@@ -93,7 +93,7 @@ z n()
   result.y=(y)malloc((block+1)*sizeof(z));
   result.y+=block-2;
   result.y[0].ul=2;
-  result.y[1].ul=0;
+  result.y[1].uc=1;
   result.y[2].ul=0;
   return result;
 }
@@ -138,7 +138,7 @@ z ps(z object,z stack)
     result.y=(y)malloc((sz+1)*sizeof(z));
     result.y+=sz-e(stack)-1;
     result.y[0].ul=e(stack)+1;
-    result.y[1].ul=0;
+    result.y[1].uc=1;
     result.y[2].ul=0;
     result.y[3]=object;
     ++result.y;
@@ -155,7 +155,7 @@ z ps(z object,z stack)
   {
     --stack.y;
     stack.y[0].ul=stack.y[1].ul+1;
-    stack.y[1].ul=0;
+    stack.y[1].uc=1;
     stack.y[2].ul=0;
     stack.y[3]=object;
     return stack;
@@ -170,7 +170,7 @@ z pp(z stack)
     z result;
     result.y=(y)malloc((sz+1)*sizeof(z));
     result.y[0].ul=e(stack)-1;
-    result.y[1].ul=0;
+    result.y[1].uc=1;
     result.y[2].ul=0;
     ul i;
     ++stack.y;
@@ -185,7 +185,7 @@ z pp(z stack)
   else
   {
     stack.y[3].ul=0;
-    stack.y[2].ul=0;
+    stack.y[2].uc=1;
     stack.y[1].ul=e(stack)-1;
     ++stack.y;
     return stack;
@@ -201,11 +201,12 @@ z tp(z stack)
 
 z rv(z stack)
 {
+  stack.y[1].uc=1;
   ul i;
   z temp;
   ul r=e(stack);
-  ul m=(r+1)/2;
-  for(i=2;i<=m;++i)
+  ul m=(r+2)/2;
+  for(i=3;i<=m;++i)
   {
     temp=stack.y[i];
     stack.y[i]=stack.y[r];
@@ -782,43 +783,43 @@ int main()
 */
   stack=pp(stack);
   displayLine(c(stack));
-  //stack=rv(stack);
+  stack=rv(stack);
   displayLine(c(stack));
   stack=pp(stack);
   displayLine(c(stack));
-  //stack=rv(stack);
+  stack=rv(stack);
   displayLine(c(stack));
   stack=pp(stack);
   displayLine(c(stack));
-  //stack=rv(stack);
+  stack=rv(stack);
   displayLine(c(stack));
   stack=pp(stack);
   displayLine(c(stack));
-  //stack=rv(stack);
+  stack=rv(stack);
   displayLine(c(stack));
   stack=pp(stack);
   displayLine(c(stack));
-  //stack=rv(stack);
+  stack=rv(stack);
   displayLine(c(stack));
   stack=pp(stack);
   displayLine(c(stack));
-  //stack=rv(stack);
+  stack=rv(stack);
   displayLine(c(stack));
   stack=pp(stack);
   displayLine(c(stack));
-  //stack=rv(stack);
+  stack=rv(stack);
   displayLine(c(stack));
   stack=pp(stack);
   displayLine(c(stack));
-  //stack=rv(stack);
+  stack=rv(stack);
   displayLine(c(stack));
   stack=pp(stack);
   displayLine(c(stack));
-  //stack=rv(stack);
+  stack=rv(stack);
   displayLine(c(stack));
   stack=pp(stack);
   displayLine(c(stack));
-  //stack=rv(stack);
+  stack=rv(stack);
   displayLine(c(stack));
   printf("%c\n",tp(c(stack)).uc);
 /*
