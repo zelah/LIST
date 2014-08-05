@@ -269,64 +269,6 @@ z rd(z fin,z fun,z stack)
   return rd1(fun,ps(fin,rv(stack)));
 }
 
-z mf(z fun,z stack)
-{
-  stack.y[1].uc=1;
-  ul i;
-  z temp;
-  for(i=3;i<=e(stack);++i)
-  {
-    temp=fun.f1(c(stack.y[i]));
-    f(stack.y[i]);
-    stack.y[i]=temp;
-  }
-  return stack;
-}
-
-z kf1(z fun,z stack,z result)
-{
-  if(e(stack)==2)
-  {
-    f(stack);
-    return result;
-  }
-  else
-  {
-    if(fun.f1(tp(c(stack))).uc)
-    {
-      result=ps(tp(c(stack)),result);
-    }
-    return kf1(fun,pp(stack),result);
-  }
-}
-
-z kf(z fun,z stack)
-{
-  return kf1(fun,rv(stack),n());
-}
-
-z rf1(z fun,z stack)
-{
-  if(e(stack)==2)
-  {
-    return tp(stack);
-  }
-  else
-  {
-    z combined;
-    combined=fun.f2(c(stack.y[3]),c(stack.y[2]));
-    f(stack.y[2]);
-    f(stack.y[3]);
-    stack=pp(pp(stack));
-    return rf1(fun,ps(combined,stack));
-  }
-}
-
-z rf(z fin,z fun,z stack)
-{
-  return rf1(fun,ps(fin,rv(stack)));
-}
-
 z u(z stack1,z stack2)
 {
   ul ex=e(stack1)+e(stack2)+2;
@@ -723,14 +665,6 @@ z notB(z character)
   return character;
 }
 
-z notEmpty(z stack)
-{
-   z result;
-   result.uc=e(stack)!=2;
-   f(stack);
-   return result;
-}
-
 int main()
 {
   z val;
@@ -822,15 +756,6 @@ int main()
   displayLine(c(stack));
   stack=rv(stack);
   displayLine(c(stack));
-  stack=ps(c(stack2),stack);
-  stack=ps(n(),stack);
-  stack=ps(c(stack2),stack);
-  fun.f1=&identity;
-  stack=mf(fun,stack);
-  displayLine(tp(c(stack)));
-  fun.f1=&notEmpty;
-  stack2=kp(fun,c(stack));
-  displayLine(tp(c(stack2)));
 
 /*
 printf("here\n");
