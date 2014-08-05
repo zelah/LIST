@@ -285,7 +285,7 @@ z mf(z fun,z stack)
 
 z kf1(z fun,z stack,z result)
 {
-  if(e(stack)==1)
+  if(e(stack)==2)
   {
     f(stack);
     return result;
@@ -295,13 +295,8 @@ z kf1(z fun,z stack,z result)
     if(fun.f1(tp(c(stack))).uc)
     {
       result=ps(tp(c(stack)),result);
-      return kf1(fun,pp(stack),result);
     }
-    else
-    {
-      f(stack.y[1]);
-      return kf1(fun,pp(stack),result);
-    }
+    return kf1(fun,pp(stack),result);
   }
 }
 
@@ -730,8 +725,10 @@ z notB(z character)
 
 z notEmpty(z stack)
 {
-   stack.uc=e(stack)!=1;
-   return stack;
+   z result;
+   result.uc=e(stack)!=2;
+   f(stack);
+   return result;
 }
 
 int main()
@@ -831,6 +828,9 @@ int main()
   fun.f1=&identity;
   stack=mf(fun,stack);
   displayLine(tp(c(stack)));
+  fun.f1=&notEmpty;
+  stack2=kp(fun,c(stack));
+  displayLine(tp(c(stack2)));
 
 /*
 printf("here\n");
