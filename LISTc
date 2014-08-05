@@ -105,7 +105,7 @@ ul e(z object)
 
 ul size(ul extent)
 {
-  return ((extent-2)/block+1)*block;
+  return ((extent-1)/block+1)*block;
 }
 
 z c(z object)
@@ -139,10 +139,11 @@ z ps(z object,z stack)
     result.y+=sz-e(stack)-1;
     result.y[0].ul=e(stack)+1;
     result.y[1].ul=0;
-    result.y[2]=object;
+    result.y[2].ul=0;
+    result.y[3]=object;
     ++result.y;
     ul i;
-    for(i=2;i<=e(stack);++i)
+    for(i=3;i<=e(stack);++i)
     {
      result.y[i]=stack.y[i];
     }
@@ -155,7 +156,8 @@ z ps(z object,z stack)
     --stack.y;
     stack.y[0].ul=stack.y[1].ul+1;
     stack.y[1].ul=0;
-    stack.y[2]=object;
+    stack.y[2].ul=0;
+    stack.y[3]=object;
     return stack;
   }
 }
@@ -677,25 +679,12 @@ z eq(z one,z two)//should not compare false
 
 void display(z object)
 {
-  printf("%d",as(c(object)));
-  printf("(%llu)",e(object)-1);
-  if(!as(c(object)))
+  printf("(%llu)",e(object)-2);
+  ul i;
+  for(i=3;i<=e(object);++i)
   {
-    printf("#false ");
-  }
-  if(as(pr(c(object))))
-  {
-    display(t(c(object)));
-    display(p(c(object)));
-  }
-  else
-  {
-    ul i;
-    for(i=2;i<=e(object);++i)
-    {
-      printf("%c",object.y[i].uc);
-    } 
-  }
+    printf("%c",object.y[i].uc);
+  } 
   f(object);
 }
 
@@ -750,8 +739,7 @@ int main()
   z stack2;
   stack=n();
   val.uc='L';
-  stack=ps(val,stack);
-/*  
+  stack=ps(val,stack);  
   val.uc='A';
   stack=ps(val,stack);
   val.uc='H';
@@ -781,6 +769,7 @@ int main()
   val.uc='H';
   stack=ps(val,stack);
   displayLine(c(stack));
+/*
   stack2=c(stack);
   fun.f1=&inc;
   stack=mp(fun,stack);
