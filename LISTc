@@ -271,9 +271,10 @@ z rd(z fin,z fun,z stack)
 
 z mf(z fun,z stack)
 {
+  stack.y[1].uc=1;
   ul i;
   z temp;
-  for(i=2;i<=e(stack);++i)
+  for(i=3;i<=e(stack);++i)
   {
     temp=fun.f1(c(stack.y[i]));
     f(stack.y[i]);
@@ -824,13 +825,14 @@ int main()
   displayLine(c(stack));
   stack=rv(stack);
   displayLine(c(stack));
-/*
   stack=ps(c(stack2),stack);
   stack=ps(n(),stack);
   stack=ps(c(stack2),stack);
   fun.f1=&identity;
   stack=mf(fun,stack);
+  displayLine(tp(c(stack)));
 
+/*
 printf("here\n");
 
   fun2.f2=&u;
