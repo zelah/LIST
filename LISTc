@@ -714,8 +714,10 @@ int main()
   displayLine(c(stack));
   fun.f1=&notB;
   stack=kp(fun,stack);
+  stack=kp(fun,stack);
   displayLine(c(stack));
   fun2.f2=&ps;
+  stack=rd(n(),fun2,stack);
   stack=rd(n(),fun2,stack);
   displayLine(c(stack));
 
