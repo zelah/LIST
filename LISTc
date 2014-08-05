@@ -194,7 +194,7 @@ z pp(z stack)
 
 z tp(z stack)
 {
-  z result=stack.y[2];
+  z result=stack.y[3];
   f(stack);
   return result;
 }
@@ -820,6 +820,7 @@ int main()
   displayLine(c(stack));
   //stack=rv(stack);
   displayLine(c(stack));
+  printf("%c\n",tp(c(stack)).uc);
 /*
   stack=ps(c(stack2),stack);
   stack=ps(n(),stack);
