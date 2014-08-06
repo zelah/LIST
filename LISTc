@@ -276,11 +276,8 @@ z u(z stack1,z stack2)
   ul i;
   if(sz==size(e(stack2)))
   {
-    stack2.y[1].uc=1;
     stack2.y-=e(stack1)+1;
-    stack2.y[0]=stack1.y[0];
-    stack2.y[1].uc=1;
-    for(i=2;i<=e(stack1);++i)
+    for(i=0;i<=e(stack1);++i)
     {
       stack2.y[i]=stack1.y[i];
     }
@@ -296,16 +293,12 @@ z u(z stack1,z stack2)
     result.y+=sz-e(stack1)-e(stack2)-2;
     result.y[0].ul=e(stack1)+e(stack2)+2;
     ++result.y;
-    result.y[0]=stack1.y[0];
-    result.y[1].uc=1;
-    for(i=2;i<=e(stack1);++i)
+    for(i=0;i<=e(stack1);++i)
     {
       result.y[i]=stack1.y[i];
     }
     result.y+=e(stack1)+1;
-    result.y[0]=stack2.y[0];
-    result.y[1].uc=1;
-    for(i=2;i<=e(stack2);++i)
+    for(i=0;i<=e(stack2);++i)
     {
       result.y[i]=stack2.y[i];
     }
@@ -770,6 +763,8 @@ int main()
   displayLine(c(stack));
 
   stack2=u(c(stack2),stack2);
+  stack2=u(c(stack2),stack2);
+  stack2=p(stack2);
   stack2=t(stack2);
   displayLine(c(stack2));
 
