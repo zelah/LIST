@@ -85,7 +85,7 @@ typedef z (*f17)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
 typedef z (*f18)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
 typedef z (*f19)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
 typedef z (*f20)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
-ul const block=5;
+ul const block=5555;
 
 z n()
 {
@@ -271,18 +271,22 @@ z rd(z fin,z fun,z stack)
 
 z u(z stack1,z stack2)
 {
-  ul ex=e(stack1)+e(stack2)+2;
+  ul ex=e(stack1)+e(stack2)+3;
   ul sz=size(ex);
   ul i;
   if(sz==size(e(stack2)))
   {
+    stack2.y[1].uc=1;
     stack2.y-=e(stack1)+1;
-    for(i=0;i<=e(stack1);++i)
+    stack2.y[0]=stack1.y[0];
+    stack2.y[1].uc=1;
+    for(i=2;i<=e(stack1);++i)
     {
       stack2.y[i]=stack1.y[i];
     }
-    --stack2.y;
+    stack2.y-=2;
     stack2.y[0].ul=ex;
+    stack2.y[1].uc=1;
     f(stack1);
     return stack2;
   }
@@ -762,8 +766,9 @@ int main()
   stack=rv(stack);
   displayLine(c(stack));
 
-  stack2=u(c(stack2),stack2);
-  stack2=u(c(stack2),stack2);
+  f(stack);
+  stack=c(stack2);
+  stack2=u(u(c(stack),c(stack)),u(c(stack),c(stack)));
   stack2=p(stack2);
   stack2=t(stack2);
   displayLine(c(stack2));
