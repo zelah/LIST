@@ -317,9 +317,9 @@ z u(z stack1,z stack2)
 z t(z stack)
 {
   z result;
-  ++stack.y;
+  stack.y+=2;
   result=c(stack);
-  --stack.y;
+  stack.y-=2;
   f(stack);
   return result;
 }
@@ -327,12 +327,12 @@ z t(z stack)
 z p(z stack)
 {
   z result;
-  ++stack.y;
+  stack.y+=2;
   ul jump=e(stack)+1;
   stack.y+=jump;
   result=c(stack);
   stack.y-=jump;
-  --stack.y;
+  stack.y-=2;
   f(stack);
   return result;
 }
@@ -674,7 +674,6 @@ int main()
   z val;
   z fun;
   z fun2;
-  z fun3;
   z stack;
   z stack2;
   stack=n();
