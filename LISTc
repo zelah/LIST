@@ -393,8 +393,9 @@ z k1(z fun,z stack,z result)
     top=t(c(stack));
     if(fun.f1(c(top)).uc)
     {
-      result=u(top,result);
+      result=u(c(top),result);
     }
+    f(top);
     return k1(fun,p(stack),result);
   }
 }
