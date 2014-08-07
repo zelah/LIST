@@ -462,22 +462,15 @@ z nu(z value)
 
 z pr(z value)
 {
-  if(value.y[1].ul==0)
+  if(value.y[2].ul==0)
   {
-    if(as(nu(c(value))))
-    {
-      f(value);
-      return no(n());
-    }
-    else
-    {
-      return no(value);
-    }
+    value.y[1].uc=0;
   }
   else
   {
-    return value;
+    value.y[1].uc=1;
   }
+  return value;
 }
 
 z a(z one,z two)
@@ -796,6 +789,10 @@ int main()
   printf("%d\n",as(nu(no(n()))));
   printf("%d\n",as(nu(c(stack2))));
   printf("%d\n",as(nu(no(c(stack2)))));
+  printf("%d\n",as(pr(n())));
+  printf("%d\n",as(pr(no(c(stack2)))));
+  printf("%d\n",as(pr(u(c(stack2),c(stack2)))));
+  printf("%d\n",as(pr(no(u(c(stack2),c(stack2))))));
 
 /*
 printf("here\n");
