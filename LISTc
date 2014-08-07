@@ -85,7 +85,7 @@ typedef z (*f17)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
 typedef z (*f18)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
 typedef z (*f19)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
 typedef z (*f20)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
-ul const block=5555;
+ul const block=5;
 
 z n()
 {
@@ -294,20 +294,25 @@ z u(z stack1,z stack2)
   {
     z result;
     result.y=(y)malloc((sz+1)*sizeof(z));
-    result.y+=sz-e(stack1)-e(stack2)-2;
-    result.y[0].ul=e(stack1)+e(stack2)+2;
-    ++result.y;
-    for(i=0;i<=e(stack1);++i)
+    result.y+=sz-e(stack1)-e(stack2)-3;
+    result.y[0].ul=ex;
+    result.y[1].uc=1;
+    result.y+=2;
+    result.y[0]=stack1.y[0];
+    result.y[1].uc=1;
+    for(i=2;i<=e(stack1);++i)
     {
       result.y[i]=stack1.y[i];
     }
     result.y+=e(stack1)+1;
-    for(i=0;i<=e(stack2);++i)
+    result.y[0]=stack2.y[0];
+    result.y[1].uc=1;
+    for(i=2;i<=e(stack2);++i)
     {
       result.y[i]=stack2.y[i];
     }
     result.y-=e(stack1)+1;
-    --result.y;
+    result.y-=2;
     f(stack1);
     f(stack2);
     return result;
