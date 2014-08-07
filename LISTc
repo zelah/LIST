@@ -436,17 +436,15 @@ uc as(z value)
 
 z no(z value)
 {
-  if(as(c(value)))
+  if(value.y[1].uc)
   {
-    z v;
-    v.uc=0;
-    value=ps(v,value);
-    return value;
+    value.y[1].uc=0;
   }
   else
   {
-    return pp(value);
+    value.y[1].uc=1;
   }
+  return value;
 }
 
 z nu(z value)
@@ -796,7 +794,7 @@ int main()
   stack2=p(stack2);
   stack2=t(stack2);
   stack2=p(stack2);
-  printf("%d\n",as(c(stack2)));
+  printf("%d\n",as(no(c(stack2))));
   displayLine(c(stack2));
 
 /*
