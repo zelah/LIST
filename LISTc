@@ -363,7 +363,7 @@ z v(z stack)
 
 z m1(z fun,z stack,z result)
 {
-  if(e(stack)==1)
+  if(e(stack)==2)
   {
     f(stack);
     return result;
@@ -774,6 +774,9 @@ int main()
   stack=c(stack2);
   f(stack2);
   stack2=u(u(c(stack),c(stack)),u(u(c(stack),c(stack)),n()));
+  fun.f1=&identity;
+  stack2=m(fun,stack2);
+  stack2=m(fun,stack2);
   stack2=v(stack2);
   stack2=p(stack2);
   stack2=t(stack2);
