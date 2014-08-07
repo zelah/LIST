@@ -382,7 +382,7 @@ z m(z fun,z stack)
 
 z k1(z fun,z stack,z result)
 {
-  if(e(stack)==1)
+  if(e(stack)==2)
   {
     f(stack);
     return result;
@@ -391,7 +391,7 @@ z k1(z fun,z stack,z result)
   {
     z top;
     top=t(c(stack));
-    if(fun.f1(top).uc)
+    if(fun.f1(c(top)).uc)
     {
       result=u(top,result);
     }
@@ -408,7 +408,7 @@ z r1(z fun,z stack)
 {
   z rest;
   rest=p(c(stack));
-  if(e(rest)==1)
+  if(e(rest)==2)
   {
     f(rest);
     return t(stack);
@@ -673,6 +673,14 @@ z notB(z character)
   character.uc=character.uc!='B';
   return character;
 }
+ 
+z tru(z value)
+{
+  z result;
+  result.uc=1;
+  f(value);
+  return result;
+}
 
 int main()
 {
@@ -777,6 +785,12 @@ int main()
   fun.f1=&identity;
   stack2=m(fun,stack2);
   stack2=m(fun,stack2);
+  fun.f1=&tru;
+  stack2=k(fun,stack2);
+  stack2=k(fun,stack2);
+  fun2.f2=&u;
+  stack2=r(n(),fun2,stack2);
+  stack2=r(n(),fun2,stack2);
   stack2=v(stack2);
   stack2=p(stack2);
   stack2=t(stack2);
