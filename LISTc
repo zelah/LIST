@@ -449,19 +449,15 @@ z no(z value)
 
 z nu(z value)
 {
-  if(e(value)==1||(e(value)==2&&value.y[1].ul==0&&value.y[2].uc==0))
+  if(e(value)==2)
   {
-	f(value);
-    return n();
-  }
-  else if(as(c(value)))
-  {
-    return no(value);
+	 value.y[1].uc=1;
   }
   else
   {
-    return value;
+    value.y[1].uc=0;
   }
+  return value;
 }
 
 z pr(z value)
@@ -796,6 +792,10 @@ int main()
   stack2=p(stack2);
   printf("%d\n",as(no(c(stack2))));
   displayLine(c(stack2));
+  printf("%d\n",as(nu(n())));
+  printf("%d\n",as(nu(no(n()))));
+  printf("%d\n",as(nu(c(stack2))));
+  printf("%d\n",as(nu(no(c(stack2)))));
 
 /*
 printf("here\n");
