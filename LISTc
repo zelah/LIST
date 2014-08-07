@@ -344,7 +344,7 @@ z p(z stack)
 
 z v1(z stack,z result)
 {
-  if(e(stack)==1)
+  if(e(stack)==2)
   {
     f(stack);
     return result;
@@ -772,9 +772,11 @@ int main()
 
   f(stack);
   stack=c(stack2);
-  stack2=u(u(c(stack),c(stack)),u(c(stack),c(stack)));
+  f(stack2);
+  stack2=u(u(c(stack),c(stack)),u(u(c(stack),c(stack)),n()));
   stack2=p(stack2);
   stack2=t(stack2);
+  stack2=p(stack2);
   displayLine(c(stack2));
 
 /*
