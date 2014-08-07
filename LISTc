@@ -774,6 +774,7 @@ int main()
   stack=c(stack2);
   f(stack2);
   stack2=u(u(c(stack),c(stack)),u(u(c(stack),c(stack)),n()));
+  stack2=v(stack2);
   stack2=p(stack2);
   stack2=t(stack2);
   stack2=p(stack2);
