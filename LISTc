@@ -793,11 +793,13 @@ int main()
   stack2=p(stack2);
   printf("%d\n",as(no(c(stack2))));
   displayLine(c(stack2));
+
   printf("  nu\n");
   displayLine(nu(n()));
   displayLine(nu(no(n())));
   displayLine(nu(c(stack2)));
   displayLine(nu(no(c(stack2))));
+
   printf("  pr\n");
   displayLine(pr(n()));
   displayLine(pr(no(c(stack2))));
