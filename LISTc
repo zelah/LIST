@@ -586,7 +586,7 @@ z eq1(z one,z two)
   }
 }
 
-z eq(z one,z two)//should not compare false
+z eq(z one,z two)
 {
   if(as(eq1(one,c(two))))
   {
@@ -794,19 +794,15 @@ int main()
   printf("%d\n",as(x(n(),no(n()))));
   printf("%d\n",as(x(n(),n())));
 
-/*
   printf("  eq\n");
-  displayLine(eq(n(),n()));
-  //displayLine(eq(n(),t(c(stack))));
-  displayLine(eq(t(c(stack)),n()));
-  displayLine(eq(t(c(stack)),t(c(stack))));
-  displayLine(eq(t(c(stack)),c(stack)));
-  //displayLine(eq(c(stack),t(c(stack))));
-  displayLine(eq(c(stack),c(stack)));
+  printf("%d\n",as(eq(n(),n())));
+  printf("%d\n",as(eq(n(),c(stack2))));
+  printf("%d\n",as(eq(c(stack2),n())));
+  printf("%d\n",as(eq(c(stack2),c(stack2))));
   printf("  eq\n");
-  displayLine(eq(u(c(stack),c(stack)),u(c(stack),c(stack))));
-  //displayLine(eq(c(stack),u(c(stack),c(stack))));
-*/
+  printf("%d\n",as(eq(u(c(stack2),c(stack2)),c(stack2))));
+  printf("%d\n",as(eq(c(stack2),u(c(stack2),c(stack2)))));
+
   f(stack);
   return 0;
 }
