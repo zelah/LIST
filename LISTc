@@ -269,52 +269,52 @@ z rd(z fin,z fun,z stack)
   return rd1(fun,ps(fin,rv(stack)));
 }
 
-z u(z stack1,z stack2)
+z u(z one,z two)
 {
-  ul ex=e(stack1)+e(stack2)+3;
+  ul ex=e(one)+e(two)+3;
   ul sz=size(ex);
   ul i;
-  if(sz==size(e(stack2)))
+  if(sz==size(e(two)))
   {
-    stack2.y[1].uc=1;
-    stack2.y-=e(stack1)+1;
-    stack2.y[0]=stack1.y[0];
-    stack2.y[1].uc=1;
-    for(i=2;i<=e(stack1);++i)
+    two.y[1].uc=1;
+    two.y-=e(one)+1;
+    two.y[0]=one.y[0];
+    two.y[1].uc=1;
+    for(i=2;i<=e(one);++i)
     {
-      stack2.y[i]=stack1.y[i];
+      two.y[i]=one.y[i];
     }
-    stack2.y-=2;
-    stack2.y[0].ul=ex;
-    stack2.y[1].uc=1;
-    f(stack1);
-    return stack2;
+    two.y-=2;
+    two.y[0].ul=ex;
+    two.y[1].uc=1;
+    f(one);
+    return two;
   }
   else
   {
     z result;
     result.y=(y)malloc((sz+1)*sizeof(z));
-    result.y+=sz-e(stack1)-e(stack2)-3;
+    result.y+=sz-e(one)-e(two)-3;
     result.y[0].ul=ex;
     result.y[1].uc=1;
     result.y+=2;
-    result.y[0]=stack1.y[0];
+    result.y[0]=one.y[0];
     result.y[1].uc=1;
-    for(i=2;i<=e(stack1);++i)
+    for(i=2;i<=e(one);++i)
     {
-      result.y[i]=stack1.y[i];
+      result.y[i]=one.y[i];
     }
-    result.y+=e(stack1)+1;
-    result.y[0]=stack2.y[0];
+    result.y+=e(one)+1;
+    result.y[0]=two.y[0];
     result.y[1].uc=1;
-    for(i=2;i<=e(stack2);++i)
+    for(i=2;i<=e(two);++i)
     {
-      result.y[i]=stack2.y[i];
+      result.y[i]=two.y[i];
     }
-    result.y-=e(stack1)+1;
+    result.y-=e(one)+1;
     result.y-=2;
-    f(stack1);
-    f(stack2);
+    f(one);
+    f(two);
     return result;
   }
 }
@@ -451,7 +451,7 @@ z nu(z value)
 {
   if(e(value)==2)
   {
-	 value.y[1].uc=1;
+    value.y[1].uc=1;
   }
   else
   {
