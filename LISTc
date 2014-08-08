@@ -319,112 +319,112 @@ z u(z one,z two)
   }
 }
 
-z t(z stack)
+z t(z pair)
 {
   z result;
-  stack.y+=2;
-  result=c(stack);
-  stack.y-=2;
-  f(stack);
+  pair.y+=2;
+  result=c(pair);
+  pair.y-=2;
+  f(pair);
   return result;
 }
 
-z p(z stack)
+z p(z pair)
 {
   z result;
-  stack.y+=2;
-  ul jump=e(stack)+1;
-  stack.y+=jump;
-  result=c(stack);
-  stack.y-=jump;
-  stack.y-=2;
-  f(stack);
+  pair.y+=2;
+  ul jump=e(pair)+1;
+  pair.y+=jump;
+  result=c(pair);
+  pair.y-=jump;
+  pair.y-=2;
+  f(pair);
   return result;
 }
 
-z v1(z stack,z result)
+z v1(z list,z result)
 {
-  if(e(stack)==2)
+  if(e(list)==2)
   {
-    f(stack);
+    f(list);
     return result;
   }
   else
   {
-    result=u(t(c(stack)),result);
-    return v1(p(stack),result);
+    result=u(t(c(list)),result);
+    return v1(p(list),result);
   }
 }
 
-z v(z stack)
+z v(z list)
 {
-  return v1(stack,n());
+  return v1(list,n());
 }
 
-z m1(z fun,z stack,z result)
+z m1(z fun,z list,z result)
 {
-  if(e(stack)==2)
+  if(e(list)==2)
   {
-    f(stack);
+    f(list);
     return result;
   }
   else
   {
-    result=u(fun.f1(t(c(stack))),result);
-    return m1(fun,p(stack),result);
+    result=u(fun.f1(t(c(list))),result);
+    return m1(fun,p(list),result);
   }
 }
 
-z m(z fun,z stack)
+z m(z fun,z list)
 {
-  return m1(fun,v(stack),n());
+  return m1(fun,v(list),n());
 }
 
-z k1(z fun,z stack,z result)
+z k1(z fun,z list,z result)
 {
-  if(e(stack)==2)
+  if(e(list)==2)
   {
-    f(stack);
+    f(list);
     return result;
   }
   else
   {
     z top;
-    top=t(c(stack));
+    top=t(c(list));
     if(fun.f1(c(top)).uc)
     {
       result=u(c(top),result);
     }
     f(top);
-    return k1(fun,p(stack),result);
+    return k1(fun,p(list),result);
   }
 }
 
-z k(z fun,z stack)
+z k(z fun,z list)
 {
-  return k1(fun,v(stack),n());
+  return k1(fun,v(list),n());
 }
 
-z r1(z fun,z stack)
+z r1(z fun,z list)
 {
   z rest;
-  rest=p(c(stack));
+  rest=p(c(list));
   if(e(rest)==2)
   {
     f(rest);
-    return t(stack);
+    return t(list);
   }
   else
   {
     z temp;
-    temp=fun.f2(t(rest),t(c(stack)));
-    return r1(fun,u(temp,p(p(stack))));
+    temp=fun.f2(t(rest),t(c(list)));
+    return r1(fun,u(temp,p(p(list))));
   }
 }
 
-z r(z fin,z fun,z stack)
+z r(z fin,z fun,z list)
 {
-  return r1(fun,u(fin,v(stack)));
+  return r1(fun,u(fin,v(list)));
 }
 
 uc as(z value)
