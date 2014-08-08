@@ -598,15 +598,39 @@ z eq(z one,z two)
   }
 }
 
+void display1(z object)
+{
+  if(as(pr(c(object))))
+  {
+    printf("(%llu)",e(object));
+  }
+  else
+  {
+    printf("[%llu]",e(object)-2);
+  }
+  if(as(pr(c(object))))
+  {
+    display1(t(c(object)));
+    display1(p(object));
+  }
+  else
+  {
+    ul i;
+    for(i=3;i<=e(object);++i)
+    {
+      printf("%c",object.y[i].uc);
+    } 
+    f(object);
+  }
+}
+
 void display(z object)
 {
-  printf("(%llu)",e(object)-2);
-  ul i;
-  for(i=3;i<=e(object);++i)
+  if(!as(c(object)))
   {
-    printf("%c",object.y[i].uc);
-  } 
-  f(object);
+    printf("{false}");
+  }
+  display1(object);
 }
 
 void displayLine(z object)
@@ -751,7 +775,9 @@ int main()
   f(stack);
   stack=c(stack2);
   f(stack2);
-  stack2=u(u(c(stack),c(stack)),u(u(c(stack),c(stack)),n()));
+  stack2=u(u(c(stack),c(stack)),u(u(c(stack),c(stack)),u(u(c(stack),c(stack)),n())));
+  displayLine(c(stack2));
+  displayLine(nu(c(stack2)));
   fun.f1=&identity;
   stack2=m(fun,stack2);
   stack2=m(fun,stack2);
