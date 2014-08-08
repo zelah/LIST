@@ -503,31 +503,13 @@ z o(z one,z two)
 
 z x(z one,z two)
 {
-  if(as(c(one)))
+  if(as(one))
   {
-    if(as(c(two)))
-    {
-      f(two);
-      return no(one);
-    }
-    else
-    {
-      f(one);
-      return no(two);
-    }
+    return no(two);
   }
   else
   {
-    if(as(c(two)))
-    {
-      f(one);
-      return two;
-    }
-    else
-    {
-      f(two);
-      return one;
-    }
+    return two;
   }
 }
 
@@ -794,28 +776,25 @@ int main()
   printf("%d\n",as(pr(u(c(stack2),c(stack2)))));
   printf("%d\n",as(pr(no(u(c(stack2),c(stack2))))));
 
-/*
-printf("here\n");
-  //displayLine(nu(t(c(stack))));
-  displayLine(pr(no(n())));
-  displayLine(pr(no(no(n()))));
-  //displayLine(pr(t(c(stack))));
-  displayLine(t(pr(c(stack))));
   printf("  a\n");
-  displayLine(a(no(n()),no(n())));
-  displayLine(a(no(n()),n()));
-  displayLine(a(n(),no(n())));
-  displayLine(a(n(),n()));
+  printf("%d\n",as(a(no(n()),no(n()))));
+  printf("%d\n",as(a(no(n()),n())));
+  printf("%d\n",as(a(n(),no(n()))));
+  printf("%d\n",as(a(n(),n())));
+  
   printf("  o\n");
-  displayLine(o(no(n()),no(n())));
-  displayLine(o(no(n()),n()));
-  displayLine(o(n(),no(n())));
-  displayLine(o(n(),n()));
+  printf("%d\n",as(o(no(n()),no(n()))));
+  printf("%d\n",as(o(no(n()),n())));
+  printf("%d\n",as(o(n(),no(n()))));
+  printf("%d\n",as(o(n(),n())));
+
   printf("  x\n");
-  displayLine(x(no(n()),no(n())));
-  displayLine(x(no(n()),n()));
-  displayLine(x(n(),no(n())));
-  displayLine(x(n(),n()));
+  printf("%d\n",as(x(no(n()),no(n()))));
+  printf("%d\n",as(x(no(n()),n())));
+  printf("%d\n",as(x(n(),no(n()))));
+  printf("%d\n",as(x(n(),n())));
+
+/*
   printf("  eq\n");
   displayLine(eq(n(),n()));
   //displayLine(eq(n(),t(c(stack))));
