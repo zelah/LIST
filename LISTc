@@ -475,7 +475,7 @@ z pr(z value)
 
 z a(z one,z two)
 {
-  if(as(c(one)))
+  if(one.y[1].uc)
   {
     f(one);
     return two;
@@ -489,7 +489,7 @@ z a(z one,z two)
 
 z o(z one,z two)
 {
-  if(as(c(one)))
+  if(one.y[1].uc)
   {
     f(two);
     return one;
@@ -503,12 +503,14 @@ z o(z one,z two)
 
 z x(z one,z two)
 {
-  if(as(one))
+  if(one.y[1].uc)
   {
+    f(one);
     return no(two);
   }
   else
   {
+    f(one);
     return two;
   }
 }
