@@ -604,7 +604,7 @@ void display1(z object)
 {
   if(object.y[2].ul)
   {
-    printf("(%llu)",e(object));
+    printf("[]");
   }
   else
   {
