@@ -600,7 +600,7 @@ z eq(z one,z two)
 
 void display1(z object)
 {
-  if(as(pr(c(object))))
+  if(object.y[2].ul)
   {
     printf("(%llu)",e(object));
   }
@@ -608,7 +608,7 @@ void display1(z object)
   {
     printf("[%llu]",e(object)-2);
   }
-  if(as(pr(c(object))))
+  if(object.y[2].ul)
   {
     display1(t(c(object)));
     display1(p(object));
@@ -626,7 +626,7 @@ void display1(z object)
 
 void display(z object)
 {
-  if(!as(c(object)))
+  if(object.y[1].uc==0)
   {
     printf("{false}");
   }
