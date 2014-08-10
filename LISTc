@@ -542,13 +542,13 @@ z eq1(z one,z two)
     }
     else
     {
-      if(one.y[2].ul!=0)
+      if(one.y[2].ul==0)
       {
-        if(two.y[2].ul!=0)
+        if(two.y[2].ul==0)
         {
-          if(as(eq1(t(c(one)),t(c(two)))))
+          if(one.y[3].uc==two.y[3].uc)
           {
-            return eq1(p(one),p(two));
+            return eq1(pp(one),pp(two));
           }
           else
           {
@@ -566,7 +566,7 @@ z eq1(z one,z two)
       }
       else
       {
-        if(two.y[2].ul!=0)
+        if(two.y[2].ul==0)
         {
           f(one);
           f(two);
@@ -574,9 +574,9 @@ z eq1(z one,z two)
         }
         else
         {
-          if(one.y[3].uc==two.y[3].uc)
+          if(as(eq1(t(c(one)),t(c(two)))))
           {
-            return eq1(pp(one),pp(two));
+            return eq1(p(one),p(two));
           }
           else
           {
