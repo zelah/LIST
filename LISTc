@@ -517,22 +517,24 @@ z x(z one,z two)
 
 z eq1(z one,z two)
 {
-  if(as(nu(c(one))))
+  if(e(one)==2)
   {
-    if(as(nu(two)))
+    if(e(two)==2)
     {
       f(one);
+      f(two);
       return n();
     }
     else
     {
       f(one);
+      f(two);
       return no(n());
     }
   }
   else
   {
-    if(as(nu(c(two))))
+    if(e(two)==2)
     {
       f(one);
       f(two);
@@ -540,9 +542,9 @@ z eq1(z one,z two)
     }
     else
     {
-      if(as(pr(c(one))))
+      if(one.y[2].ul!=0)
       {
-        if(as(pr(c(two))))
+        if(two.y[2].ul!=0)
         {
           if(as(eq1(t(c(one)),t(c(two)))))
           {
@@ -564,7 +566,7 @@ z eq1(z one,z two)
       }
       else
       {
-        if(as(pr(c(two))))
+        if(two.y[2].ul!=0)
         {
           f(one);
           f(two);
@@ -572,7 +574,7 @@ z eq1(z one,z two)
         }
         else
         {
-          if(one.y[2].uc==two.y[2].uc)
+          if(one.y[3].uc==two.y[3].uc)
           {
             return eq1(pp(one),pp(two));
           }
@@ -834,7 +836,9 @@ int main()
   printf("  eq\n");
   displayLine(eq(u(c(stack2),c(stack2)),c(stack2)));
   displayLine(eq(c(stack2),u(c(stack2),c(stack2))));
-
+  val.uc='x';
+  displayLine(eq(u(c(stack2),rv(ps(val,pp(c(stack2))))),u(c(stack2),rv(c(stack2)))));
+  displayLine(eq(u(c(stack2),rv(c(stack2))),u(c(stack2),rv(ps(val,pp(c(stack2)))))));
   f(stack);
   return 0;
 }
