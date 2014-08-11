@@ -540,7 +540,7 @@ uc lt1(z one,z two)
 
 z lt(z one,z two)
 {
-  if(lt1(c(one),c(two)))
+  if(e(one)<e(two)||lt1(c(one),c(two)))
   {
     f(two);
     one.y[1].uc=1;
@@ -768,8 +768,10 @@ int main()
   stack=mp(fun,stack);
   displayLine(c(stack));
   printf("  lt\n");
-  displayLine(lt(c(stack),c(stack2)));
   displayLine(lt(c(stack2),c(stack)));
+  displayLine(lt(c(stack),c(stack2)));
+  displayLine(lt(c(stack2),rv(pp(c(stack)))));
+  displayLine(lt(rv(pp(c(stack))),c(stack2)));
   fun.f1=&notB;
   stack=kp(fun,stack);
   stack=kp(fun,stack);
