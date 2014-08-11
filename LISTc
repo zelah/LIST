@@ -515,6 +515,45 @@ z x(z one,z two)
   }
 }
 
+uc lt1(z one,z two)
+{
+  if(e(one)==2)
+  {
+    f(one);
+    f(two);
+    return 1;
+  }
+  else
+  {
+    if(e(two)==2)
+    {
+      f(one);
+      f(two);
+      return 0;
+    }
+    else
+    {
+      return one.y[3].uc<two.y[3].uc&&lt1(pp(one),pp(two));
+    }
+  }
+}
+
+z lt(z one,z two)
+{
+  if(lt1(c(one),c(two)))
+  {
+    f(two);
+    one.y[1].uc=1;
+    return one;
+  }
+  else
+  {
+    f(one);
+    two.y[1].uc=0;
+    return two;
+  }
+}
+ 
 uc eq1(z one,z two)
 {
   if(e(one)==2)
@@ -589,16 +628,18 @@ uc eq1(z one,z two)
     }
   }
 }
-
+ 
 z eq(z one,z two)
 {
   if(eq1(one,c(two)))
   {
+    two.y[1].uc=1;
     return two;
   }
   else
   {
-    return no(two);
+    two.y[1].uc=0;
+    return two;
   }
 }
 
@@ -726,6 +767,9 @@ int main()
   fun.f1=&inc;
   stack=mp(fun,stack);
   displayLine(c(stack));
+  printf("  lt\n");
+  displayLine(lt(c(stack),c(stack2)));
+  displayLine(lt(c(stack2),c(stack)));
   fun.f1=&notB;
   stack=kp(fun,stack);
   stack=kp(fun,stack);
