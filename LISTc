@@ -553,6 +553,45 @@ z lt(z one,z two)
     return two;
   }
 }
+
+uc gt1(z one,z two)
+{
+  if(e(two)==2)
+  {
+    f(one);
+    f(two);
+    return 1;
+  }
+  else
+  {
+    if(e(one)==2)
+    {
+      f(one);
+      f(two);
+      return 0;
+    }
+    else
+    {
+      return one.y[3].uc>two.y[3].uc&&gt1(pp(one),pp(two));
+    }
+  }
+}
+
+z gt(z one,z two)
+{
+  if(e(one)>e(two)||gt1(c(one),c(two)))
+  {
+    f(two);
+    one.y[1].uc=1;
+    return one;
+  }
+  else
+  {
+    f(one);
+    two.y[1].uc=0;
+    return two;
+  }
+}
  
 uc eq1(z one,z two)
 {
@@ -772,6 +811,11 @@ int main()
   displayLine(lt(c(stack),c(stack2)));
   displayLine(lt(c(stack2),rv(pp(c(stack)))));
   displayLine(lt(rv(pp(c(stack))),c(stack2)));
+  printf("  gt\n");
+  displayLine(gt(c(stack2),c(stack)));
+  displayLine(gt(c(stack),c(stack2)));
+  displayLine(gt(c(stack2),rv(pp(c(stack)))));
+  displayLine(gt(rv(pp(c(stack))),c(stack2)));
   fun.f1=&notB;
   stack=kp(fun,stack);
   stack=kp(fun,stack);
