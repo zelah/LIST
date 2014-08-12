@@ -525,22 +525,13 @@ uc lt1(z one,z two)
   }
   else
   {
-    if(e(two)==2)
-    {
-      f(one);
-      f(two);
-      return 0;
-    }
-    else
-    {
-      return one.y[3].uc<two.y[3].uc&&lt1(pp(one),pp(two));
-    }
+    return one.y[3].uc<two.y[3].uc&&lt1(pp(one),pp(two));
   }
 }
-
+ 
 z lt(z one,z two)
 {
-  if(e(one)<e(two)||lt1(c(one),c(two)))
+  if(e(one)<e(two)||(e(one)==e(two)&&lt1(c(one),c(two))))
   {
     f(two);
     one.y[1].uc=1;
@@ -553,7 +544,7 @@ z lt(z one,z two)
     return two;
   }
 }
-
+ 
 uc gt1(z one,z two)
 {
   if(e(two)==2)
@@ -564,22 +555,13 @@ uc gt1(z one,z two)
   }
   else
   {
-    if(e(one)==2)
-    {
-      f(one);
-      f(two);
-      return 0;
-    }
-    else
-    {
-      return one.y[3].uc>two.y[3].uc&&gt1(pp(one),pp(two));
-    }
+    return one.y[3].uc>two.y[3].uc&&gt1(pp(one),pp(two));
   }
 }
-
+ 
 z gt(z one,z two)
 {
-  if(e(one)>e(two)||gt1(c(one),c(two)))
+  if(e(one)>e(two)||(e(one)==e(two)&&gt1(c(one),c(two))))
   {
     f(two);
     one.y[1].uc=1;
@@ -597,43 +579,19 @@ uc eq1(z one,z two)
 {
   if(e(one)==2)
   {
-    if(e(two)==2)
-    {
-      f(one);
-      f(two);
-      return 1;
-    }
-    else
-    {
-      f(one);
-      f(two);
-      return 0;
-    }
+    f(one);
+    f(two);
+    return 1;
   }
   else
   {
-    if(e(two)==2)
+    if(one.y[2].ul)
     {
-      f(one);
-      f(two);
-      return 0;
-    }
-    else
-    {
-      if(one.y[2].ul)
+      if(two.y[2].ul)
       {
-        if(two.y[2].ul)
+        if(eq1(t(c(one)),t(c(two))))
         {
-          if(eq1(t(c(one)),t(c(two))))
-          {
-            return eq1(p(one),p(two));
-          }
-          else
-          {
-            f(one);
-            f(two);
-            return 0;
-          }
+          return eq1(p(one),p(two));
         }
         else
         {
@@ -644,24 +602,30 @@ uc eq1(z one,z two)
       }
       else
       {
-        if(two.y[2].ul)
+        f(one);
+        f(two);
+        return 0;
+      }
+    }
+    else
+    {
+      if(two.y[2].ul)
+      {
+        f(one);
+        f(two);
+        return 0;
+      }
+      else
+      {
+        if(one.y[3].uc==two.y[3].uc)
+        {
+          return eq1(pp(one),pp(two));
+        }
+        else
         {
           f(one);
           f(two);
           return 0;
-        }
-        else
-        {
-          if(one.y[3].uc==two.y[3].uc)
-          {
-            return eq1(pp(one),pp(two));
-          }
-          else
-          {
-            f(one);
-            f(two);
-            return 0;
-          }
         }
       }
     }
@@ -670,7 +634,7 @@ uc eq1(z one,z two)
  
 z eq(z one,z two)
 {
-  if(eq1(one,c(two)))
+  if(e(one)==e(two)&&eq1(one,c(two)))
   {
     two.y[1].uc=1;
     return two;
