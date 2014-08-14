@@ -670,7 +670,7 @@ z ad3(z one,z two,uc carry,z result)
   uc two1;
   if(e(one)==2)
   {
-    one1=0;
+    one1='0';
   }
   else
   {
@@ -679,14 +679,14 @@ z ad3(z one,z two,uc carry,z result)
   }
   if(e(two)==2)
   {
-    two1=0;
+    two1='0';
   }
   else
   {
     two1=two.y[3].uc;
     two=pp(two);
   }
-  if(carry==0&&(one1==0&&two1==0))
+  if(carry==0&&(one1=='0'&&two1=='0'))
   {
     f(one);
     f(two);
@@ -697,7 +697,7 @@ z ad3(z one,z two,uc carry,z result)
     z temp;
     temp.uc=ad2(one1,two1,carry);
     result=ps(temp,result);
-    return ad3(two,one,ad1(one1,two1),result);
+    return ad3(one,two,ad1(one1,two1),result);
   }
 }
 
@@ -832,7 +832,7 @@ int main()
   displayLine(c(stack));
   printf("  ad\n");
   displayLine(ad(c(stack2),c(stack2)));
-  displayLine(ad(c(stack2),rv(c(stack2))));
+  displayLine(ad(c(stack2),pp(rv(c(stack2)))));
   printf("  lt\n");
   displayLine(lt(c(stack2),c(stack)));
   displayLine(lt(c(stack),c(stack2)));
