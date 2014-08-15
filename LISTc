@@ -87,6 +87,8 @@ typedef z (*f19)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
 typedef z (*f20)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
 ul const block=5;
  
+void displayLine(z object);
+ 
 z n()
 {
   z result;
@@ -686,7 +688,7 @@ z ad3(z one,z two,uc carry,z result)
     two1=two.y[3].uc;
     two=pp(two);
   }
-  if(carry==0&&(one1=='0'&&two1=='0'))
+  if(carry==0&&(e(one)==2&&e(two)==2))
   {
     f(one);
     f(two);
@@ -704,6 +706,75 @@ z ad3(z one,z two,uc carry,z result)
 z ad(z one,z two)
 {
   return ad3(rv(one),rv(two),0,n());
+}
+
+z twice(z number)
+{
+  z result;
+  result=ad(c(number),c(number));
+  f(number);
+  return result;
+}
+
+z mu1(z one,z two,z control,z compare,z result)
+{
+  if(e(two)==2)
+  {
+    f(one);
+    f(two);
+    f(control);
+    f(compare);
+    return result;
+  }
+  else
+  {
+    if(as(gt(ad(t(c(control)),c(compare)),c(one))))
+    {
+      control=p(control);
+      two=p(two);
+    }
+    else
+    {
+      compare=ad(compare,t(c(control)));
+      control=p(control);
+      result=ad(result,t(c(two)));
+      two=p(two);
+    }
+    return mu1(one,two,control,compare,result);
+  }
+}
+
+z mu2(z one,z two,z control)
+{
+  if(as(gt(t(c(control)),c(one))))
+  {
+    return mu1(one,p(two),p(control),n(),n());
+  }
+  else
+  {
+    displayLine(c(control));
+    z result;
+    result=mu2(one,u(twice(t(c(two))),c(two)),u(twice(t(c(control))),c(control)));
+    f(two);
+    f(control);
+    return result;
+  }
+}
+
+z mu(z one,z two)
+{
+  if(e(one)==2||e(two)==2)
+  {
+    f(one);
+    f(two);
+    return n();
+  }
+  else
+  {
+    z val;
+    val.uc='1';
+    return mu2(one,u(two,n()),u(ps(val,n()),n()));
+  }
 }
  
 void display1(z object)
@@ -791,6 +862,7 @@ int main()
   z fun2;
   z stack;
   z stack2;
+  z stack3;
   stack=n();
   val.uc='3';
   stack=ps(val,stack);  
@@ -833,6 +905,22 @@ int main()
   printf("  ad\n");
   displayLine(ad(c(stack2),c(stack2)));
   displayLine(ad(c(stack2),pp(rv(c(stack2)))));
+
+  val.uc='4';
+  stack3=ps(val,n());
+  val.uc='2';
+  stack3=ps(val,stack3);
+  val.uc='0';
+  stack3=ps(val,stack3);
+  val.uc='1';
+  stack3=ps(val,stack3);
+  displayLine(c(stack3));
+  displayLine(ad(c(stack3),c(stack3)));
+
+  printf("  mu\n");
+  displayLine(mu(n(),c(stack2)));
+  displayLine(mu(c(stack2),n()));
+  displayLine(mu(c(stack2),c(stack2)));
   printf("  lt\n");
   displayLine(lt(c(stack2),c(stack)));
   displayLine(lt(c(stack),c(stack2)));
