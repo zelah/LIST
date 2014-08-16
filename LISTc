@@ -525,9 +525,21 @@ uc lt1(z one,z two)
     f(two);
     return 1;
   }
+  else if(one.y[3].uc<two.y[3].uc)
+  {
+    f(one);
+    f(two);
+    return 1;
+  }
+  else if(one.y[3].uc>two.y[3].uc)
+  {
+    f(one);
+    f(two);
+    return 0;
+  }
   else
   {
-    return one.y[3].uc<two.y[3].uc&&lt1(pp(one),pp(two));
+    return lt1(pp(one),pp(two));
   }
 }
  
@@ -555,9 +567,21 @@ uc gt1(z one,z two)
     f(two);
     return 1;
   }
+  else if(one.y[3].uc>two.y[3].uc)
+  {
+    f(one);
+    f(two);
+    return 1;
+  }
+  else if(one.y[3].uc<two.y[3].uc)
+  {
+    f(one);
+    f(two);
+    return 0;
+  }
   else
   {
-    return one.y[3].uc>two.y[3].uc&&gt1(pp(one),pp(two));
+    return gt1(pp(one),pp(two));
   }
 }
  
@@ -749,7 +773,9 @@ z mu2(z one,z two,z control)
 {
   if(as(gt(t(c(control)),c(one))))
   {
-    displayLine(c(control));
+    displayLine(t(c(control)));
+    displayLine(c(one));
+    displayLine(gt(t(c(control)),c(one)));
     return mu1(one,p(two),p(control),n(),n());
   }
   else
