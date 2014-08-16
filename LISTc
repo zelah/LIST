@@ -755,16 +755,22 @@ z mu1(z one,z two,z control,z compare,z result)
   {
     if(as(gt(ad(t(c(control)),c(compare)),c(one))))
     {
+      printf("too big\n");
       control=p(control);
       two=p(two);
     }
     else
     {
+      printf("fits\n");
       compare=ad(compare,t(c(control)));
       control=p(control);
       result=ad(result,t(c(two)));
       two=p(two);
     }
+    printf("compare");
+    displayLine(c(compare));
+    printf("result");
+    displayLine(c(result));
     return mu1(one,two,control,compare,result);
   }
 }
@@ -773,9 +779,10 @@ z mu2(z one,z two,z control)
 {
   if(as(gt(t(c(control)),c(one))))
   {
-    displayLine(t(c(control)));
-    displayLine(c(one));
-    displayLine(gt(t(c(control)),c(one)));
+    printf("control");
+    displayLine(c(control));
+    printf("two");
+    displayLine(c(two));
     return mu1(one,p(two),p(control),n(),n());
   }
   else
@@ -945,9 +952,9 @@ int main()
   displayLine(ad(c(stack3),c(stack3)));
 
   printf("  mu\n");
-  displayLine(mu(n(),c(stack2)));
-  displayLine(mu(c(stack2),n()));
-  displayLine(mu(c(stack2),c(stack2)));
+  displayLine(mu(n(),c(stack3)));
+  displayLine(mu(c(stack3),n()));
+  displayLine(mu(c(stack3),c(stack3)));
   printf("  lt\n");
   displayLine(lt(c(stack2),c(stack)));
   displayLine(lt(c(stack),c(stack2)));
