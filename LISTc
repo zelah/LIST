@@ -523,7 +523,7 @@ uc lt1(z one,z two)
   {
     f(one);
     f(two);
-    return 1;
+    return 0;
   }
   else if(one.y[3].uc<two.y[3].uc)
   {
@@ -565,7 +565,7 @@ uc gt1(z one,z two)
   {
     f(one);
     f(two);
-    return 1;
+    return 0;
   }
   else if(one.y[3].uc>two.y[3].uc)
   {
@@ -762,15 +762,11 @@ z mu1(z one,z two,z control,z compare,z result)
     else
     {
       printf("fits\n");
-      compare=ad(compare,t(c(control)));
+      displayLine(c(compare=ad(compare,t(c(control)))));
       control=p(control);
-      result=ad(result,t(c(two)));
+      displayLine(c(result=ad(result,t(c(two)))));
       two=p(two);
     }
-    printf("compare");
-    displayLine(c(compare));
-    printf("result");
-    displayLine(c(result));
     return mu1(one,two,control,compare,result);
   }
 }
