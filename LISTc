@@ -762,8 +762,12 @@ z mu1(z one,z two,z control,z compare,z result)
     else
     {
       printf("fits\n");
+      displayLine(c(compare));
+      displayLine(t(c(control)));
       displayLine(c(compare=ad(compare,t(c(control)))));
       control=p(control);
+      displayLine(c(result));
+      displayLine(t(c(two)));
       displayLine(c(result=ad(result,t(c(two)))));
       two=p(two);
     }
@@ -936,10 +940,8 @@ int main()
   displayLine(ad(c(stack2),c(stack2)));
   displayLine(ad(c(stack2),pp(rv(c(stack2)))));
 
-  val.uc='4';
-  stack3=ps(val,n());
   val.uc='2';
-  stack3=ps(val,stack3);
+  stack3=ps(val,n());
   val.uc='0';
   stack3=ps(val,stack3);
   val.uc='1';
