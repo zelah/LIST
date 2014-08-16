@@ -668,6 +668,7 @@ uc ad2(uc one,uc two,uc carry)
 
 z ad3(z one,z two,uc carry,z result)
 {
+  uc bothNull=e(one)==2&&e(two)==2;
   uc one1;
   uc two1;
   if(e(one)==2)
@@ -688,7 +689,7 @@ z ad3(z one,z two,uc carry,z result)
     two1=two.y[3].uc;
     two=pp(two);
   }
-  if(carry==0&&(e(one)==2&&e(two)==2))
+  if(carry==0&&bothNull)
   {
     f(one);
     f(two);
@@ -752,7 +753,6 @@ z mu2(z one,z two,z control)
   }
   else
   {
-    displayLine(c(control));
     z result;
     result=mu2(one,u(twice(t(c(two))),c(two)),u(twice(t(c(control))),c(control)));
     f(two);
