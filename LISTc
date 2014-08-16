@@ -749,6 +749,7 @@ z mu2(z one,z two,z control)
 {
   if(as(gt(t(c(control)),c(one))))
   {
+    displayLine(c(control));
     return mu1(one,p(two),p(control),n(),n());
   }
   else
