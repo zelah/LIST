@@ -672,9 +672,9 @@ z eq(z one,z two)
   }
 }
 
-uc ad1(uc one,uc two)
+uc ad1(uc one,uc two,uc carry)
 {
-  return one+two>'0'+'9';
+  return one+two+carry>'0'+'9';
 }
 
 uc ad2(uc one,uc two,uc carry)
@@ -724,7 +724,7 @@ z ad3(z one,z two,uc carry,z result)
     z temp;
     temp.uc=ad2(one1,two1,carry);
     result=ps(temp,result);
-    return ad3(one,two,ad1(one1,two1),result);
+    return ad3(one,two,ad1(one1,two1,carry),result);
   }
 }
 
@@ -936,6 +936,9 @@ int main()
   fun.f1=&inc;
   stack=mp(fun,stack);
   displayLine(c(stack));
+  printf("  ad1ad2\n");
+  printf("%d%c\n",ad1('6','8',0),ad2('6','8',0));
+  printf("%d%c\n",ad1('9','0',1),ad2('9','0',1));
   printf("  ad\n");
   displayLine(ad(c(stack2),c(stack2)));
   displayLine(ad(c(stack2),pp(rv(c(stack2)))));
@@ -950,9 +953,9 @@ int main()
   displayLine(ad(c(stack3),c(stack3)));
 
   printf("  mu\n");
-  displayLine(mu(n(),c(stack3)));
-  displayLine(mu(c(stack3),n()));
-  displayLine(mu(c(stack3),c(stack3)));
+  displayLine(mu(n(),c(stack2)));
+  displayLine(mu(c(stack2),n()));
+  displayLine(mu(c(stack2),c(stack2)));
   printf("  lt\n");
   displayLine(lt(c(stack2),c(stack)));
   displayLine(lt(c(stack),c(stack2)));
