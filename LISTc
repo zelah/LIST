@@ -870,6 +870,66 @@ z mu(z one,z two)
   }
 }
  
+z dv1(z one,z two,z control,z compare,z result)
+{
+  if(e(two)==2)
+  {
+    f(one);
+    f(two);
+    f(control);
+    f(compare);
+    return result;
+  }
+  else
+  {
+    if(as(gt(ad(t(c(two)),c(compare)),c(one))))
+    {
+      two=p(two);
+      control=p(control);
+    }
+    else
+    {
+      compare=ad(compare,t(c(two)));
+      two=p(two);
+      result=ad(result,t(c(control)));
+      control=p(control);
+    }
+    return dv1(one,two,control,compare,result);
+  }
+}
+
+z dv2(z one,z two,z control)
+{
+  if(as(gt(t(c(two)),c(one))))
+  {
+    return dv1(one,p(two),p(control),n(),n());
+  }
+  else
+  {
+    z result;
+    result=dv2(one,u(twice(t(c(two))),c(two)),u(twice(t(c(control))),c(control)));
+    f(two);
+    f(control);
+    return result;
+  }
+}
+
+z dv(z one,z two)
+{
+  if(e(one)==2)
+  {
+    f(one);
+    f(two);
+    return n();
+  }
+  else
+  {
+    z val;
+    val.uc='1';
+    return dv2(one,u(two,n()),u(ps(val,n()),n()));
+  }
+}
+
 void display1(z object)
 {
   if(object.y[2].ul)
@@ -1020,6 +1080,12 @@ int main()
   stack3=ps(val,stack3);
   displayLine(c(stack3));
   displayLine(ad(c(stack3),c(stack3)));
+
+  printf("  dv\n");
+  displayLine(dv(n(),c(stack2)));
+  displayLine(dv(c(stack2),c(stack2)));
+  displayLine(dv(c(stack2),c(stack3)));
+  displayLine(dv(c(stack3),c(stack2)));
 
   printf("  mu\n");
   displayLine(mu(n(),c(stack2)));
