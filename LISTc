@@ -733,6 +733,16 @@ z ad(z one,z two)
   return ad3(rv(one),rv(two),0,n());
 }
 
+uc sb1(uc one,uc two,uc borrow)
+{
+  return one<two+borrow;
+}
+
+uc sb2(uc one,uc two,uc borrow)
+{
+  return (sb1(one,two,borrow)?one+'0'+10-two:one+'0'-two)-borrow;
+}
+
 z twice(z number)
 {
   z result;
@@ -755,20 +765,14 @@ z mu1(z one,z two,z control,z compare,z result)
   {
     if(as(gt(ad(t(c(control)),c(compare)),c(one))))
     {
-      printf("too big\n");
       control=p(control);
       two=p(two);
     }
     else
     {
-      printf("fits\n");
-      displayLine(c(compare));
-      displayLine(t(c(control)));
-      displayLine(c(compare=ad(compare,t(c(control)))));
+      compare=ad(compare,t(c(control)));
       control=p(control);
-      displayLine(c(result));
-      displayLine(t(c(two)));
-      displayLine(c(result=ad(result,t(c(two)))));
+      result=ad(result,t(c(two)));
       two=p(two);
     }
     return mu1(one,two,control,compare,result);
@@ -779,10 +783,6 @@ z mu2(z one,z two,z control)
 {
   if(as(gt(t(c(control)),c(one))))
   {
-    printf("control");
-    displayLine(c(control));
-    printf("two");
-    displayLine(c(two));
     return mu1(one,p(two),p(control),n(),n());
   }
   else
@@ -936,6 +936,13 @@ int main()
   fun.f1=&inc;
   stack=mp(fun,stack);
   displayLine(c(stack));
+  printf("  sb1sb2\n");
+  printf("%d%c\n",sb1('0','9',1),sb2('0','9',1));
+  printf("%d%c\n",sb1('9','9',1),sb2('9','9',1));
+  printf("%d%c\n",sb1('9','8',1),sb2('9','8',1));
+  printf("%d%c\n",sb1('0','9',0),sb2('0','9',0));
+  printf("%d%c\n",sb1('9','9',0),sb2('9','9',0));
+  printf("%d%c\n",sb1('9','8',0),sb2('9','8',0));
   printf("  ad1ad2\n");
   printf("%d%c\n",ad1('6','8',0),ad2('6','8',0));
   printf("%d%c\n",ad1('9','0',1),ad2('9','0',1));
