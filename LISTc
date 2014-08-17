@@ -743,6 +743,65 @@ uc sb2(uc one,uc two,uc borrow)
   return (sb1(one,two,borrow)?one+'0'+10-two:one+'0'-two)-borrow;
 }
 
+z sb3(z one,z two,uc borrow,z result)
+{
+  uc bothNull=e(one)==2&&e(two)==2;
+  uc one1;
+  uc two1;
+  if(e(one)==2)
+  {
+    one1='0';
+  }
+  else
+  {
+    one1=one.y[3].uc;
+    one=pp(one);
+  }
+  if(e(two)==2)
+  {
+    two1='0';
+  }
+  else
+  {
+    two1=two.y[3].uc;
+    two=pp(two);
+  }
+  if(borrow==0&&bothNull)
+  {
+    f(one);
+    f(two);
+    return result;
+  }
+  else
+  {
+    z temp;
+    temp.uc=sb2(one1,two1,borrow);
+    result=ps(temp,result);
+    return sb3(one,two,sb1(one1,two1,borrow),result);
+  }
+}
+
+z sb4(z value)
+{
+  if(e(value)==2)
+  {
+    return value;
+  }
+  else if(value.y[3].uc=='0')
+  {
+    return sb4(pp(value));
+  }
+  else
+  {
+    return value;
+  }
+}
+
+z sb(z one,z two)
+{
+  return sb4(sb3(rv(one),rv(two),0,n()));
+}
+
 z twice(z number)
 {
   z result;
@@ -943,6 +1002,9 @@ int main()
   printf("%d%c\n",sb1('0','9',0),sb2('0','9',0));
   printf("%d%c\n",sb1('9','9',0),sb2('9','9',0));
   printf("%d%c\n",sb1('9','8',0),sb2('9','8',0));
+  printf("  sb\n");
+  displayLine(sb(c(stack2),c(stack2)));
+  displayLine(sb(c(stack2),pp(rv(c(stack2)))));
   printf("  ad1ad2\n");
   printf("%d%c\n",ad1('6','8',0),ad2('6','8',0));
   printf("%d%c\n",ad1('9','0',1),ad2('9','0',1));
