@@ -85,7 +85,7 @@ typedef z (*f17)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
 typedef z (*f18)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
 typedef z (*f19)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
 typedef z (*f20)(z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z,z);
-ul const block=5;
+ul const block=1024;
  
 void displayLine(z object);
  
@@ -930,6 +930,11 @@ z dv(z one,z two)
   }
 }
 
+z md(z one,z two)
+{
+  return sb(one,mu(two,dv(c(one),c(two))));
+}
+
 void display1(z object)
 {
   if(object.y[2].ul)
@@ -1086,11 +1091,14 @@ int main()
   displayLine(dv(c(stack2),c(stack2)));
   displayLine(dv(c(stack2),c(stack3)));
   displayLine(dv(c(stack3),c(stack2)));
-
+  printf("  md\n");
+  displayLine(md(c(stack2),c(stack3)));
   printf("  mu\n");
   displayLine(mu(n(),c(stack2)));
   displayLine(mu(c(stack2),n()));
   displayLine(mu(c(stack2),c(stack2)));
+  printf("  mudvmd\n");
+  displayLine(ad(md(c(stack2),c(stack3)),mu(c(stack3),dv(c(stack2),c(stack3)))));
   printf("  lt\n");
   displayLine(lt(c(stack2),c(stack)));
   displayLine(lt(c(stack),c(stack2)));
