@@ -690,47 +690,57 @@ uc ad2(uc one,uc two,uc carry)
   }
 }
 
-z ad3(z one,z two,uc carry,z result)
+z ad3(z one,z two,uc carry,ul index1,ul index2)
 {
-  uc bothNull=e(two)==2;
+  if(index1==2&&carry==0)
+  {
+    f(one);
+    return two;
+  }
+  uc bothNull=index2==2;
   uc one1;
   uc two1;
-  if(e(one)==2)
+  if(index1==2)
   {
     one1='0';
   }
   else
   {
-    one1=one.y[3].uc;
-    one=pp(one);
+    one1=one.y[index1].uc;
+    --index1;
   }
-  if(e(two)==2)
+  if(index2==2)
   {
     two1='0';
   }
   else
   {
-    two1=two.y[3].uc;
-    two=pp(two);
+    two1=two.y[index2].uc;
+    --index2;
   }
-  if(carry==0&&bothNull)
+  if(carry&&bothNull)
+  {
+    z val;
+    val.uc='1';
+    f(one);
+    return ps(val,two);
+  }
+  else if(bothNull)
   {
     f(one);
-    f(two);
-    return result;
+    return two;
   }
   else
   {
-    z temp;
-    temp.uc=ad2(one1,two1,carry);
-    result=ps(temp,result);
-    return ad3(one,two,ad1(one1,two1,carry),result);
+    uc temp=ad2(one1,two1,carry);
+    two.y[index2+1].uc=temp;
+    return ad3(one,two,ad1(one1,two1,carry),index1,index2);
   }
 }
 
 z ad4(z one,z two)
 {
-  return ad3(rv(one),rv(two),0,n());
+  return ad3(one,two,0,e(one),e(two));
 }
 
 z ad(z one,z two)
