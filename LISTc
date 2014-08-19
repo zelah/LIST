@@ -692,7 +692,7 @@ uc ad2(uc one,uc two,uc carry)
 
 z ad3(z one,z two,uc carry,z result)
 {
-  uc bothNull=e(one)==2&&e(two)==2;
+  uc bothNull=e(two)==2;
   uc one1;
   uc two1;
   if(e(one)==2)
@@ -728,9 +728,21 @@ z ad3(z one,z two,uc carry,z result)
   }
 }
 
-z ad(z one,z two)
+z ad4(z one,z two)
 {
   return ad3(rv(one),rv(two),0,n());
+}
+
+z ad(z one,z two)
+{
+  if(as(lt(c(one),c(two))))
+  {
+    return ad4(one,two);
+  }
+  else
+  {
+    return ad4(two,one);
+  }
 }
 
 uc sb1(uc one,uc two,uc borrow)
