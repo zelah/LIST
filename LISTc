@@ -697,7 +697,13 @@ z ad3(z one,z two,uc carry,ul index1,ul index2)
     f(one);
     return two;
   }
-  uc bothNull=index2==2;
+  if(index2==2&&carry)
+  {
+    z val;
+    val.uc='1';
+    f(one);
+    return ps(val,two);
+  }
   uc one1;
   uc two1;
   if(index1==2)
@@ -718,24 +724,9 @@ z ad3(z one,z two,uc carry,ul index1,ul index2)
     two1=two.y[index2].uc;
     --index2;
   }
-  if(carry&&bothNull)
-  {
-    z val;
-    val.uc='1';
-    f(one);
-    return ps(val,two);
-  }
-  else if(bothNull)
-  {
-    f(one);
-    return two;
-  }
-  else
-  {
-    uc temp=ad2(one1,two1,carry);
-    two.y[index2+1].uc=temp;
-    return ad3(one,two,ad1(one1,two1,carry),index1,index2);
-  }
+  uc temp=ad2(one1,two1,carry);
+  two.y[index2+1].uc=temp;
+  return ad3(one,two,ad1(one1,two1,carry),index1,index2);
 }
 
 z ad4(z one,z two)
@@ -765,42 +756,36 @@ uc sb2(uc one,uc two,uc borrow)
   return (sb1(one,two,borrow)?one+'0'+10-two:one+'0'-two)-borrow;
 }
 
-z sb3(z one,z two,uc borrow,z result)
+z sb3(z one,z two,uc borrow,ul index1,ul index2)
 {
-  uc bothNull=e(one)==2&&e(two)==2;
+  if(index2==2&&borrow==0)
+  {
+    f(two);
+    return one;
+  }
   uc one1;
   uc two1;
-  if(e(one)==2)
+  if(index1==2)
   {
     one1='0';
   }
   else
   {
-    one1=one.y[3].uc;
-    one=pp(one);
+    one1=one.y[index1].uc;
+    --index1;
   }
-  if(e(two)==2)
+  if(index2==2)
   {
     two1='0';
   }
   else
   {
-    two1=two.y[3].uc;
-    two=pp(two);
+    two1=two.y[index2].uc;
+    --index2;
   }
-  if(borrow==0&&bothNull)
-  {
-    f(one);
-    f(two);
-    return result;
-  }
-  else
-  {
-    z temp;
-    temp.uc=sb2(one1,two1,borrow);
-    result=ps(temp,result);
-    return sb3(one,two,sb1(one1,two1,borrow),result);
-  }
+  uc temp=sb2(one1,two1,borrow);
+  one.y[index1+1].uc=temp;
+  return sb3(one,two,sb1(one1,two1,borrow),index1,index2);
 }
 
 z sb4(z value)
@@ -821,7 +806,7 @@ z sb4(z value)
 
 z sb(z one,z two)
 {
-  return sb4(sb3(rv(one),rv(two),0,n()));
+  return sb4(sb3(one,two,0,e(one),e(two)));
 }
 
 z twice(z number)
