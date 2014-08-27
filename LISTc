@@ -601,7 +601,7 @@ z gt(z one,z two)
   }
 }
  
-uc eq1(z one,z two)
+uc q1(z one,z two)
 {
   if(e(one)==2)
   {
@@ -615,9 +615,9 @@ uc eq1(z one,z two)
     {
       if(two.y[2].ul)
       {
-        if(eq1(t(c(one)),t(c(two))))
+        if(q1(t(c(one)),t(c(two))))
         {
-          return eq1(p(one),p(two));
+          return q1(p(one),p(two));
         }
         else
         {
@@ -645,7 +645,7 @@ uc eq1(z one,z two)
       {
         if(one.y[3].uc==two.y[3].uc)
         {
-          return eq1(pp(one),pp(two));
+          return q1(pp(one),pp(two));
         }
         else
         {
@@ -658,9 +658,9 @@ uc eq1(z one,z two)
   }
 }
  
-z eq(z one,z two)
+z q(z one,z two)
 {
-  if(e(one)==e(two)&&eq1(one,c(two)))
+  if(e(one)==e(two)&&q1(one,c(two)))
   {
     two.y[1].uc=1;
     return two;
@@ -1218,17 +1218,17 @@ int main()
   displayLine(x(n(),no(n())));
   displayLine(x(n(),n()));
  
-  printf("  eq\n");
-  displayLine(eq(n(),n()));
-  displayLine(eq(n(),c(stack2)));
-  displayLine(eq(c(stack2),n()));
-  displayLine(eq(c(stack2),c(stack2)));
-  printf("  eq\n");
-  displayLine(eq(u(c(stack2),c(stack2)),c(stack2)));
-  displayLine(eq(c(stack2),u(c(stack2),c(stack2))));
+  printf("  q\n");
+  displayLine(q(n(),n()));
+  displayLine(q(n(),c(stack2)));
+  displayLine(q(c(stack2),n()));
+  displayLine(q(c(stack2),c(stack2)));
+  printf("  q\n");
+  displayLine(q(u(c(stack2),c(stack2)),c(stack2)));
+  displayLine(q(c(stack2),u(c(stack2),c(stack2))));
   val.uc='x';
-  displayLine(eq(u(c(stack2),rv(ps(val,pp(c(stack2))))),u(c(stack2),rv(c(stack2)))));
-  displayLine(eq(u(c(stack2),rv(c(stack2))),u(c(stack2),rv(ps(val,pp(c(stack2)))))));
+  displayLine(q(u(c(stack2),rv(ps(val,pp(c(stack2))))),u(c(stack2),rv(c(stack2)))));
+  displayLine(q(u(c(stack2),rv(c(stack2))),u(c(stack2),rv(ps(val,pp(c(stack2)))))));
 
   f(stack);
   return 0;
