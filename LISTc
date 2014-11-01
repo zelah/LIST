@@ -4,6 +4,7 @@
  
 
 #define PROFILE srand(time(NULL))
+//PROFILE; at the top of main()
 #define PRO(s) PRO2(s)
 //PRO0(s) profiling off
 //PRO1(s) profiling on
