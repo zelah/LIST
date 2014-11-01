@@ -2,13 +2,20 @@
 #include<stdlib.h>
 #include<time.h>
  
+
 #define PROFILE srand(time(NULL))
-#define PRO(s) PRO1(s)
+#define PRO(s) PRO2(s)
+//                        ^^^^^^^^
+//PRO0(s) profiling off
+//PRO1(s) profiling on
+//PRO2(s) verbose halting
 #define PRO0(s)
 #define PRO1(s) {int r=rand()/(RAND_MAX/PRO3);if(r==0){printf(":%s ",s);fflush(stdout);}}
 #define PRO2(s) {time_t t=time(NULL);int r=rand()/(RAND_MAX/PRO3);fflush(stdout);printf(":%s%3d ",s,(char)(t%100));fflush(stdout);printf("%c",1/r);}
-#define PRO3 5555
-
+#define PRO3 555
+//                      ^^^
+//change number for frequency
+ 
 typedef union z z;
 union z
 {
@@ -111,13 +118,13 @@ z n()
  
 ul e(z object)
 {
-  PRO("e");
+  //PRO("e");
   return object.y[0].ul;
 }
  
 ul size(ul extent)
 {
-  PRO("size");
+  //PRO("size");
   return ((extent-1)/block+1)*block;
 }
  
@@ -1142,6 +1149,9 @@ int main()
   z stack;
   z stack2;
   z stack3;
+  int i;
+  for(i=1;i<5;++i)
+  {
   stack=n();
   val.uc='3';
   stack=ps(val,stack);  
@@ -1345,5 +1355,8 @@ int main()
   displayLine(q(u(c(stack2),rv(c(stack2))),u(c(stack2),rv(ps(val,pp(c(stack2)))))));
  
   f(stack);
+  f(stack2);
+  f(stack3);
+  }
   return 0;
 }
